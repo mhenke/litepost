@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<!-- Session Service -->
+	<bean id="sessionService" class="net.lightblog.component.session.SessionService"/>
+	
+	<!-- Security Service -->
+	<bean id="securityService" class="net.lightblog.component.security.SecurityService">
+		<property name="sessionService">
+			<ref bean="sessionService"/>
+		</property>
+	</bean>
+	
+	<!-- User Service -->
+	<bean id="userService" class="net.lightblog.component.user.UserService">
+		<property name="userDAO">
+			<bean class="net.lightblog.component.user.UserDAO">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+         </property>
+		<property name="userGateway">
+			<bean class="net.lightblog.component.user.UserGateway">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+         </property>
+		<property name="sessionService">
+			<ref bean="sessionService"/>
+		</property>
+	</bean>
+	
+	<!-- Blog Entry Service -->
+	<bean id="entryService" class="net.lightblog.component.entry.EntryService">
+		<property name="entryDAO">
+			<bean class="net.lightblog.component.entry.EntryDAO">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+         </property>
+		<property name="entryGateway">
+			<bean class="net.lightblog.component.entry.entryGateway">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+         </property>
+		<property name="commentService">
+			<ref bean="commentService"/>
+		</property>
+	</bean>
+	
+	<!-- Comments Service -->
+	<bean id="commentService" class="net.lightblog.component.comment.CommentService">
+		<property name="commentDAO">
+			<bean class="net.lightblog.component.comment.CommentDAO">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+		<property name="commentGateway">
+			<bean class="net.lightblog.component.comment.CommentGateway">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Category Service -->
+	<bean id="categoryService" class="net.lightblog.component.category.CategoryService">
+		<property name="categoryDAO">
+			<bean class="net.lightblog.component.category.CategoryDAO">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+		<property name="categoryGateway">
+			<bean class="net.lightblog.component.category.CategoryGateway">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Bookmark Service -->
+	<bean id="bookmarkService" class="net.lightblog.component.bookmark.BookmarkService">
+		<property name="bookmarkDAO">
+			<bean class="net.lightblog.component.bookmark.BookmarkDAO">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+		<property name="bookmarkGateway">
+			<bean class="net.lightblog.component.bookmark.BookmarkGateway">
+         		<property name="dsn">
+					<value>lightblog</value>
+				 </property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

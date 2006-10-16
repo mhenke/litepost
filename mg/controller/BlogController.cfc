@@ -1,0 +1,94 @@
+<!--
+	  
+  Copyright (c) 2006, Chris Scott, Matt Woodward, Adam Wayne Lehman, Dave Ross
+  All rights reserved.
+	
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+	$Id: $
+-->
+
+<cfcomponent displayname="BlogController" 
+			 hint="Main controller for all blog related things" 
+			 extends="ModelGlue.Core.Controller" 
+			 output="false">
+			 
+	<cffunction name="Init" access="Public" returnType="lightblog.mg.controller.BlogController" output="false" 
+				hint="I build a new BlogController">
+		<cfargument name="ModelGlue" required="true" type="ModelGlue.ModelGlue" />
+		<cfargument name="InstanceName" required="true" type="string" />
+		<cfset super.Init(arguments.ModelGlue) />
+		<cfreturn this />
+	</cffunction>
+	
+	<!--- setters for dependencies --->
+	<cffunction name="setBookmarkService" returntype="void" access="public" output="false" hint="Dependency: BookmarkService">
+		<cfargument name="bookmarkService" type="net.lightblog.service.BookmarkService" required="true" />
+		<cfset variables.bookmarkService = arguments.bookmarkService />
+	</cffunction>
+
+	<cffunction name="setCategoryService" returntype="void" access="public" output="false" hint="Dependency: CategoryService">
+		<cfargument name="categoryService" type="net.lightblog.service.CategoryService" required="true" />
+		<cfset variables.categoryService = arguments.categoryService />
+	</cffunction>
+	
+	<cffunction name="setEntryService" returntype="void" access="public" output="false" hint="Dependency: EntryService">
+		<cfargument name="entryService" type="net.lightblog.service.EntryService" required="true" />
+		<cfset variables.entryService = arguments.entryService />
+	</cffunction>
+	
+	<cffunction name="setCommentService" returntype="void" access="public" output="false" hint="Dependency: CommentService">
+		<cfargument name="commentService" type="net.lightblog.service.CommentService" required="true" />
+		<cfset variables.commentService = arguments.commentService />
+	</cffunction>
+	
+	<!--- main controller methods --->
+	<cffunction name="getBookmarks" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var bookmarks = variables.bookmarkService.getBookmarks() />
+		<cfset arguments.event.SetValue("bookmarks", bookmarks) />
+		
+	</cffunction>
+	
+	<cffunction name="getCategories" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var categories = variables.categoryService.getCategoriesWithCounts() />
+		<cfset arguments.event.SetValue("categories", categories) />
+		
+	</cffunction>
+	
+	<cffunction name="getEntries" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var entries = variables.entryService.getEntries() />
+		<cfset arguments.event.SetValue("entries", entries) />
+		
+	</cffunction>
+	
+	<cffunction name="getEntryWithComments" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var entryID = arguments.event.getValue("entryID",0) />
+		<cfset var entry = variables.entryService.getEntryByID(entryID, true) />
+		
+		<cfif entry.isNull()>
+			<cfset arguments.event.forward("home") />
+		<cfelse>
+			<cfset arguments.event.SetValue("entry", entry) />
+		</cfif>
+		
+	</cffunction>
+		
+</cfcomponent>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Used within the fusebox.xml page to contain the elements that configure the application.
+-->
+<!ELEMENT fusebox (circuits, classes, lexicons, parameters, globalfuseactions, plugins)>
+<!--
+	Specify the circuits in this application.
+-->
+<!ELEMENT circuits (circuit+)>
+<!ELEMENT circuit EMPTY>
+<!ATTLIST circuit
+	alias CDATA #REQUIRED
+	path CDATA #REQUIRED
+	parent CDATA #IMPLIED
+>
+<!--
+	Specify the class declarations in this application.
+-->
+<!ELEMENT classes (class*)>
+<!ELEMENT class EMPTY>
+<!ATTLIST class
+	alias CDATA #REQUIRED
+	type (component | java) "component"
+	classpath CDATA #REQUIRED
+	constructor CDATA #IMPLIED
+>
+<!--
+	Specify the Fusebox 4.1 style lexicon declarations in this application. Deprecated.
+-->
+<!ELEMENT lexicons (lexicon*)>
+<!ELEMENT lexicon EMPTY>
+<!ATTLIST lexicon
+	namespace CDATA #REQUIRED
+	path CDATA #REQUIRED
+>
+<!--
+	Specify the global fuseactions - appinit is optional (since it is new) but all existing
+	applications will already have preprocess followed by postprocess (even if they are empty).
+-->
+<!ELEMENT globalfuseactions (appinit?, preprocess, postprocess)>
+<!ELEMENT appinit ((do | fuseaction)*)>
+<!ELEMENT preprocess ((do | fuseaction)*)>
+<!ELEMENT postprocess ((do | fuseaction)*)>
+<!--
+	Using <do> in a globalfuseaction is deprecated. Use <fuseaction> instead.
+-->
+<!ELEMENT do EMPTY>
+<!ATTLIST do
+	action CDATA #REQUIRED
+>
+<!--
+	Global fuseactions should be specified using the <fuseaction> verb.
+-->
+<!ELEMENT fuseaction EMPTY>
+<!ATTLIST fuseaction
+	action CDATA #REQUIRED
+>
+<!--
+	Specify the plugin declarations for the applications. In the <plugins> section
+	there are a number of phases, within each phase you can have <plugin> declarations.
+-->
+<!ELEMENT plugins (phase+)>
+<!ELEMENT phase (plugin*)>
+<!ATTLIST phase
+	name (fuseactionException | postFuseaction | postProcess | preFuseaction | preProcess | processError) #REQUIRED
+>
+<!ELEMENT plugin (parameter*)>
+<!ATTLIST plugin
+	name CDATA #REQUIRED
+	template CDATA #REQUIRED
+	path CDATA #REQUIRED
+>
+<!--
+	Plugins may have parameters.
+-->
+<!ELEMENT parameters (parameter+)>
+<!ELEMENT parameter EMPTY>
+<!ATTLIST parameter
+	name CDATA #REQUIRED
+	value CDATA #REQUIRED
+>

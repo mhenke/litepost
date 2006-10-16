@@ -1,0 +1,140 @@
+<!--
+	  
+  Copyright (c) 2006, Chris Scott, Matt Woodward, Adam Wayne Lehman, Dave Ross
+  All rights reserved.
+	
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+	$Id: $
+-->
+
+<modelglue>
+
+	<!-- PROPERTIES -->
+	<config>
+		<setting name="beanMappings" value="/lightblog/config/lightblog-services.xml" />
+		<setting name="viewMappings" value="/lightblog/mg/views" />
+		<setting name="applicationMapping" value="/lightblog/mg" />
+		<setting name="modelGlueMapping" value="/lightblog" />
+		<setting name="beanFactoryLoader" value="ModelGlue.Core.ColdSpringLoader" />
+	  	<setting name="autowireControllers" value="true" />
+		
+		<setting name="defaultEvent" value="home" />
+		<setting name="defaultExceptionHandler" value="exceptionEvent" />
+
+		<setting name="reload" value="false" />
+		<setting name="debug" value="true" />
+
+	</config>
+
+	<!-- CONTROLLERS -->
+	<controllers>
+		<controller name="security" type="lightblog.mg.controller.SecurityController">
+			<message-listener message="OnRequestStart" function="checkAuthentication" />
+			<message-listener message="authenticateUser" function="authenticate" />
+		</controller>
+		<controller name="blog" type="lightblog.mg.controller.BlogController">
+			<!-- <message-listener message="OnRequestStart" function="getBookmarks" />
+			<message-listener message="OnRequestStart" function="getCategories" /> -->
+			<message-listener message="getBookmarks" function="getBookmarks" />
+			<message-listener message="getCategories" function="getCategories" />
+			<message-listener message="getEntries" function="getEntries" />
+			<message-listener message="getEntryComments" function="getEntryWithComments" />
+		</controller>
+	</controllers>
+
+	<!-- EVENT-HANDLERS -->
+	<event-handlers>
+	
+		<!-- login, for now default event -->
+		<event-handler name="loginForm">
+			
+			<views>
+				<include name="content" template="loginForm.cfm">
+					<value name="submitEvent" value="login" overwrite="true" />
+				</include>
+			</views>
+			
+			<results>
+				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+		<!-- login
+		<event-handler event="login" access="public">
+			<event-mapping event="Home" mapping="clients" />
+			<notify listener="users" method="attemptLogin" />
+		</event-handler> -->
+		
+		<!-- logout
+		<event-handler event="logout" access="public">
+			<notify listener="users" method="removeSession" />
+			<announce event="loginForm" copyEventArgs="false" />
+		</event-handler> -->
+		
+		<!-- home (main blog page) -->
+		<event-handler name="home">
+			<broadcasts>
+				<message name="getBookmarks" />
+				<message name="getCategories" />
+				<message name="getEntries" />
+			</broadcasts>
+			
+			<views>
+				<include name="content" template="entries.cfm" />
+				<include name="contentRight" template="bookmarks.cfm" />
+				<include name="contentRight" template="categories.cfm" append="true" />
+			</views>
+			
+			<results>
+				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+		<!-- comments -->
+		<event-handler name="comments">
+			<broadcasts>
+				<message name="getBookmarks" />
+				<message name="getCategories" />
+				<message name="getEntryComments"/>
+			</broadcasts>
+			
+			<views>
+				<include name="content" template="comments.cfm" />
+				<include name="contentRight" template="bookmarks.cfm" />
+				<include name="contentRight" template="categories.cfm" append="true" />
+			</views>
+			
+			<results>
+				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="layoutPage">
+			<views>
+				<include name="main" template="mainLayout.cfm" />
+			</views>
+		</event-handler>
+	
+		<event-handler name="exceptionEvent">
+			<views>
+				<include name="content" template="exception.cfm" />
+			</views>
+			<results>
+				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+	</event-handlers>
+
+</modelglue>

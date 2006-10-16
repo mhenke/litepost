@@ -1,0 +1,86 @@
+<!--
+	  
+  Copyright (c) 2006, Chris Scott, Matt Woodward, Adam Wayne Lehman, Dave Ross
+  All rights reserved.
+	
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+	$Id: $
+-->
+
+<mach-ii version="1.0">
+
+	<!-- PROPERTIES -->
+	<properties>
+		<!-- mach-ii required -->
+		<property name="applicationRoot" value="/lightblog/machii" />
+		<property name="defaultEvent" value="showHome" />
+		<property name="eventParameter" value="event" />
+		<property name="parameterPrecedence" value="form" />
+		<property name="maxEvents" value="10" />
+		<property name="exceptionEvent" value="exceptionEvent" />
+		<!-- application specific -->
+		<property name="dsn" value="lightblog" />
+		<property name="numEntriesOnHomePage" value="20" />
+	</properties>
+
+	<!-- PLUGINS -->
+	<plugins>
+		<!--
+		<plugin name="yourPluginName" type="fullyQualifiedDotDelimitedPathToCFC">
+			<parameters>
+				<parameter name="yourParameterName" value="yourParameterValue" />
+			</parameters>
+		</plugin>
+		-->
+	</plugins>
+	
+	<!-- EVENT-FILTERS -->
+	<event-filters>
+		<event-filter name="checkLoginFilter" type="lightblog.machii.filters.CheckLoginFilter" />
+	</event-filters>
+
+	<!-- LISTENERS -->
+	<listeners>
+		<listener name="bookmarkListener" type="lightblog.machii.listeners.BookmarkListener" />
+		<listener name="categoryListener" type="lightblog.machii.listeners.CategoryListener" />
+		<listener name="commentListener" type="lightblog.machii.listeners.CommentListener" />
+		<listener name="entryListener" type="lightblog.machii.listeners.EntryListener" />
+		<listener name="userListener" type="lightblog.machii.listeners.UserListener" />
+	</listeners>
+	
+	<!-- EVENT-HANDLERS -->
+	<event-handlers>
+		<!-- main home page event -->
+		<event-handler event="showHome" access="public">
+			<view-page name="home" contentArg="content" />
+			<view-page name="mainTemplate" />
+		</event-handler>
+		
+		<!-- login-related events -->
+		
+		<!-- exception event -->
+		<event-handler event="exceptionEvent" access="private">
+			<view-page name="exception" />
+		</event-handler>
+	</event-handlers>
+	
+	<!-- PAGE-VIEWS -->
+	<page-views>
+		<page-view name="home" page="/views/home.cfm" />
+		
+		<page-view name="mainTemplate" page="/views/mainTemplate.cfm" />
+		<page-view name="exception" page="/views/exception.cfm" />
+	</page-views>
+
+</mach-ii>

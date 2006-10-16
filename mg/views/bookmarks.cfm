@@ -1,0 +1,20 @@
+
+<!--- bookmarks sidebar --->
+<cfsilent>
+	<cfset bookmarks = viewState.getValue("bookmarks") />
+</cfsilent>
+
+<b>Links</b>
+
+<p>
+<cfoutput>
+	<cfloop from="1" to="#ArrayLen(bookmarks)#" index="i">
+		<cfset bookmark = bookmarks[i] />
+		<cfset linkUrl = bookmark.getUrl() />
+		<cfif Left(linkUrl,7) NEQ "http://">
+			<cfset linkUrl = "http://" & linkUrl />
+		</cfif>
+		<a href="#linkUrl#" target="_blank">#bookmark.getName()#</a><br />
+	</cfloop>
+</cfoutput>
+</p>
