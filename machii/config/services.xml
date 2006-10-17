@@ -37,14 +37,14 @@
 		<property name="userDAO">
 			<bean class="net.litepost.component.user.UserDAO">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
          </property>
 		<property name="userGateway">
 			<bean class="net.litepost.component.user.UserGateway">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
          </property>
@@ -58,14 +58,14 @@
 		<property name="entryDAO">
 			<bean class="net.litepost.component.entry.EntryDAO">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
          </property>
 		<property name="entryGateway">
-			<bean class="net.litepost.component.entry.entryGateway">
+			<bean class="net.litepost.component.entry.EntryGateway">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
          </property>
@@ -79,14 +79,14 @@
 		<property name="commentDAO">
 			<bean class="net.litepost.component.comment.CommentDAO">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
 		<property name="commentGateway">
 			<bean class="net.litepost.component.comment.CommentGateway">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
@@ -97,14 +97,14 @@
 		<property name="categoryDAO">
 			<bean class="net.litepost.component.category.CategoryDAO">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
 		<property name="categoryGateway">
 			<bean class="net.litepost.component.category.CategoryGateway">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
@@ -115,14 +115,14 @@
 		<property name="bookmarkDAO">
 			<bean class="net.litepost.component.bookmark.BookmarkDAO">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
 		<property name="bookmarkGateway">
 			<bean class="net.litepost.component.bookmark.BookmarkGateway">
          		<property name="dsn">
-					<value>litepost</value>
+					<value>${dsn}</value>
 				 </property>
 			</bean>
 		</property>
