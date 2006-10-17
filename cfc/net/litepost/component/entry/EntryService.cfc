@@ -44,7 +44,7 @@
 	</cffunction>
 	
 	<!--- service methods --->
-	<cffunction name="getEntries" returntype="array" access="public" output="false" hint="Gets entries and (optionally) comments as objects">
+	<cffunction name="getEntries" returntype="array" access="public" output="false" hint="Gets entries and comments as objects">
 		<cfargument name="numToReturn" type="numeric" required="false" default="-1" />
 		<cfargument name="activeOnly" type="boolean" required="false" default="true" />
 		
