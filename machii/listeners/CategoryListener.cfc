@@ -31,7 +31,7 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setCategoryService" returntype="void" access="public" output="false" hint="Dependency: CategoryService">
-		<cfargument name="categoryService" type="net.lightblog.component.category.CategoryService" required="true" />
+		<cfargument name="categoryService" type="net.litepost.component.category.CategoryService" required="true" />
 		<cfset variables.categoryService = arguments.categoryService />
 	</cffunction>
 

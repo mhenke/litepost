@@ -32,7 +32,7 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setUserService" returntype="void" access="public" output="false" hint="Dependency: UserService">
-		<cfargument name="userService" type="net.lightblog.component.user.UserService" required="true" />
+		<cfargument name="userService" type="net.litepost.component.user.UserService" required="true" />
 		<cfset variables.userService = arguments.userService />
 	</cffunction>
 	

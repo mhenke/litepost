@@ -30,7 +30,7 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setBookmarkService" returntype="void" access="public" output="false" hint="Dependency: BookmarkService">
-		<cfargument name="bookmarkService" type="net.lightblog.component.bookmark.BookmarkService" required="true" />
+		<cfargument name="bookmarkService" type="net.litepost.component.bookmark.BookmarkService" required="true" />
 		<cfset variables.bookmarkService = arguments.bookmarkService />
 	</cffunction>
 

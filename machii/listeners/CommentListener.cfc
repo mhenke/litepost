@@ -31,7 +31,7 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setCommentService" returntype="void" access="public" output="false" hint="Dependency: CommentService">
-		<cfargument name="commentService" type="net.lightblog.component.comment.CommentService" required="true" />
+		<cfargument name="commentService" type="net.litepost.component.comment.CommentService" required="true" />
 		<cfset variables.commentService = arguments.commentService />
 	</cffunction>
 

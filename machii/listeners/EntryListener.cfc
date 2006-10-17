@@ -31,7 +31,7 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setEntryService" returntype="void" access="public" output="false" hint="Dependency: EntryService">
-		<cfargument name="bookmarkService" type="net.lightblog.component.entry.EntryService" required="true" />
+		<cfargument name="entryService" type="net.litepost.component.entry.EntryService" required="true" />
 		<cfset variables.entryService = arguments.entryService />
 	</cffunction>
 	
