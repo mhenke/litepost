@@ -43,8 +43,16 @@
 		<cfreturn variables.categoryGateway.getCategories() />
 	</cffunction>
 	
+	<cffunction name="getCategoriesAsQuery" returntype="query" access="public" output="false">
+		<cfreturn variables.categoryGateway.getCategoriesAsQuery() />
+	</cffunction>
+	
 	<cffunction name="getCategoriesWithCounts" returntype="array" access="public" output="false">
 		<cfreturn variables.categoryGateway.getCategoriesWithCounts() />
+	</cffunction>
+	
+	<cffunction name="getCategoriesWithCountsAsQuery" returntype="query" access="public" output="false">
+		<cfreturn variables.categoryGateway.getCategoriesWithCountsAsQuery() />
 	</cffunction>
 	
 	<cffunction name="getCategoryByID" returntype="net.litepost.component.category.Category" access="public" output="false">

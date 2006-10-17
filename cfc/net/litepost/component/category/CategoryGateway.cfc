@@ -40,10 +40,7 @@
 		<cfset var categories = ArrayNew(1) />
 		<cfset var category = 0 />
 		
-		<cfquery name="qrySelect" datasource="#variables.dsn#">
-		SELECT categoryID, category
-		FROM categories ORDER BY category
-		</cfquery>
+		<cfset qrySelect = getCategoriesAsQuery() />
 		
 		<cfloop query="qrySelect">
 			<cfset category = CreateObject('component','net.litepost.component.category.Category').init(
@@ -56,16 +53,23 @@
 		<cfreturn categories />
 	</cffunction>
 	
+	<cffunction name="getCategoriesAsQuery" returntype="query" access="public" output="false">
+		<cfset var qrySelect = 0 />
+		
+		<cfquery name="qrySelect" datasource="#variables.dsn#">
+		SELECT categoryID, category
+		FROM categories ORDER BY category
+		</cfquery>
+		
+		<cfreturn qrySelect />
+	</cffunction>
+	
 	<cffunction name="getCategoriesWithCounts" returntype="array" access="public" output="false">
 		<cfset var qrySelect = 0 />
 		<cfset var categories = ArrayNew(1) />
 		<cfset var category = 0 />
 		
-		<cfquery name="qrySelect" datasource="#variables.dsn#">
-		SELECT c.categoryID, c.category, COUNT(e.entryID) AS posts 
-		FROM categories c LEFT OUTER JOIN entries e ON c.categoryID = e.categoryID 
-		GROUP BY c.categoryID, c.category
-		</cfquery>
+		<cfset qrySelect = getCategoriesWithCountsAsQuery() />
 		
 		<cfloop query="qrySelect">
 			<cfset category = CreateObject('component','net.litepost.component.category.Category').init(
@@ -77,7 +81,17 @@
 		</cfloop>
 		
 		<cfreturn categories />
-		
 	</cffunction>
 	
+	<cffunction name="getCategoriesWithCountsAsQuery" returntype="query" access="public" output="false">
+		<cfset var qrySelect = 0 />
+
+		<cfquery name="qrySelect" datasource="#variables.dsn#">
+		SELECT c.categoryID, c.category, COUNT(e.entryID) AS posts 
+		FROM categories c LEFT OUTER JOIN entries e ON c.categoryID = e.categoryID 
+		GROUP BY c.categoryID, c.category
+		</cfquery>
+		
+		<cfreturn qrySelect />
+	</cffunction>
 </cfcomponent>
