@@ -36,5 +36,11 @@
 		<cfset variables.securityService = arguments.securityService />
 	</cffunction>
 	
-	
+	<!--- listener methods --->
+	<cffunction name="checkAuthentication" access="public" returntype="boolean" output="false">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.securityService.isAuthenticated() />
+	</cffunction>
+
 </cfcomponent>
