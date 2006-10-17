@@ -30,12 +30,12 @@
 	<!--- setters for dependencies --->
 	<cffunction name="setCommentDAO" returntype="void" access="public" output="false" hint="Dependency: CommentDAO">
 		<cfargument name="commentDAO" type="net.litepost.component.comment.CommentDAO" required="true"/>
-		<cfset variables.commentDAO  = arguments.commentDAO />
+		<cfset variables.commentDAO = arguments.commentDAO />
 	</cffunction>
 	
 	<cffunction name="setCommentGateway" returntype="void" access="public" output="false" hint="Dependency: CommentGateway">
 		<cfargument name="commentGateway" type="net.litepost.component.comment.CommentGateway" required="true"/>
-		<cfset variables.commentGateway  = arguments.commentGateway />
+		<cfset variables.commentGateway = arguments.commentGateway />
 	</cffunction>
 	
 	<!--- service methods --->
