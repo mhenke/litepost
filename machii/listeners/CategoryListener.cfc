@@ -34,5 +34,70 @@
 		<cfargument name="categoryService" type="net.litepost.component.category.CategoryService" required="true" />
 		<cfset variables.categoryService = arguments.categoryService />
 	</cffunction>
-
+	
+	<!--- listener methods --->
+	<cffunction name="getCategory" returntype="net.litepost.component.category.Category" access="public" output="false" 
+			hint="Returns a category bean using the category ID in the event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.categoryService.getCategoryByID(arguments.event.getArg("categoryID")) />
+	</cffunction>
+	
+	<cffunction name="getCategories" returntype="array" access="public" output="false" 
+			hint="Returns an array of categories">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.categoryService.getCategories() />
+	</cffunction>
+	
+	<cffunction name="getCategoriesAsQuery" returntype="query" access="public" output="false" 
+			hint="Returns a query object containing categories">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.categoryService.getCategoriesAsQuery() />
+	</cffunction>
+	
+	<cffunction name="getCategoriesWithCounts" returntype="array" access="public" output="false" 
+			hint="Returns an array of categories including the count of entries in each category">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.categoryService.getCategoriesWithCounts() />
+	</cffunction>
+	
+	<cffunction name="getCategoriesWithCountsAsQuery" returntype="query" access="public" output="false" 
+			hint="Returns a query object of categories with counts">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.categoryService.getCategoriesWithCountsAsQuery() />
+	</cffunction>
+	
+	<cffunction name="processCategoryForm" returntype="void" access="public" output="false" 
+			hint="Processes the category form and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showCategoryForm" />
+		
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<cfset variables.categoryService.saveCategory(arguments.event.getArg("category")) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
+	
+	<cffunction name="deleteCategory" returntype="void" access="public" output="false" 
+			hint="Deletes a category">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showCategoryForm" />
+		
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<cfset variables.categoryService.deleteCategory(arguments.event.getArg("categoryID")) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
 </cfcomponent>
