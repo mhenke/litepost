@@ -43,6 +43,10 @@
 		<cfreturn variables.bookmarkGateway.getBookmarks() />
 	</cffunction>
 	
+	<cffunction name="getBookmarksAsQuery" returntype="query" access="public" output="false">
+		<cfreturn variables.bookmarkGateway.getBookmarksAsQuery() />
+	</cffunction>
+	
 	<cffunction name="getBookmarkById" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false">
 		<cfargument name="bookmarkID" type="numeric" required="true" />
 		<cfreturn variables.bookmarkDAO.fetch(arguments.bookmarkID) />
