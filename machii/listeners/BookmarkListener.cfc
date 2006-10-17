@@ -33,5 +33,56 @@
 		<cfargument name="bookmarkService" type="net.litepost.component.bookmark.BookmarkService" required="true" />
 		<cfset variables.bookmarkService = arguments.bookmarkService />
 	</cffunction>
-
+	
+	<!--- listener methods --->
+	<cffunction name="getBookmark" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false" 
+			hint="Returns a bookmark">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.bookmarkService.getBookmarkByID(arguments.event.getArg("bookmarkID")) />
+	</cffunction>
+	
+	<cffunction name="getBookmarks" returntype="array" access="public" output="false" 
+			hint="Returns an array of Bookmarks">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.bookmarkService.getBookmarks() />
+	</cffunction>
+	
+	<cffunction name="getBookmarksAsQuery" returntype="query" access="public" output="false" 
+			hint="Returns a query object containing bookmarks">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfreturn variables.bookmarkService.getBookmarksAsQuery() />
+	</cffunction>
+	
+	<cffunction name="processBookmarkForm" returntype="void" access="public" output="false" 
+			hint="Processes the bookmark form and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showBookmarkForm" />
+		
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<cfset variables.bookmarkService.saveBookmark(arguments.event.getArg("bookmark")) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
+	
+	<cffunction name="deleteBookmark" returntype="void" access="public" output="false" 
+			hint="Deletes a bookmark and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showBookmarkForm" />
+		
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<cfset variables.bookmarkService.removeBookmark(arguments.event.getArg("bookmarkID")) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
 </cfcomponent>
