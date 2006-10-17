@@ -20,21 +20,21 @@
 --->
  
 <cfcomponent displayname="CategoryService" 
-			extends="net.lightblog.service.CategoryService" 
+			extends="net.litepost.service.CategoryService" 
 			hint="Service for Categories">
 
-	<cffunction name="init" returntype="net.lightblog.component.category.CategoryService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.category.CategoryService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setCategoryDAO" returntype="void" access="public" output="false" hint="Dependency: CategoryDAO">
-		<cfargument name="categoryDAO" type="net.lightblog.component.category.CategoryDAO" required="true"/>
+		<cfargument name="categoryDAO" type="net.litepost.component.category.CategoryDAO" required="true"/>
 		<cfset variables.categoryDAO  = arguments.categoryDAO />
 	</cffunction>
 	
 	<cffunction name="setCategoryGateway" returntype="void" access="public" output="false" hint="Dependency: CategoryGateway">
-		<cfargument name="categoryGateway" type="net.lightblog.component.category.CategoryGateway" required="true"/>
+		<cfargument name="categoryGateway" type="net.litepost.component.category.CategoryGateway" required="true"/>
 		<cfset variables.categoryGateway  = arguments.categoryGateway />
 	</cffunction>
 	
@@ -47,13 +47,13 @@
 		<cfreturn variables.categoryGateway.getCategoriesWithCounts() />
 	</cffunction>
 	
-	<cffunction name="getCategoryByID" returntype="net.lightblog.component.category.Category" access="public" output="false">
+	<cffunction name="getCategoryByID" returntype="net.litepost.component.category.Category" access="public" output="false">
 		<cfargument name="categoryID" type="numeric" required="true" />
 		<cfreturn variables.categoryDAO.fetch(arguments.categoryID) />
 	</cffunction>
 	
 	<cffunction name="saveCategory" returntype="numeric" access="public" output="false">
-		<cfargument name="category" type="net.lightblog.component.category.Category" required="true" />
+		<cfargument name="category" type="net.litepost.component.category.Category" required="true" />
 		<cfreturn variables.categoryDAO.save(arguments.category) />
 	</cffunction>
 	

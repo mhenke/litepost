@@ -22,10 +22,10 @@
 
 	<!-- PROPERTIES -->
 	<config>
-		<setting name="beanMappings" value="/lightblog/config/lightblog-services.xml" />
-		<setting name="viewMappings" value="/lightblog/mg/views" />
-		<setting name="applicationMapping" value="/lightblog/mg" />
-		<setting name="modelGlueMapping" value="/lightblog" />
+		<setting name="beanMappings" value="/litepost/config/litepost-services.xml" />
+		<setting name="viewMappings" value="/litepost/mg/views" />
+		<setting name="applicationMapping" value="/litepost/mg" />
+		<setting name="modelGlueMapping" value="/litepost" />
 		<setting name="beanFactoryLoader" value="ModelGlue.Core.ColdSpringLoader" />
 	  	<setting name="autowireControllers" value="true" />
 		
@@ -39,11 +39,11 @@
 
 	<!-- CONTROLLERS -->
 	<controllers>
-		<controller name="security" type="lightblog.mg.controller.SecurityController">
+		<controller name="security" type="litepost.mg.controller.SecurityController">
 			<message-listener message="OnRequestStart" function="checkAuthentication" />
 			<message-listener message="authenticateUser" function="authenticate" />
 		</controller>
-		<controller name="blog" type="lightblog.mg.controller.BlogController">
+		<controller name="blog" type="litepost.mg.controller.BlogController">
 			<!-- <message-listener message="OnRequestStart" function="getBookmarks" />
 			<message-listener message="OnRequestStart" function="getCategories" /> -->
 			<message-listener message="getBookmarks" function="getBookmarks" />

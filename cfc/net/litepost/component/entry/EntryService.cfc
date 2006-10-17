@@ -20,26 +20,26 @@
 --->
  
 <cfcomponent displayname="EntryService" 
-			extends="net.lightblog.service.EntryService" 
+			extends="net.litepost.service.EntryService" 
 			hint="Service for Comments">
 
-	<cffunction name="init" returntype="net.lightblog.component.entry.EntryService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.entry.EntryService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setEntryDAO" returntype="void" access="public" output="false" hint="Dependency: EntryDAO">
-		<cfargument name="entryDAO" type="net.lightblog.component.entry.EntryDAO" required="true"/>
+		<cfargument name="entryDAO" type="net.litepost.component.entry.EntryDAO" required="true"/>
 		<cfset variables.entryDAO  = arguments.entryDAO />
 	</cffunction>
 	
 	<cffunction name="setEntryGateway" returntype="void" access="public" output="false" hint="Dependency: EntryGateway">
-		<cfargument name="entryGateway" type="net.lightblog.component.entry.EntryGateway" required="true"/>
+		<cfargument name="entryGateway" type="net.litepost.component.entry.EntryGateway" required="true"/>
 		<cfset variables.entryGateway  = arguments.entryGateway />
 	</cffunction>
 	
 	<cffunction name="setCommentService" returntype="void" access="public" output="false" hint="Dependency: CommentService">
-		<cfargument name="commentService" type="net.lightblog.service.CommentService" required="true"/>
+		<cfargument name="commentService" type="net.litepost.service.CommentService" required="true"/>
 		<cfset variables.commentService  = arguments.commentService />
 	</cffunction>
 	
@@ -66,7 +66,7 @@
 		<cfreturn variables.entryGateway.getEntries(arguments.numToReturn, arguments.activeOnly, arguments.categoryID) />
 	</cffunction>
 	
-	<cffunction name="getEntryByID" returntype="net.lightblog.component.entry.Entry" access="public" output="false" hint="Gets an entries by a entry ID, and all it's comments">
+	<cffunction name="getEntryByID" returntype="net.litepost.component.entry.Entry" access="public" output="false" hint="Gets an entries by a entry ID, and all it's comments">
 		<cfargument name="entryID" type="numeric" required="true" />
 		<cfargument name="includeComments" type="boolean" required="false" default="true" />
 		
@@ -78,7 +78,7 @@
 	</cffunction>
 	
 	<cffunction name="saveEntry" returntype="numeric" access="public" output="false" hint="Saves an entry">
-		<cfargument name="entry" type="net.lightblog.component.entry.Entry" required="true" />
+		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
 		<cfreturn variables.entryDAO.save(arguments.entry) />
 	</cffunction>
 	

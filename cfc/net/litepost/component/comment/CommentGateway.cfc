@@ -25,7 +25,7 @@
 	<cfset variables.cacheTimeLong = CreateTimeSpan(0, 0, 30, 0)>
 	<cfset variables.cacheTimeShort = CreateTimeSpan(0, 0, 20, 0)>
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.comment.CommentGateway" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.comment.CommentGateway" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -51,7 +51,7 @@
 		</cfquery>
 		
 		<cfloop query="qrySelect">
-			<cfset comment = createObject("component", "net.lightblog.component.comment.Comment").init(qrySelect.commentID, 
+			<cfset comment = createObject("component", "net.litepost.component.comment.Comment").init(qrySelect.commentID, 
 																								  qrySelect.entryID, 
 																								  qrySelect.comment, 
 																								  qrySelect.name, 

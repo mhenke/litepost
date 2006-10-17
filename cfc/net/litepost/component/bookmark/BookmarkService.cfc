@@ -20,21 +20,21 @@
 --->
  
 <cfcomponent displayname="BookmarkService" 
-			extends="net.lightblog.service.BookmarkService" 
+			extends="net.litepost.service.BookmarkService" 
 			hint="Service for Bookmarks">
 
-	<cffunction name="init" returntype="net.lightblog.component.bookmark.BookmarkService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.bookmark.BookmarkService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setBookmarkDAO" returntype="void" access="public" output="false" hint="Dependency: BookmarkDAO">
-		<cfargument name="bookmarkDAO" type="net.lightblog.component.bookmark.BookmarkDAO" required="true"/>
+		<cfargument name="bookmarkDAO" type="net.litepost.component.bookmark.BookmarkDAO" required="true"/>
 		<cfset variables.bookmarkDAO  = arguments.bookmarkDAO />
 	</cffunction>
 	
 	<cffunction name="setBookmarkGateway" returntype="void" access="public" output="false" hint="Dependency: BookmarkGateway">
-		<cfargument name="bookmarkGateway" type="net.lightblog.component.bookmark.BookmarkGateway" required="true"/>
+		<cfargument name="bookmarkGateway" type="net.litepost.component.bookmark.BookmarkGateway" required="true"/>
 		<cfset variables.bookmarkGateway  = arguments.bookmarkGateway />
 	</cffunction>
 	
@@ -43,13 +43,13 @@
 		<cfreturn variables.bookmarkGateway.getBookmarks() />
 	</cffunction>
 	
-	<cffunction name="getBookmarkById" returntype="net.lightblog.component.bookmark.Bookmark" access="public" output="false">
+	<cffunction name="getBookmarkById" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false">
 		<cfargument name="bookmarkID" type="numeric" required="true" />
 		<cfreturn variables.bookmarkDAO.fetch(arguments.bookmarkID) />
 	</cffunction>
 	
 	<cffunction name="saveBookmark" returntype="numeric" access="public" output="false">
-		<cfargument name="bookmark" type="net.lightblog.component.bookmark.Bookmark" required="true" />
+		<cfargument name="bookmark" type="net.litepost.component.bookmark.Bookmark" required="true" />
 		<cfreturn variables.bookmarkDAO.save(arguments.bookmark) />
 	</cffunction>
 	

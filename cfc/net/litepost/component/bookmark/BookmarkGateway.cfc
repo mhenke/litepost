@@ -25,7 +25,7 @@
 	<cfset variables.cacheTimeLong = CreateTimeSpan(0, 0, 30, 0)>
 	<cfset variables.cacheTimeShort = CreateTimeSpan(0, 0, 20, 0)>
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.bookmark.BookmarkGateway" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.bookmark.BookmarkGateway" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -47,7 +47,7 @@
 		</cfquery>
 		
 		<cfloop query="qrySelect">
-			<cfset bookmark = createObject("component", "net.lightblog.component.bookmark.Bookmark").init(qrySelect.bookmarkID, 
+			<cfset bookmark = createObject("component", "net.litepost.component.bookmark.Bookmark").init(qrySelect.bookmarkID, 
 																									 qrySelect.name, 
 																									 qrySelect.url) />
 			<cfset arrayAppend(bookmarks, bookmark) />

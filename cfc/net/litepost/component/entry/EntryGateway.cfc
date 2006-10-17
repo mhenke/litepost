@@ -25,7 +25,7 @@
 	<cfset variables.cacheTimeLong = CreateTimeSpan(0, 0, 30, 0)>
 	<cfset variables.cacheTimeShort = CreateTimeSpan(0, 0, 20, 0)>
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.entry.EntryGateway" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.entry.EntryGateway" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -77,7 +77,7 @@
 		<cfset qrySelect = getEntriesAsQuery(arguments.numToReturn, arguments.activeOnly, arguments.categoryID) />
 		
 		<cfloop query="qrySelect">
-			<cfset entry = createObject("component", "net.lightblog.component.entry.Entry").init() />
+			<cfset entry = createObject("component", "net.litepost.component.entry.Entry").init() />
 			<cfset entry.setEntryID(qrySelect.entryID) />
 			<cfset entry.setCategoryID(qrySelect.categoryID) />
 			<cfset entry.setCategory(qrySelect.category) />

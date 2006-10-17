@@ -25,7 +25,7 @@
 	<cfset variables.cacheTimeLong = CreateTimeSpan(0, 0, 30, 0)>
 	<cfset variables.cacheTimeShort = CreateTimeSpan(0, 0, 20, 0)>
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.user.UserGateway" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.user.UserGateway" output="false">
 		<cfreturn this />
 	</cffunction>
 	

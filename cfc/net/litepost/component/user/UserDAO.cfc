@@ -23,7 +23,7 @@
 	
 	<cfset variables.dsn = "" />
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.user.UserDAO" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.user.UserDAO" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -56,9 +56,9 @@
 		</cfif>
 	</cffunction>
 	
-	<cffunction name="fetch" returntype="net.lightblog.component.user.User" access="public" output="false">
+	<cffunction name="fetch" returntype="net.litepost.component.user.User" access="public" output="false">
 		<cfargument name="userID" type="numeric" required="true" />
-		<cfset var user = CreateObject('component','net.lightblog.component.user.User').init() />
+		<cfset var user = CreateObject('component','net.litepost.component.user.User').init() />
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
@@ -84,7 +84,7 @@
 	</cffunction>
 	
 	<cffunction name="save" returntype="void" access="public" output="false">
-		<cfargument name="user" type="net.lightblog.component.user.User" required="true" />
+		<cfargument name="user" type="net.litepost.component.user.User" required="true" />
 		
 		<cfif arguments.user.getUserID() GT 0>
 			<cfset update(arguments.user)/>
@@ -95,7 +95,7 @@
 	</cffunction>
 	
 	<cffunction name="create" returntype="void" access="private" output="false">
-		<cfargument name="user" type="net.lightblog.component.user.User" required="true" />
+		<cfargument name="user" type="net.litepost.component.user.User" required="true" />
 
 		<cfset var qryInsert = 0 />
 		
@@ -121,7 +121,7 @@
 	</cffunction>
 	
 	<cffunction name="update" returntype="void" access="private" output="false">
-		<cfargument name="user" type="net.lightblog.component.user.User" required="true" />
+		<cfargument name="user" type="net.litepost.component.user.User" required="true" />
 
 		<cfset var qryUpdate = 0 />
 		

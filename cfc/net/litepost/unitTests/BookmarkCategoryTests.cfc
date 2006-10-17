@@ -13,7 +13,7 @@
 		<!--- create a new bean factory --->
 		<cfset bf = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init()/>
 		<!--- load the bean defs --->
-		<cfset bf.loadBeansFromXmlFile(path&'/lightblog-services.xml')/>
+		<cfset bf.loadBeansFromXmlFile(path&'/litepost-services.xml')/>
 		
 		<cfset variables.sys.out.println("Loading services") />
 
@@ -32,7 +32,7 @@
 		<cfset var bookmarkName = "" />
 		<cfset var bookmarkURL = "" />
 		
-		<cfset bookmark = CreateObject("component", "net.lightblog.component.bookmark.Bookmark").init() />
+		<cfset bookmark = CreateObject("component", "net.litepost.component.bookmark.Bookmark").init() />
 		<cfset bookmark.setName("test bookmark")/>
 		<cfset bookmark.setUrl("www.test.com")/>
 		<cfset bookmarkName = bookmark.getName() />
@@ -66,7 +66,7 @@
 	<cffunction name="testCategoryServiceMethods" access="public" returntype="void" output="false">
 		
 		<cfset var categories = variables.categoryService.getCategories() />
-		<cfset var category = CreateObject("component", "net.lightblog.component.category.Category").init() />
+		<cfset var category = CreateObject("component", "net.litepost.component.category.Category").init() />
 		<cfset var categoryID = 0 />
 		<cfset var name = "" />
 		<cfset var numPosts = "" />

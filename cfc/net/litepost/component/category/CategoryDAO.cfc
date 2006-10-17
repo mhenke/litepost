@@ -23,7 +23,7 @@
 	
 	<cfset variables.dsn = "" />
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.category.CategoryDAO" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.category.CategoryDAO" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -37,9 +37,9 @@
 	</cffunction>
 	
 	<!--- dao methods --->
-	<cffunction name="fetch" returntype="net.lightblog.component.category.Category" access="public" output="false">
+	<cffunction name="fetch" returntype="net.litepost.component.category.Category" access="public" output="false">
 		<cfargument name="categoryID" type="numeric" required="true" />
-		<cfset var category = CreateObject('component','net.lightblog.component.category.Category').init() />
+		<cfset var category = CreateObject('component','net.litepost.component.category.Category').init() />
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
@@ -59,7 +59,7 @@
 	</cffunction>
 	
 	<cffunction name="save" returntype="numeric" access="public" output="false">
-		<cfargument name="category" type="net.lightblog.component.category.Category" required="true" />
+		<cfargument name="category" type="net.litepost.component.category.Category" required="true" />
 		
 		<cfif arguments.category.getCategoryID() GT 0>
 			<cfset update(arguments.category)/>
@@ -83,7 +83,7 @@
 	</cffunction>
 	
 	<cffunction name="create" returntype="numeric" access="private" output="false">
-		<cfargument name="category" type="net.lightblog.component.category.Category" required="true" />
+		<cfargument name="category" type="net.litepost.component.category.Category" required="true" />
 
 		<cfset var qryInsert = 0 />
 		<cfset var qrySelect = 0 />
@@ -104,7 +104,7 @@
 	</cffunction>
 	
 	<cffunction name="update" returntype="void" access="private" output="false">
-		<cfargument name="category" type="net.lightblog.component.category.Category" required="true" />
+		<cfargument name="category" type="net.litepost.component.category.Category" required="true" />
 		
 		<cfset var qryInsert = 0 />
 

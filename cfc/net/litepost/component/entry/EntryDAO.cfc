@@ -23,7 +23,7 @@
 	
 	<cfset variables.dsn = "" />
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.entry.EntryDAO" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.entry.EntryDAO" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -37,7 +37,7 @@
 	</cffunction>
 	
 	<!--- dao methods --->
-	<cffunction name="fetch" returntype="net.lightblog.component.entry.Entry" access="public" output="false">
+	<cffunction name="fetch" returntype="net.litepost.component.entry.Entry" access="public" output="false">
 		<cfargument name="entryID" type="numeric" required="true" />
 		<cfset var entry = 0 />
 		<cfset var qrySelect = 0 />
@@ -51,10 +51,10 @@
 		
 		<cfif qrySelect.RecordCount LT 1>
 			<!--- return an uninitialized entry --->
-			<cfreturn CreateObject('component','net.lightblog.component.entry.Entry') />
+			<cfreturn CreateObject('component','net.litepost.component.entry.Entry') />
 		</cfif>
 		
-		<cfset entry = CreateObject('component','net.lightblog.component.entry.Entry').init() />
+		<cfset entry = CreateObject('component','net.litepost.component.entry.Entry').init() />
 		<cfset entry.setEntryID(qrySelect.entryID) />
 		<cfset entry.setCategoryID(qrySelect.categoryID) />
 		<cfset entry.setCategory(qrySelect.category) />
@@ -69,7 +69,7 @@
 	</cffunction>
 	
 	<cffunction name="save" returntype="numeric" access="public" output="false">
-		<cfargument name="entry" type="net.lightblog.component.entry.Entry" required="true" />
+		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
 		
 		<cfif arguments.entry.getEntryID() GT 0>
 			<cfset update(arguments.entry)/>
@@ -94,7 +94,7 @@
 	</cffunction>
 	
 	<cffunction name="create" returntype="numeric" access="private" output="false">
-		<cfargument name="entry" type="net.lightblog.component.entry.Entry" required="true" />
+		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
 
 		<cfset var qryInsert = 0 />
 		<cfset var qrySelect = 0 />
@@ -123,7 +123,7 @@
 	</cffunction>
 	
 	<cffunction name="update" returntype="void" access="private" output="false">
-		<cfargument name="entry" type="net.lightblog.component.entry.Entry" required="true" />
+		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
 
 		<cfset var qryUpdate = 0 />
 		

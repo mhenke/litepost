@@ -13,7 +13,7 @@
 		<!--- create a new bean factory --->
 		<cfset bf = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init()/>
 		<!--- load the bean defs --->
-		<cfset bf.loadBeansFromXmlFile(path&'/lightblog-services.xml')/>
+		<cfset bf.loadBeansFromXmlFile(path&'/litepost-services.xml')/>
 		
 		<cfset variables.sys.out.println("Loading services") />
 
@@ -50,7 +50,7 @@
 		<cfset assertTrue(IsArray(entries), "getEntriesByCategoryID(1) did not return an array!")/>
 		<cfset variables.sys.out.println("getEntriesByCategoryID(1) returned #ArrayLen(entries)# Entries") />
 		
-		<cfset entry = CreateObject("component", "net.lightblog.component.entry.Entry").init() />
+		<cfset entry = CreateObject("component", "net.litepost.component.entry.Entry").init() />
 		<cfset entry.setTitle("A test entry!") />
 		<cfset entry.setBody("Well look at this, I bet we will have a problem here...") />
 		<cfset title = entry.getTitle() />
@@ -88,7 +88,7 @@
 		<cfset var email = "" />
 		<cfset var url = "" />
 		
-		<cfset entry = CreateObject("component", "net.lightblog.component.entry.Entry").init() />
+		<cfset entry = CreateObject("component", "net.litepost.component.entry.Entry").init() />
 		<cfset entry.setTitle("A test entry for comments!") />
 		<cfset entry.setBody("This better stop being a pain in the ass!...") />
 		<cfset entryID = variables.entryService.saveEntry(entry) />
@@ -99,7 +99,7 @@
 		<cfset variables.sys.out.println("getCommentsByEntryID(#entryID#) returned #ArrayLen(comments)# Comments")/>
 		
 		<!--- make a new comment, save fetch, update, check it, delete it --->
-		<cfset comment = CreateObject("component", "net.lightblog.component.comment.Comment").init() />
+		<cfset comment = CreateObject("component", "net.litepost.component.comment.Comment").init() />
 		<cfset comment.setEntryId(entryID)/>
 		<cfset comment.setComment("Cool entry")/>
 		<cfset comment.setName("Chris")/>

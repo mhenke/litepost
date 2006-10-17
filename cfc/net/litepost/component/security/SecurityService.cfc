@@ -20,14 +20,14 @@
 --->
 
 <cfcomponent displayname="SecurityService"
-			extends="net.lightblog.service.SecurityService" hint="Service for Security">
+			extends="net.litepost.service.SecurityService" hint="Service for Security">
 
-	<cffunction name="init" returntype="net.lightblog.component.security.SecurityService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.security.SecurityService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<cffunction name="setSessionService" access="public" returntype="void" output="false" hint="DEPENDENCY: SessionService">
-		<cfargument name="sessionService" type="net.lightblog.service.SessionService" required="true" />
+		<cfargument name="sessionService" type="net.litepost.service.SessionService" required="true" />
 		<cfset variables.sessionService = arguments.sessionService />
 	</cffunction>
 	

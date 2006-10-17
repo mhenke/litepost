@@ -20,21 +20,21 @@
 --->
 
 <cfcomponent displayname="SessionService" 
-			extends="net.lightblog.service.SessionService" hint="Service for Session Facade">
+			extends="net.litepost.service.SessionService" hint="Service for Session Facade">
 
-	<cffunction name="init" returntype="net.lightblog.component.session.SessionService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.session.SessionService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<!---
 	SESSION USER MANAGEMENT
 	--->
-	<cffunction name="getUser" access="public" returntype="net.lightblog.component.user.User" output="false">
+	<cffunction name="getUser" access="public" returntype="net.litepost.component.user.User" output="false">
 		<cfreturn getParameter('user') />
 	</cffunction>
 	
 	<cffunction name="setUser" access="public" returntype="void" output="false">
-		<cfargument name="user" type="net.lightblog.component.user.User" required="true" />
+		<cfargument name="user" type="net.litepost.component.user.User" required="true" />
 		<cfset setParameter('user', arguments.user) />
 	</cffunction>
 	
@@ -113,7 +113,7 @@
 	--->
 	
 	<cffunction name="initSession" access="private" returntype="void" output="false">
-		<cfset var user = CreateObject("component","net.lightblog.component.user.User").init() />
+		<cfset var user = CreateObject("component","net.litepost.component.user.User").init() />
 		<cflock name="Session.Storage" timeout="5">
 			<cfset session.uid = CreateUUID() />
 			<cfset session.storage = structnew() />

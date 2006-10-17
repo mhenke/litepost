@@ -23,7 +23,7 @@
 	
 	<cfset variables.dsn = "" />
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.bookmark.BookmarkDAO" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.bookmark.BookmarkDAO" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -37,9 +37,9 @@
 	</cffunction>
 	
 	<!--- dao methods --->
-	<cffunction name="fetch" returntype="net.lightblog.component.bookmark.Bookmark" access="public" output="false">
+	<cffunction name="fetch" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false">
 		<cfargument name="bookmarkID" type="numeric" required="true" />
-		<cfset var bookmark = CreateObject('component','net.lightblog.component.bookmark.Bookmark').init() />
+		<cfset var bookmark = CreateObject('component','net.litepost.component.bookmark.Bookmark').init() />
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
@@ -61,7 +61,7 @@
 	</cffunction>
 	
 	<cffunction name="save" returntype="numeric" access="public" output="false">
-		<cfargument name="bookmark" type="net.lightblog.component.bookmark.Bookmark" required="true" />
+		<cfargument name="bookmark" type="net.litepost.component.bookmark.Bookmark" required="true" />
 		
 		<cfif arguments.bookmark.getBookmarkID() GT 0>
 			<cfset update(arguments.bookmark)/>
@@ -86,7 +86,7 @@
 	</cffunction>
 	
 	<cffunction name="create" returntype="numeric" access="private" output="false">
-		<cfargument name="bookmark" type="net.lightblog.component.bookmark.Bookmark" required="true" />
+		<cfargument name="bookmark" type="net.litepost.component.bookmark.Bookmark" required="true" />
 
 		<cfset var qryInsert = 0 />
 		<cfset var qrySelect = 0 />
@@ -112,7 +112,7 @@
 	</cffunction>
 	
 	<cffunction name="update" returntype="void" access="private" output="false">
-		<cfargument name="bookmark" type="net.lightblog.component.bookmark.Bookmark" required="true" />
+		<cfargument name="bookmark" type="net.litepost.component.bookmark.Bookmark" required="true" />
 
 		<cfset var qryUpdate = 0 />
 		

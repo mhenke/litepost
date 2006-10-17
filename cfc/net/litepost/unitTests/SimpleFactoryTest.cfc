@@ -13,7 +13,7 @@
 		<!--- create a new bean factory --->
 		<cfset bf = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init()/>
 		<!--- load the bean defs --->
-		<cfset bf.loadBeansFromXmlFile(path&'/lightblog-services.xml')/>
+		<cfset bf.loadBeansFromXmlFile(path&'/litepost-services.xml')/>
 		
 		<cfset variables.sys.out.println("Loading all services") />
 		<!--- make sure we can load the services --->

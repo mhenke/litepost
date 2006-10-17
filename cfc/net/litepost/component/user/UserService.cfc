@@ -20,31 +20,31 @@
 --->
  
 <cfcomponent displayname="UserService" 
-			extends="net.lightblog.service.UserService" 
+			extends="net.litepost.service.UserService" 
 			hint="Service for Users">
 
-	<cffunction name="init" returntype="net.lightblog.component.user.UserService" access="public" output="false">
+	<cffunction name="init" returntype="net.litepost.component.user.UserService" access="public" output="false">
 		<cfreturn this/>
 	</cffunction>
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setUserDAO" returntype="void" access="public" output="false" hint="Dependency: UserDAO">
-		<cfargument name="userDAO" type="net.lightblog.component.user.UserDAO" required="true"/>
+		<cfargument name="userDAO" type="net.litepost.component.user.UserDAO" required="true"/>
 		<cfset variables.userDAO  = arguments.userDAO />
 	</cffunction>
 	
 	<cffunction name="setUserGateway" returntype="void" access="public" output="false" hint="Dependency: UserGateway">
-		<cfargument name="userGateway" type="net.lightblog.component.user.UserGateway" required="true"/>
+		<cfargument name="userGateway" type="net.litepost.component.user.UserGateway" required="true"/>
 		<cfset variables.userGateway  = arguments.userGateway />
 	</cffunction>
 	
 	<cffunction name="setSessionService" returntype="void" access="public" output="false" hint="Dependency: SessionService">
-		<cfargument name="sessionService" type="net.lightblog.service.SessionService" required="true"/>
+		<cfargument name="sessionService" type="net.litepost.service.SessionService" required="true"/>
 		<cfset variables.sessionService  = arguments.sessionService />
 	</cffunction>
 	
 	<!--- service methods --->
-	<cffunction name="authenticate" access="public" returntype="net.lightblog.component.user.User" output="false">
+	<cffunction name="authenticate" access="public" returntype="net.litepost.component.user.User" output="false">
 		<cfargument name="userName" type="string" required="true"/>
 		<cfargument name="password" type="string" required="true"/>		
 		<cfset var user = 0 />
@@ -65,13 +65,13 @@
 		<cfreturn user/>
 	</cffunction>
 	
-	<cffunction name="getUserByID" returntype="net.lightblog.component.user.User" access="public "output="false">
+	<cffunction name="getUserByID" returntype="net.litepost.component.user.User" access="public "output="false">
 		<cfargument name="userID" type="numeric" required="true" />
 		<cfreturn variables.userDAO.fetch(arguments.userID) />
 	</cffunction>
 	
 	<cffunction name="saveUser" returntype="void" access="public" output="false">
-		<cfargument name="user" type="net.lightblog.component.user.User" required="true" />
+		<cfargument name="user" type="net.litepost.component.user.User" required="true" />
 		<cfset variables.userDAO.save(arguments.user) />
 	</cffunction>
 	

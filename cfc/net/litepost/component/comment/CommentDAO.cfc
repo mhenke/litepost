@@ -23,7 +23,7 @@
 	
 	<cfset variables.dsn = "" />
 	
-	<cffunction name="init" access="public" returntype="net.lightblog.component.comment.CommentDAO" output="false">
+	<cffunction name="init" access="public" returntype="net.litepost.component.comment.CommentDAO" output="false">
 		<cfreturn this />
 	</cffunction>
 	
@@ -37,9 +37,9 @@
 	</cffunction>
 	
 	<!--- dao methods --->
-	<cffunction name="fetch" returntype="net.lightblog.component.comment.Comment" access="public" output="false">
+	<cffunction name="fetch" returntype="net.litepost.component.comment.Comment" access="public" output="false">
 		<cfargument name="commentID" type="numeric" required="true" />
-		<cfset var comment = CreateObject('component','net.lightblog.component.comment.Comment').init() />
+		<cfset var comment = CreateObject('component','net.litepost.component.comment.Comment').init() />
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
@@ -65,7 +65,7 @@
 	</cffunction>
 	
 	<cffunction name="save" returntype="numeric" access="public" output="false">
-		<cfargument name="comment" type="net.lightblog.component.comment.Comment" required="true" />
+		<cfargument name="comment" type="net.litepost.component.comment.Comment" required="true" />
 		
 		<cfif arguments.comment.getCommentID() GT 0>
 			<cfset update(arguments.comment)/>
@@ -89,7 +89,7 @@
 	</cffunction>
 	
 	<cffunction name="create" returntype="numeric" access="private" output="false">
-		<cfargument name="comment" type="net.lightblog.component.comment.Comment" required="true" />
+		<cfargument name="comment" type="net.litepost.component.comment.Comment" required="true" />
 
 		<cfset var qryInsert = 0 />
 		<cfset var qrySelect = 0 />
@@ -123,7 +123,7 @@
 	</cffunction>
 	
 	<cffunction name="update" returntype="void" access="private" output="false">
-		<cfargument name="comment" type="net.lightblog.component.comment.Comment" required="true" />
+		<cfargument name="comment" type="net.litepost.component.comment.Comment" required="true" />
 
 		<cfset var qryUpdate = 0 />
 		
