@@ -36,18 +36,114 @@
 	</cffunction>
 	
 	<!--- listener methods --->
+	<cffunction name="getEntry" returntype="net.litepost.component.entry.Entry" access="public" output="false" 
+			hint="Returns an entry bean based on the entry ID in the event object">
+		<cfargument name="event" type="MachII.framework.Event">
+		
+		<cfset var includeComments = true />
+		
+		<cfif arguments.event.isArgDefined("includeComments")>
+			<cfset includeComments = arguments.event.getArg("includeComments") />
+		</cfif>
+		
+		<cfreturn variables.entryService.getEntryByID(arguments.event.getArg("entryID"), includeComments) />
+	</cffunction>
+	
+	<cffunction name="getEntries" returntype="array" access="public" output="false" 
+			hint="Returns an array of entry objects and comment objects">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var numToReturn = -1 />
+		<cfset var activeOnly = true />
+		
+		<cfif arguments.event.isArgDefined("numToReturn")>
+			<cfset numToReturn = arguments.event.getArg("numToReturn") />
+		</cfif>
+		
+		<cfif arguments.event.isArgDefined("activeOnly")>
+			<cfset activeOnly = arguments.event.getArg("activeOnly") />
+		</cfif>
+		
+		<cfreturn variables.entryService.getEntries(arguments.numToReturn, arguments.activeOnly) />
+	</cffunction>
+	
+	<cffunction name="getEntriesAsQuery" returntype="query" access="public" output="false" 
+			hint="Returns a query object of entry objects (does not include comments)">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var numToReturn = -1 />
+		<cfset var activeOnly = true />
+		
+		<cfif arguments.event.isArgDefined("numToReturn")>
+			<cfset numToReturn = arguments.event.getArg("numToReturn") />
+		</cfif>
+		
+		<cfif arguments.event.isArgDefined("activeOnly")>
+			<cfset activeOnly = arguments.event.getArg("activeOnly") />
+		</cfif>
+		
+		<cfreturn variables.entryService.getEntriesAsQuery(arguments.numToReturn, arguments.activeOnly) />
+	</cffunction>
+	
 	<cffunction name="getEntriesForHomePage" returntype="array" access="public" output="false" 
 			hint="Gets the entries for the home page using the numEntriesOnHomePage property in mach-ii.xml">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfreturn variables.entryService.getEntries(getProperty("numEntriesOnHomePage")) />
+		<cfreturn variables.entryService.getEntries(getProperty("numEntriesOnHomePage"), true) />
 	</cffunction>
 	
 	<cffunction name="getEntriesByCategoryID" returntype="array" access="public" output="false" 
 			hint="Gets the entries for a particular category">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfreturn variables.entryService.getEntriesByCategoryID(arguments.event.getArg("categoryID")) />
+		<cfset var numToReturn = -1 />
+		<cfset var activeOnly = true />
+		
+		<cfif arguments.event.isArgDefined("numToReturn")>
+			<cfset numToReturn = arguments.event.getArg("numToReturn") />
+		</cfif>
+		
+		<cfif arguments.event.isArgDefined("activeOnly")>
+			<cfset activeOnly = arguments.event.getArg("activeOnly") />
+		</cfif>
+		
+		<cfreturn variables.entryService.getEntriesByCategoryID(arguments.event.getArg("categoryID"), 
+																numToReturn, activeOnly) />
 	</cffunction>
 	
+	<cffunction name="processEntryForm" returntype="void" access="public" output="false" 
+			hint="Processes the entry form and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showEntryForm" />
+		
+		<!--- if there's an exitEvent included in the event object, use it --->
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<!--- save the data --->
+		<cfset variables.entryService.saveEntry(arguments.event.getArg("entry")) />
+		
+		<!--- announce the next event --->
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
+	
+	<cffunction name="deleteEntry" returntype="void" access="public" output="false" 
+			hint="Deletes an entry and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent="showEntries" />
+
+		<!--- if there's an exitEvent included in the event object, use it --->
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<!--- delete the entry --->
+		<cfset removeEvent(arguments.event.getArg("entryID")) />
+		
+		<!--- announce the next event --->
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
 </cfcomponent>
