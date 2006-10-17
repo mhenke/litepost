@@ -22,7 +22,7 @@
 	displayname="CheckLoginFilter"
 	extends="MachII.framework.EventFilter"
 	output="false" 
-	hint="CheckLogin filter for Lightblog">
+	hint="CheckLogin filter for Litepost">
 
 	<!---
 	INITIALIZATION / CONFIGURATION
