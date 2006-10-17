@@ -23,7 +23,7 @@
 	displayname="EntryListener" 
 	output="false" 
 	extends="MachII.framework.Listener" 
-	hint="The Entry listener for Lightblog">
+	hint="The Entry listener for Litepost">
 
 	<cffunction name="configure" returntype="void" access="public" output="false" hint="Configures this listener; called automatically by Mach-II">
 		<!--- don't need to do anything here --->

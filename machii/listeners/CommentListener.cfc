@@ -23,7 +23,7 @@
 	displayname="CommentListener" 
 	output="false" 
 	extends="MachII.framework.Listener" 
-	hint="The Comment listener for Lightblog">
+	hint="The Comment listener for Litepost">
 
 	<cffunction name="configure" returntype="void" access="public" output="false" hint="Configures this listener; called automatically by Mach-II">
 		<!--- don't need to do anything here --->

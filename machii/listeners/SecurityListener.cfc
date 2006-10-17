@@ -23,7 +23,7 @@
 	displayname="SecurityListener" 
 	output="false" 
 	extends="MachII.framework.Listener" 
-	hint="Security Listener for Lightblog">
+	hint="Security Listener for Litepost">
 	
 	
 	<cffunction name="configure" returntype="void" access="public" output="false" hint="Configures this listener; called automatically by Mach-II">

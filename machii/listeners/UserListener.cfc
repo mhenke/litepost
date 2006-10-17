@@ -23,7 +23,7 @@
 	displayname="UserListener" 
 	output="false" 
 	extends="MachII.framework.Listener" 
-	hint="User Listener for Lightblog">
+	hint="User Listener for Litepost">
 	
 	
 	<cffunction name="configure" returntype="void" access="public" output="false" hint="Configures this listener; called automatically by Mach-II">
@@ -35,5 +35,11 @@
 		<cfargument name="userService" type="net.litepost.component.user.UserService" required="true" />
 		<cfset variables.userService = arguments.userService />
 	</cffunction>
+	
+	<cffunction name="setSecurityService" returntype="void" access="public" output="false" hint="Dependency: SecurityService">
+		<cfargument name="securityService" type="net.litepost.component.security.SecurityService" required="true" />
+		<cfset variables.securityService = arguments.securityService />
+	</cffunction>
+	
 	
 </cfcomponent>
