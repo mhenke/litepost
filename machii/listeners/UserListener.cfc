@@ -36,10 +36,25 @@
 		<cfset variables.userService = arguments.userService />
 	</cffunction>
 	
-	<cffunction name="setSecurityService" returntype="void" access="public" output="false" hint="Dependency: SecurityService">
-		<cfargument name="securityService" type="net.litepost.component.security.SecurityService" required="true" />
-		<cfset variables.securityService = arguments.securityService />
+	<!--- listener methods --->
+	<cffunction name="getUser" returntype="net.litepost.component.user.User" access="public" output="false" 
+			hint="Returns a user bean based on the userID in the event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		<cfreturn variables.userService.getUserByID(arguments.event.getArg("userID")) />
 	</cffunction>
 	
-	
+	<cffunction name="processUserForm" returntype="void" access="public" output="false" 
+			hint="Processes the user form and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var exitEvent = "showUserForm" />
+		
+		<cfif arguments.event.isArgDefined("exitEvent")>
+			<cfset exitEvent = arguments.event.getArg("exitEvent") />
+		</cfif>
+		
+		<cfset variables.userService.saveUser(arguments.event.getArg("user")) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
 </cfcomponent>
