@@ -141,7 +141,7 @@
 		</cfif>
 		
 		<!--- delete the entry --->
-		<cfset removeEvent(arguments.event.getArg("entryID")) />
+		<cfset variables.entryService.removeEvent(arguments.event.getArg("entryID")) />
 		
 		<!--- announce the next event --->
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
