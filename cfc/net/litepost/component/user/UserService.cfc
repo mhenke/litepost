@@ -65,7 +65,7 @@
 		<cfreturn user/>
 	</cffunction>
 	
-	<cffunction name="getUserByID" returntype="net.litepost.component.user.User" access="public "output="false">
+	<cffunction name="getUserByID" returntype="net.litepost.component.user.User" access="public" output="false">
 		<cfargument name="userID" type="numeric" required="true" />
 		<cfreturn variables.userDAO.fetch(arguments.userID) />
 	</cffunction>
