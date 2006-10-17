@@ -41,10 +41,7 @@
 		<cfset var bookmarks = arrayNew(1) />
 		<cfset var bookmark = 0 />
 		
-		<cfquery name="qrySelect" datasource="#variables.dsn#">
-			SELECT bookmarkID, name, url 
-			FROM bookmarks
-		</cfquery>
+		<cfset qrySelect = getBookmarksAsQuery() />
 		
 		<cfloop query="qrySelect">
 			<cfset bookmark = createObject("component", "net.litepost.component.bookmark.Bookmark").init(qrySelect.bookmarkID, 
@@ -56,4 +53,14 @@
 		<cfreturn bookmarks />
 	</cffunction>
 	
+	<cffunction name="getBookmarksAsQuery" returntype="query" access="public" output="false">
+		<cfset var qrySelect = 0 />
+
+		<cfquery name="qrySelect" datasource="#variables.dsn#">
+			SELECT bookmarkID, name, url 
+			FROM bookmarks
+		</cfquery>
+		
+		<cfreturn qrySelect />
+	</cffunction>
 </cfcomponent>
