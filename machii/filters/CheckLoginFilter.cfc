@@ -47,7 +47,7 @@
 			<cfset proceed = true />
 		<cfelse>
 			<cfset arguments.eventContext.clearEventQueue() />
-			<cfset arguments.event.setArg("message", "Either you are not logged in or your session has expired. Please log in." />
+			<cfset arguments.event.setArg("message", "Either you are not logged in or your session has expired. Please log in.") />
 			<cfset arguments.eventContext.announceEvent("showLogin", arguments.event.getArgs()) />
 		</cfif>
 		
