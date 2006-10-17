@@ -6,7 +6,7 @@
 <cfset entryService = bf.getBean("entryService") />
 <cfset commentService = bf.getBean("commentService") />
 
-<cfset entry = CreateObject("component", "net.lightblog.component.entry.Entry").init() />
+<cfset entry = CreateObject("component", "net.litepost.component.entry.Entry").init() />
 <cfset entry.setTitle("A test entry!") />
 <cfset entry.setBody("Well look at this, I bet we will have a problem here...") />
 
@@ -22,7 +22,7 @@
 </cfoutput>
 
 
-<cfset comment = CreateObject("component", "net.lightblog.component.comment.Comment").init() />
+<cfset comment = CreateObject("component", "net.litepost.component.comment.Comment").init() />
 <cfset comment.setEntryId(entryID)/>
 <cfset comment.setComment("Cool entry")/>
 <cfset comment.setName("Chris")/>

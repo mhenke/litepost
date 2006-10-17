@@ -23,7 +23,7 @@
 			 extends="ModelGlue.Core.Controller" 
 			 output="false">
 			 
-	<cffunction name="Init" access="Public" returnType="lightblog.mg.controller.BlogController" output="false" 
+	<cffunction name="Init" access="Public" returnType="litepost.mg.controller.BlogController" output="false" 
 				hint="I build a new BlogController">
 		<cfargument name="ModelGlue" required="true" type="ModelGlue.ModelGlue" />
 		<cfargument name="InstanceName" required="true" type="string" />
@@ -33,22 +33,22 @@
 	
 	<!--- setters for dependencies --->
 	<cffunction name="setBookmarkService" returntype="void" access="public" output="false" hint="Dependency: BookmarkService">
-		<cfargument name="bookmarkService" type="net.lightblog.service.BookmarkService" required="true" />
+		<cfargument name="bookmarkService" type="net.litepost.service.BookmarkService" required="true" />
 		<cfset variables.bookmarkService = arguments.bookmarkService />
 	</cffunction>
 
 	<cffunction name="setCategoryService" returntype="void" access="public" output="false" hint="Dependency: CategoryService">
-		<cfargument name="categoryService" type="net.lightblog.service.CategoryService" required="true" />
+		<cfargument name="categoryService" type="net.litepost.service.CategoryService" required="true" />
 		<cfset variables.categoryService = arguments.categoryService />
 	</cffunction>
 	
 	<cffunction name="setEntryService" returntype="void" access="public" output="false" hint="Dependency: EntryService">
-		<cfargument name="entryService" type="net.lightblog.service.EntryService" required="true" />
+		<cfargument name="entryService" type="net.litepost.service.EntryService" required="true" />
 		<cfset variables.entryService = arguments.entryService />
 	</cffunction>
 	
 	<cffunction name="setCommentService" returntype="void" access="public" output="false" hint="Dependency: CommentService">
-		<cfargument name="commentService" type="net.lightblog.service.CommentService" required="true" />
+		<cfargument name="commentService" type="net.litepost.service.CommentService" required="true" />
 		<cfset variables.commentService = arguments.commentService />
 	</cffunction>
 	
@@ -87,6 +87,35 @@
 			<cfset arguments.event.forward("home") />
 		<cfelse>
 			<cfset arguments.event.SetValue("entry", entry) />
+		</cfif>
+		
+	</cffunction>
+	
+	<cffunction name="getEntryBean" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var entry = arguments.event.makeEventBean("net.litepost.component.entry.Entry") />
+		<cfset arguments.event.SetValue("entry", entry) />
+		
+	</cffunction>
+	
+	<cffunction name="getCommentBean" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var commentBean = arguments.event.makeEventBean("net.litepost.component.comment.Comment") />
+		<cfset arguments.event.SetValue("commentBean", commentBean) />
+		
+	</cffunction>
+	
+	<cffunction name="saveComment" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var commentBean = arguments.event.makeEventBean("net.litepost.component.comment.Comment") />
+		<!--- validate the bean, add result based on validation--->
+		<cfif false>
+		<cfelse>
+			<cfset arguments.event.SetValue("message", "Please complete comments form!") />
+			<cfset arguments.event.addResult("goComments") />
 		</cfif>
 		
 	</cffunction>

@@ -23,7 +23,7 @@
 			 extends="ModelGlue.Core.Controller" 
 			 output="false">
 			 
-	<cffunction name="Init" access="Public" returnType="lightblog.mg.controller.SecurityController" output="false" 
+	<cffunction name="Init" access="Public" returnType="litepost.mg.controller.SecurityController" output="false" 
 				hint="I build a new SecurityC">
 		<cfargument name="ModelGlue" required="true" type="ModelGlue.ModelGlue" />
 		<cfargument name="InstanceName" required="true" type="string" />
@@ -32,7 +32,7 @@
 	</cffunction>
 	
 	<cffunction name="setSecurityService" returntype="void" access="public" output="false" hint="Dependency: SecurityService">
-		<cfargument name="securityService" type="net.lightblog.service.SecurityService" required="true" />
+		<cfargument name="securityService" type="net.litepost.service.SecurityService" required="true" />
 		<cfset variables.securityService = arguments.securityService />
 	</cffunction>
 	

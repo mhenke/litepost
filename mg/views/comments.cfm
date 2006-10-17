@@ -1,12 +1,13 @@
 <cfsilent>
 	<cfset entry = viewState.getValue("entry") />
+	<cfset commentBean = viewState.getValue("commentBean") />
 	<cfset message = viewState.getValue("message") />
 	<cfset isAdmin = viewState.getValue("isAdmin") />
+	<cfset myself = viewState.getValue("myself") />
 	<cfset fullDateString = "dddd, mmmm dd, yyyy" />
 	<cfset shortDateString = "mmm dd, yyyy" />
 	<cfset timeString = "h:mm tt" />
 	
-	<cfset commentBean = CreateObject('component','net.lightblog.component.comment.Comment').init() />
 </cfsilent>
 
 <!--- entry with comments page --->
@@ -47,7 +48,7 @@
 	</cfloop>
 	
 	<!--- add comments form --->
-	<form action="addComment" method="post">
+	<form action="#myself#saveComment" method="post">
 	<input type="hidden" name="entryID" value="#entry.getEntryID()#" />
 	 
 	<h3>Post a comment</h3>

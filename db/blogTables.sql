@@ -1,5 +1,5 @@
 /*
- * Light Blog Tables descriptions
+ * LightPost Tables descriptions
  * Created October 11, 2006
  * by Chris Scott, chris.scott.one@gmail.com
  */

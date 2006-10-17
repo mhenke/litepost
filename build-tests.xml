@@ -8,12 +8,12 @@
     <taskdef name="cfcUnit" classname="org.cfcunit.ant.CFCUnitTask" classpath="${basedir}/ant-cfcunit/ant-cfcunit.jar"/>
     
     <target name="moveCFML" description="Moves cfcs, skipping .svn directories">
-        <copy todir="${basedir}\cfc\net\lightblog\unitTests">
+        <copy todir="${basedir}\cfc\net\litepost\unitTests">
             <fileset dir="${basedir}\config"> 
               <exclude name="**/.svn"/>
             </fileset>
          </copy>
-        <copy todir="${webroot}\lightblog">
+        <copy todir="${webroot}\litepost">
             <fileset dir="${basedir}"> 
               <exclude name="**/tools"/>
               <exclude name="**/build-tests.xml"/>
@@ -25,7 +25,7 @@
     </target>
 
     <target name="EntriesTest" depends="moveCFML"> 
-        <cfcUnit hostname="${hostname}" testcase="net.lightblog.unitTests.EntryCommentsTests"
+        <cfcUnit hostname="${hostname}" testcase="net.litepost.unitTests.EntryCommentsTests"
                  verbose="true"
                  haltonfailure="true"
                  haltonerror="true" 
@@ -33,7 +33,7 @@
     </target>
 
     <target name="VerboseTest" depends="moveCFML"> 
-        <cfcUnit hostname="${hostname}" testcase="net.lightblog.unitTests.AllTests"
+        <cfcUnit hostname="${hostname}" testcase="net.litepost.unitTests.AllTests"
                  verbose="true"
                  haltonfailure="true"
                  haltonerror="true" 
@@ -41,7 +41,7 @@
     </target>
 
     <target name="SimpleTest" depends="moveCFML">
-        <cfcUnit hostname="${hostname}" testcase="net.lightblog.unitTests.AllTests" verbose="false"/>
+        <cfcUnit hostname="${hostname}" testcase="net.litepost.unitTests.AllTests" verbose="false"/>
     </target>
 
 </project>

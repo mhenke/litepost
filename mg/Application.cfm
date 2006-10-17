@@ -1,5 +1,5 @@
 <cfsilent>
-	<cfapplication name="lightblog-mg" sessionmanagement="yes" />
+	<cfapplication name="lightpost-mg" sessionmanagement="yes" />
 	<!--- set up log4j
 	<cfscript>
 		if (NOT IsDefined("application.initLoggerX")) {

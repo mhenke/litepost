@@ -19,7 +19,7 @@
   If your path to ModelGlue.xml is custom, change it here.  Otherwise,
   it will default to Config/ModelGlue.xml
 --->
-	<cfset ModelGlue_CONFIG_PATH = expandPath("../") & "config/lightblog-mg-conf.xml" />
+	<cfset ModelGlue_CONFIG_PATH = expandPath("../") & "config/litepost-mg-conf.xml" />
 
 
 

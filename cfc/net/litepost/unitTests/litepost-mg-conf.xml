@@ -49,7 +49,9 @@
 			<message-listener message="getBookmarks" function="getBookmarks" />
 			<message-listener message="getCategories" function="getCategories" />
 			<message-listener message="getEntries" function="getEntries" />
-			<message-listener message="getEntryComments" function="getEntryWithComments" />
+			<message-listener message="getCommentsForEntry" function="getEntryWithComments" />
+			<message-listener message="getCommentBean" function="getCommentBean" />
+			<message-listener message="saveComment" function="saveComment" />
 		</controller>
 	</controllers>
 
@@ -106,7 +108,8 @@
 			<broadcasts>
 				<message name="getBookmarks" />
 				<message name="getCategories" />
-				<message name="getEntryComments"/>
+				<message name="getCommentsForEntry"/>
+				<message name="getCommentBean"/>
 			</broadcasts>
 			
 			<views>
@@ -117,6 +120,16 @@
 			
 			<results>
 				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="saveComment">
+			<broadcasts>
+				<message name="saveComment"/>
+			</broadcasts>
+			<results>
+				<result name="goComments" do="comments"/>
+				<result name="goHome" do="home" relocate="true"/>
 			</results>
 		</event-handler>
 		

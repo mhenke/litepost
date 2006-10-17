@@ -7,7 +7,7 @@
 
 <cfset bookmarks = bookmarkService.getBookmarks() />
 
-<cfset bookmark = CreateObject("component", "net.lightblog.component.bookmark.Bookmark").init() />
+<cfset bookmark = CreateObject("component", "net.litepost.component.bookmark.Bookmark").init() />
 <cfset bookmark.setName("test bookmark 2")/>
 <cfset bookmark.setUrl("www.testTwo.com")/>
 <cfset bookmarkID = bookmarkService.saveBookmark(bookmark) />
@@ -26,7 +26,7 @@
 
 <cfset categoryService = bf.getBean("categoryService") />
 
-<cfset category = CreateObject("component", "net.lightblog.component.category.Category").init() />
+<cfset category = CreateObject("component", "net.litepost.component.category.Category").init() />
 <cfset category.setCategory("test category")/>
 <cfset categoryID = variables.categoryService.saveCategory(category) />
 <cfset category = variables.categoryService.getCategoryByID(categoryID) />
