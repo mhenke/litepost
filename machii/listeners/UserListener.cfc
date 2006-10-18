@@ -56,4 +56,31 @@
 		
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
 	</cffunction>
+	
+	<cffunction name="authenticate" returntype="void" access="public" output="false" 
+			hint="Checks the login attempt and announces the next event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset var user = createObject("component", "net.litepost.component.user.User").init() />
+		<cfset var message = "You were successfully logged in." />
+		<cfset var exitEvent = "success" />
+		
+		<!--- <cftry> --->
+			<cfset user = variables.userService.authenticate(arguments.event.getArg("userName"), 
+																	arguments.event.getArg("password")) />
+			<!--- <cfcatch type="User.NotFound">
+				<cfset message = "Your account was not found. Please try again." />
+				<cfset exitEvent = "failure" />
+			</cfcatch>
+			
+			<cfcatch type="any">
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+				<cfset exitEvent = "failure" />
+			</cfcatch>
+		</cftry> --->
+		
+		<cfset arguments.event.setArg("message", message) />
+		
+		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+	</cffunction>
 </cfcomponent>
