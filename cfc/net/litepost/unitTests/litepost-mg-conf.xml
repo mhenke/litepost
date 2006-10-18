@@ -33,7 +33,7 @@
 		<setting name="defaultExceptionHandler" value="exceptionEvent" />
 
 		<setting name="reload" value="false" />
-		<setting name="debug" value="true" />
+		<setting name="debug" value="false" />
 
 	</config>
 
@@ -41,7 +41,8 @@
 	<controllers>
 		<controller name="security" type="litepost.mg.controller.SecurityController">
 			<message-listener message="OnRequestStart" function="checkAuthentication" />
-			<message-listener message="authenticateUser" function="authenticate" />
+			<message-listener message="authenticateUser" function="authenticateUser" />
+			<message-listener message="logoutUser" function="logoutUser" />
 		</controller>
 		<controller name="blog" type="litepost.mg.controller.BlogController">
 			<!-- <message-listener message="OnRequestStart" function="getBookmarks" />
@@ -49,6 +50,9 @@
 			<message-listener message="getBookmarks" function="getBookmarks" />
 			<message-listener message="getCategories" function="getCategories" />
 			<message-listener message="getEntries" function="getEntries" />
+			<message-listener message="getEntryBean" function="getEntryBean" />
+			<message-listener message="getEntry" function="getEntry" />
+			<message-listener message="saveEntry" function="saveEntry" />
 			<message-listener message="getCommentsForEntry" function="getEntryWithComments" />
 			<message-listener message="getCommentBean" function="getCommentBean" />
 			<message-listener message="saveComment" function="saveComment" />
@@ -60,7 +64,6 @@
 	
 		<!-- login, for now default event -->
 		<event-handler name="loginForm">
-			
 			<views>
 				<include name="content" template="loginForm.cfm">
 					<value name="submitEvent" value="login" overwrite="true" />
@@ -72,17 +75,23 @@
 			</results>
 		</event-handler>
 		
-		<!-- login
-		<event-handler event="login" access="public">
-			<event-mapping event="Home" mapping="clients" />
-			<notify listener="users" method="attemptLogin" />
-		</event-handler> -->
+		<!-- login -->
+		<event-handler name="login">
+			<broadcasts>
+				<message name="authenticateUser" />
+			</broadcasts>
+			
+			<results>
+				<result do="loginForm"/>
+			</results>
+		</event-handler>
 		
-		<!-- logout
-		<event-handler event="logout" access="public">
-			<notify listener="users" method="removeSession" />
-			<announce event="loginForm" copyEventArgs="false" />
-		</event-handler> -->
+		<!-- logout -->
+		<event-handler name="logout">
+			<broadcasts>
+				<message name="logoutUser" />
+			</broadcasts>
+		</event-handler>
 		
 		<!-- home (main blog page) -->
 		<event-handler name="home">
@@ -94,6 +103,54 @@
 			
 			<views>
 				<include name="content" template="entries.cfm" />
+				<include name="contentRight" template="bookmarks.cfm" />
+				<include name="contentRight" template="categories.cfm" append="true" />
+			</views>
+			
+			<results>
+				<result do="layoutPage" />
+			</results>
+		</event-handler>
+		
+		<!-- add / edit entries -->
+		<event-handler name="addEntry">
+			<broadcasts>
+				<message name="getEntryBean" />
+			</broadcasts>
+			
+			<results>
+				<result do="entryForm" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="editEntry">
+			<broadcasts>
+				<message name="getEntry" />
+			</broadcasts>
+			
+			<results>
+				<result do="entryForm" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="saveEntry">
+			<broadcasts>
+				<message name="saveEntry"/>
+			</broadcasts>
+			<results>
+				<result name="goEntryForm" do="entryForm"/>
+				<result name="goHome" do="home" relocate="true"/>
+			</results>
+		</event-handler>
+		
+		<event-handler name="entryForm">
+			<broadcasts>
+				<message name="getBookmarks" />
+				<message name="getCategories" />
+			</broadcasts>
+			
+			<views>
+				<include name="content" template="entryForm.cfm" />
 				<include name="contentRight" template="bookmarks.cfm" />
 				<include name="contentRight" template="categories.cfm" append="true" />
 			</views>

@@ -36,12 +36,41 @@
 		<cfset variables.securityService = arguments.securityService />
 	</cffunction>
 	
+	<cffunction name="setUserService" returntype="void" access="public" output="false" hint="Dependency: UserService">
+		<cfargument name="userService" type="net.litepost.service.UserService" required="true" />
+		<cfset variables.userService = arguments.userService />
+	</cffunction>
+	
 	<cffunction name="checkAuthentication" access="public" returntype="void" output="false">
 		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
 		
 		<cfset var isAdmin = variables.securityService.isAuthenticated() />
 		<cfset arguments.event.SetValue("isAdmin", isAdmin) />
 
+	</cffunction>
+	
+	<cffunction name="authenticateUser" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var username = arguments.event.getValue("username","") />
+		<cfset var password = arguments.event.getValue("password","") />
+		<cfset var user = variables.userService.authenticate(username, password)>
+		
+		<cfif user.isNull()>
+			<cfset arguments.event.SetValue("message", "User not found!") />
+		<cfelse>
+			<cfset arguments.event.forward("home") />
+		</cfif>
+
+	</cffunction>
+	
+	
+	<cffunction name="logoutUser" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset variables.securityService.removeUserSession() />
+		<cfset arguments.event.forward("home") />
+		
 	</cffunction>
 		
 </cfcomponent>

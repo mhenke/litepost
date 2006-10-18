@@ -57,4 +57,8 @@
 		
 	</cffunction>
 	
+	<cffunction name="removeUserSession" access="public" returntype="void" output="false">
+		<cfset variables.sessionService.resetSession() />
+	</cffunction>
+	
 </cfcomponent>

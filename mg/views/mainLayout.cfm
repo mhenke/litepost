@@ -4,6 +4,8 @@
 <cfsilent>
 	<cfset content = ViewCollection.GetView("content") />
 	<cfset contentRight = ViewCollection.GetView("contentRight") />
+	<cfset isAdmin = viewState.getValue("isAdmin") />
+	<cfset myself = viewState.getValue("myself") />
 </cfsilent>
 <cfcontent reset="true" />
 
@@ -41,6 +43,15 @@
 		<cfif len("contentRight")>
 			#contentRight#
 		</cfif>
+		
+		<br/>
+		<div class="links">
+		<cfif isAdmin>
+			<a href="#myself#logout">logout</a>
+		<cfelse>
+			<a href="#myself#loginForm">login</a>
+		</cfif>
+		</div>
 	</div>
 	
 	</cfoutput>

@@ -52,7 +52,7 @@
 		
 		<cfif userId LT 1>
 			<cfset variables.sessionService.resetSession() />
-			<cfthrow type="User.NotFound" message="No matching user was found in database"/>
+			<cfreturn CreateObject('component','net.litepost.component.user.User') />
 		</cfif>
 		
 		<!--- fetch the full user --->

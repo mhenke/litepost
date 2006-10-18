@@ -61,7 +61,10 @@ Date Format: MM/DD/YYYY
 		<cfargument name="userName" type="string" required="false" default="" />
 		<cfargument name="password" type="string" required="false" default="" />
 		<cfargument name="role" type="string" required="false" default="" />
-
+		
+		<!--- init parent --->
+		<cfset super.init() />
+		
 		<!--- run setters --->
 		<cfset setUserID(arguments.userID) />
 		<cfset setFirstName(arguments.firstName) />

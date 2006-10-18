@@ -32,8 +32,8 @@
 		<setting name="defaultEvent" value="home" />
 		<setting name="defaultExceptionHandler" value="exceptionEvent" />
 
-		<setting name="reload" value="true" />
-		<setting name="debug" value="true" />
+		<setting name="reload" value="false" />
+		<setting name="debug" value="false" />
 
 	</config>
 
@@ -41,7 +41,8 @@
 	<controllers>
 		<controller name="security" type="litepost.mg.controller.SecurityController">
 			<message-listener message="OnRequestStart" function="checkAuthentication" />
-			<message-listener message="authenticateUser" function="authenticate" />
+			<message-listener message="authenticateUser" function="authenticateUser" />
+			<message-listener message="logoutUser" function="logoutUser" />
 		</controller>
 		<controller name="blog" type="litepost.mg.controller.BlogController">
 			<!-- <message-listener message="OnRequestStart" function="getBookmarks" />
@@ -63,7 +64,6 @@
 	
 		<!-- login, for now default event -->
 		<event-handler name="loginForm">
-			
 			<views>
 				<include name="content" template="loginForm.cfm">
 					<value name="submitEvent" value="login" overwrite="true" />
@@ -75,17 +75,23 @@
 			</results>
 		</event-handler>
 		
-		<!-- login
-		<event-handler event="login" access="public">
-			<event-mapping event="Home" mapping="clients" />
-			<notify listener="users" method="attemptLogin" />
-		</event-handler> -->
+		<!-- login -->
+		<event-handler name="login">
+			<broadcasts>
+				<message name="authenticateUser" />
+			</broadcasts>
+			
+			<results>
+				<result do="loginForm"/>
+			</results>
+		</event-handler>
 		
-		<!-- logout
-		<event-handler event="logout" access="public">
-			<notify listener="users" method="removeSession" />
-			<announce event="loginForm" copyEventArgs="false" />
-		</event-handler> -->
+		<!-- logout -->
+		<event-handler name="logout">
+			<broadcasts>
+				<message name="logoutUser" />
+			</broadcasts>
+		</event-handler>
 		
 		<!-- home (main blog page) -->
 		<event-handler name="home">
