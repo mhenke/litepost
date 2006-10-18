@@ -42,7 +42,7 @@
 		<cfargument name="password" type="string" required="true" />		
 		<cfset var userQry = 0 />
 		
-		<cfquery name="userQry" maxrows="1" datasource="#variables.m_dsn#">
+		<cfquery name="userQry" maxrows="1" datasource="#variables.dsn#">
 		SELECT userId
 		FROM users
 		WHERE username = <cfqueryparam cfsqltype="cf_sql_varchar" maxlength="15" value="#arguments.userName#" />
