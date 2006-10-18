@@ -45,6 +45,7 @@
 				<parameter name="resolveMachiiDependencies" value="true"/>
 			</parameters>
 		</plugin>
+		<plugin name="checkAuthentication" type="litepost.machii.plugins.CheckAuthentication" />
 	</plugins>
 	
 	<!-- EVENT-FILTERS -->
@@ -67,9 +68,8 @@
 		<!-- main home page event -->
 		<event-handler event="showHome" access="public">
 			<notify listener="entryListener" method="getEntriesForHomePage" resultArg="entries" />
-			<!-- <view-page name="home" contentArg="content" />
-			<view-page name="mainTemplate" /> -->
-			<view-page name="home" />
+			<view-page name="entries" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
 		</event-handler>
 		
 		<!-- login-related events -->
@@ -84,13 +84,24 @@
 			<notify listener="userListener" method="authenticate" />
 		</event-handler>
 		
-		<!-- admin events -->
-		<event-handler event="showAdminMenu" access="public">
-			<view-page name="adminMenu" />
+		<event-handler event="logout" access="public">
+			<notify listener="securityListener" method="logoutUser" />
+			<redirect event="showLogin" />
 		</event-handler>
+		
+		<!-- entry-related events -->
+		<event-handler event="showEntryForm" access="public">
+			<view-page name="entryForm" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
+		<!-- comment-related events -->
+		
 		
 		<!-- layout events -->
 		<event-handler event="mainLayout" access="private">
+			<notify listener="categoryListener" method="getCategories" resultArg="categories" />
+			<view-page name="categories" contentArg="contentRight" />
 			<view-page name="mainLayout" />
 		</event-handler>
 		
@@ -102,7 +113,8 @@
 	
 	<!-- PAGE-VIEWS -->
 	<page-views>
-		<page-view name="home" page="/views/home.cfm" />
+		<page-view name="categories" page="/views/categories.cfm" />
+		<page-view name="entries" page="/views/entries.cfm" />
 		<page-view name="login" page="/views/login.cfm" />
 		<page-view name="mainLayout" page="/views/mainLayout.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
