@@ -32,7 +32,7 @@
 		<!-- application specific -->
 		<property name="dsn" value="litepost" />
 		<property name="numEntriesOnHomePage" value="20" />
-		<property name="coldspringConfigFile" value="config/services.xml"/>
+		<property name="coldspringConfigFile" value="../config/litepost-services.xml"/>
 	</properties>
 
 	<!-- PLUGINS -->
@@ -74,7 +74,8 @@
 		
 		<!-- login-related events -->
 		<event-handler event="showLogin" access="public">
-			<view-page name="login" />
+			<view-page name="login" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
 		</event-handler>
 		
 		<event-handler event="processLogin" access="public">
@@ -88,6 +89,11 @@
 			<view-page name="adminMenu" />
 		</event-handler>
 		
+		<!-- layout events -->
+		<event-handler event="mainLayout" access="private">
+			<view-page name="mainLayout" />
+		</event-handler>
+		
 		<!-- exception event -->
 		<event-handler event="exceptionEvent" access="private">
 			<view-page name="exception" />
@@ -98,7 +104,7 @@
 	<page-views>
 		<page-view name="home" page="/views/home.cfm" />
 		<page-view name="login" page="/views/login.cfm" />
-		<page-view name="mainTemplate" page="/views/mainTemplate.cfm" />
+		<page-view name="mainLayout" page="/views/mainLayout.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
 	</page-views>
 
