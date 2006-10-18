@@ -65,19 +65,20 @@
 		<cfset var message = "You were successfully logged in." />
 		<cfset var exitEvent = "success" />
 		
-		<!--- <cftry> --->
+		<cftry>
 			<cfset user = variables.userService.authenticate(arguments.event.getArg("userName"), 
 																	arguments.event.getArg("password")) />
-			<!--- <cfcatch type="User.NotFound">
-				<cfset message = "Your account was not found. Please try again." />
+			
+			<cfif user.isNull()>
+				<cfset message = "Your login failed. Please try again." />
 				<cfset exitEvent = "failure" />
-			</cfcatch>
+			</cfif>
 			
 			<cfcatch type="any">
 				<cfset message = "An error occurred: #cfcatch.detail#" />
 				<cfset exitEvent = "failure" />
 			</cfcatch>
-		</cftry> --->
+		</cftry>
 		
 		<cfset arguments.event.setArg("message", message) />
 		

@@ -41,5 +41,11 @@
 		
 		<cfreturn variables.securityService.isAuthenticated() />
 	</cffunction>
+	
+	<cffunction name="logoutUser" access="public" returntype="void" output="false">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
+		
+		<cfset variables.securityService.removeUserSession() />
+	</cffunction>
 
 </cfcomponent>
