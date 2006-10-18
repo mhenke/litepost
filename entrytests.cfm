@@ -1,7 +1,7 @@
 
 <cfset bf = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init()/>
 <!--- load the bean defs --->
-<cfset bf.loadBeansFromXmlFile(expandPath('./config/lightblog-services.xml'))/>
+<cfset bf.loadBeansFromXmlFile(expandPath('./config/litepost-services.xml'))/>
 
 <cfset entryService = bf.getBean("entryService") />
 <cfset commentService = bf.getBean("commentService") />
