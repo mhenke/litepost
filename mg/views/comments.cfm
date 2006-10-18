@@ -7,7 +7,6 @@
 	<cfset fullDateString = "dddd, mmmm dd, yyyy" />
 	<cfset shortDateString = "mmm dd, yyyy" />
 	<cfset timeString = "h:mm tt" />
-	
 </cfsilent>
 
 <!--- entry with comments page --->

@@ -91,11 +91,41 @@
 		
 	</cffunction>
 	
+	<cffunction name="getEntry" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var entryID = arguments.event.getValue("entryID",0) />
+		<cfset var entry = variables.entryService.getEntryByID(entryID, false) />
+		
+		<cfif entry.isNull()>
+			<cfset arguments.event.forward("home") />
+		<cfelse>
+			<cfset arguments.event.SetValue("entryBean", entry) />
+		</cfif>
+		
+	</cffunction>
+	
 	<cffunction name="getEntryBean" access="public" returntype="void" output="false">
 		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
 		
-		<cfset var entry = arguments.event.makeEventBean("net.litepost.component.entry.Entry") />
-		<cfset arguments.event.SetValue("entry", entry) />
+		<cfset var entryBean = arguments.event.makeEventBean("net.litepost.component.entry.Entry") />
+		<cfset arguments.event.SetValue("entryBean", entryBean) />
+		
+	</cffunction>
+	
+	<cffunction name="saveEntry" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var entryBean = arguments.event.makeEventBean("net.litepost.component.entry.Entry") />
+		<!--- validate the bean, add result based on validation--->
+		<cfif entryBean.validate()>
+			<cfset variables.entryService.saveEntry(entryBean) />
+			<cfset arguments.event.addResult("goHome") />
+		<cfelse>
+			<cfset arguments.event.SetValue("message", "Please complete entry form!") />
+			<cfset arguments.event.SetValue("entryBean", entryBean) />
+			<cfset arguments.event.addResult("goEntryForm") />
+		</cfif>
 		
 	</cffunction>
 	
@@ -112,7 +142,9 @@
 		
 		<cfset var commentBean = arguments.event.makeEventBean("net.litepost.component.comment.Comment") />
 		<!--- validate the bean, add result based on validation--->
-		<cfif false>
+		<cfif commentBean.validate()>
+			<cfset variables.commentService.saveComment(commentBean) />
+			<cfset arguments.event.addResult("goHome") />
 		<cfelse>
 			<cfset arguments.event.SetValue("message", "Please complete comments form!") />
 			<cfset arguments.event.addResult("goComments") />
