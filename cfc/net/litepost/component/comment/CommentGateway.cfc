@@ -47,7 +47,7 @@
 			SELECT commentID, entryID, comment, name, email, url, dateCreated 
 			FROM comments 
 			WHERE entryID = <cfqueryparam value="#arguments.entryID#" cfsqltype="cf_sql_integer" /> 
-			ORDER BY dateCreated DESC
+			ORDER BY dateCreated ASC
 		</cfquery>
 		
 		<cfloop query="qrySelect">

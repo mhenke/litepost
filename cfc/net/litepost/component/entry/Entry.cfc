@@ -57,7 +57,7 @@ Date Format: MM/DD/YYYY
 	--->
 	<cffunction name="init" access="public" returntype="net.litepost.component.entry.Entry" output="false">
 		<cfargument name="entryID" type="Numeric" required="false" default="0" />
-		<cfargument name="categoryID" type="Numeric" required="false" default="0" />
+		<cfargument name="categoryID" type="Numeric" required="false" default="-1" />
 		<cfargument name="category" type="String" required="false" default="" />
 		<cfargument name="title" type="String" required="false" default="" />
 		<cfargument name="body" type="String" required="false" default="" />
@@ -86,11 +86,19 @@ Date Format: MM/DD/YYYY
 		<cfreturn this />
  	</cffunction>
 	
-	<!---  --->
+	<!--- Return instance data for debugging --->
 	<cffunction name="getInstance" access="public" returntype="struct" output="false">
 		<cfreturn variables />
 	</cffunction>
 	
+	<!--- validate the required fields --->
+	<cffunction name="validate" access="public" returntype="boolean" output="false">
+		<cfif len(getTitle()) and len(getBody()) and getCategoryID() GT -1>
+			<cfreturn true />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+	</cffunction>
 	
 	<!---
 	ACCESSORS
