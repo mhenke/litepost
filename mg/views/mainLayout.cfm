@@ -12,7 +12,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>:: LightBlog! ::</title>
+	<title>:: LitePost! ::</title>
 	<link rel="stylesheet" type="text/css" href="views/css/simple.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
@@ -22,7 +22,7 @@
 	<div id="content">
 	
 	<div class="header">
-		<h3>LightBlog!</h3>
+		<h3>LitePost!</h3>
 	</div>
 	
 	<cfoutput>
