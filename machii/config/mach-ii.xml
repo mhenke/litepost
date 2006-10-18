@@ -58,6 +58,7 @@
 		<listener name="categoryListener" type="litepost.machii.listeners.CategoryListener" />
 		<listener name="commentListener" type="litepost.machii.listeners.CommentListener" />
 		<listener name="entryListener" type="litepost.machii.listeners.EntryListener" />
+		<listener name="securityListener" type="litepost.machii.listeners.SecurityListener" />
 		<listener name="userListener" type="litepost.machii.listeners.UserListener" />
 	</listeners>
 	
@@ -65,11 +66,27 @@
 	<event-handlers>
 		<!-- main home page event -->
 		<event-handler event="showHome" access="public">
-			<view-page name="home" contentArg="content" />
-			<view-page name="mainTemplate" />
+			<notify listener="entryListener" method="getEntriesForHomePage" resultArg="entries" />
+			<!-- <view-page name="home" contentArg="content" />
+			<view-page name="mainTemplate" /> -->
+			<view-page name="home" />
 		</event-handler>
 		
 		<!-- login-related events -->
+		<event-handler event="showLogin" access="public">
+			<view-page name="login" />
+		</event-handler>
+		
+		<event-handler event="processLogin" access="public">
+			<event-mapping event="success" mapping="showAdminMenu" />
+			<event-mapping event="failure" mapping="showLogin" />
+			<notify listener="userListener" method="authenticate" />
+		</event-handler>
+		
+		<!-- admin events -->
+		<event-handler event="showAdminMenu" access="public">
+			<view-page name="adminMenu" />
+		</event-handler>
 		
 		<!-- exception event -->
 		<event-handler event="exceptionEvent" access="private">
@@ -80,7 +97,7 @@
 	<!-- PAGE-VIEWS -->
 	<page-views>
 		<page-view name="home" page="/views/home.cfm" />
-		
+		<page-view name="login" page="/views/login.cfm" />
 		<page-view name="mainTemplate" page="/views/mainTemplate.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
 	</page-views>
