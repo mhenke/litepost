@@ -7,34 +7,25 @@
 </cfsilent>
 
 <!--- main entries page --->
-
-<cfset lastDate = "" />
 <cfoutput>
 	<cfif arrayLen(entries) gt 0>
 		<cfloop from="1" to="#ArrayLen(entries)#" index="i">
 			<cfset entry = entries[i] />
-			<cfset entryDate = entry.getEntryDate() />
 			
-			<cfif entryDate NEQ lastDate>
-				<h4>#DateFormat(entryDate, fullDateString)#</h4>
-				<cfset lastDate = entryDate />
-			</cfif>
-			
-			<strong>#entry.getTitle()#</strong>
+			<h1>#entry.getTitle()#</h1>
+			<p class="author">Posted by NAME HERE, #entry.getEntryDate()#</p>
 			<p>#entry.getBody()#</p>
-			
-			<div class="postlinks">
-			posted #TimeFormat(entry.getDateCreated(), timeString)# | 
-			<cfif entry.getDateLastUpdated() GT entry.getDateCreated() >updated #DateFormat(entry.getDateCreated(), shortDateString)# #TimeFormat(entry.getDateCreated(), timeString)# | </cfif>
-			<cfif entry.getCategoryID() GT 0><a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#entry.getCategoryID()#">#entry.getCategory()#</a> | </cfif>
-			<a href="index.cfm?#getProperty('eventParameter')#=comments&entryID=#entry.getEntryID()#">#entry.getNumComments()#  comments</a>
-			<cfif isAdmin>
-				&nbsp;|&nbsp;<a href="index.cfm?#getProperty('eventParameter')#=showEntryForm&entryID=#entry.getEntryID()#">edit</a>
-			</cfif>
+
+			<!-- footer at the bottom of every post-->
+			<div class="postfooter">
+				<span>
+					<a href="postDetail.html"><img src="../assets/images/comment_icon.gif" alt="Comment" border="0" /></a> 
+					<a href="postDetail.html##comments">Comments (#entry.getNumComments()#)</a>
+				</span>
+				<span class="right">
+					<cfif entry.getCategoryID() neq 0><a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#entry.getCategoryID()#">Filed under #entry.getCategory()#</a><cfelse>Unfiled</cfif>
+				</span>
 			</div>
-			
-			<br/>
-			
 		</cfloop>
 	<cfelse>
 		- no entries -
