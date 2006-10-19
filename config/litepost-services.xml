@@ -44,7 +44,7 @@
 			</bean>
          </property>
 		<property name="entryGateway">
-			<bean class="net.litepost.component.entry.entryGateway">
+			<bean class="net.litepost.component.entry.EntryGateway">
          		<property name="dsn">
 					<value>litepost</value>
 				 </property>
