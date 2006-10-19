@@ -29,7 +29,7 @@
 		<cfif entry.getCategoryID() GT 0><a href="#myself#home&categoryID=#entry.getCategoryID()#">#entry.getCategory()#</a> | </cfif>
 		<a href="#myself#comments&entryID=#entry.getEntryID()#">#entry.getNumComments()#  comments</a>
 		<cfif isAdmin>
-			&nbsp;|&nbsp;<a href="#entry.getEntryID()#">edit</a>
+			&nbsp;|&nbsp;<a href="#myself#editEntry&entryID=#entry.getEntryID()#">edit</a>
 		</cfif>
 		</div>
 		

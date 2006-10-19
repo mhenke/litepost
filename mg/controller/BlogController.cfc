@@ -72,7 +72,15 @@
 	<cffunction name="getEntries" access="public" returntype="void" output="false">
 		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
 		
-		<cfset var entries = variables.entryService.getEntries() />
+		<cfset var categoryID = arguments.event.getValue("categoryID",0) />
+		<cfset var entries = 0 />
+		
+		<cfif categoryID GT 0>
+			<cfset entries = variables.entryService.getEntriesByCategoryID(categoryID) />
+		<cfelse>
+			<cfset entries = variables.entryService.getEntries() />
+		</cfif>
+		
 		<cfset arguments.event.SetValue("entries", entries) />
 		
 	</cffunction>

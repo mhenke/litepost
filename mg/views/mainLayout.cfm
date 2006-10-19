@@ -44,14 +44,21 @@
 			#contentRight#
 		</cfif>
 		
-		<br/>
+		<b>Nav</b>
+		
+		<p>
 		<div class="links">
 		<cfif isAdmin>
-			<a href="#myself#logout">logout</a>
+			<a href="#myself#logout">logout</a> | 
+			<a href="#myself#addEntry">add entry</a> | 
+			<a href="#myself#home">home</a>
 		<cfelse>
-			<a href="#myself#loginForm">login</a>
+			<a href="#myself#loginForm">login</a> | 
+			<a href="#myself#home">home</a>
 		</cfif>
 		</div>
+		</p>
+		
 	</div>
 	
 	</cfoutput>

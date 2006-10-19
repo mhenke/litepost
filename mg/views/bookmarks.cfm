@@ -2,6 +2,8 @@
 <!--- bookmarks sidebar --->
 <cfsilent>
 	<cfset bookmarks = viewState.getValue("bookmarks") />
+	<cfset isAdmin = viewState.getValue("isAdmin") />
+	<cfset myself = viewState.getValue("myself") />
 </cfsilent>
 
 <b>Links</b>
@@ -15,6 +17,13 @@
 			<cfset linkUrl = "http://" & linkUrl />
 		</cfif>
 		<a href="#linkUrl#" target="_blank">#bookmark.getName()#</a><br />
+		<cfif isAdmin>
+		<div class="postlinks">
+			<a href="">edit</a> | 
+			<cfif i eq ArrayLen(bookmarks)><a href="">+</a> | </cfif>
+			<a href="">-</a>
+		</div>
+		</cfif>
 	</cfloop>
 </cfoutput>
 </p>
