@@ -60,7 +60,7 @@
 			hint="Processes the comment form and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showCommentForm" />
+		<cfset var exitEvent = "showEntry" />
 		
 		<cfif arguments.event.isArgDefined("exitEvent")>
 			<cfset exitEvent = arguments.event.getArg("exitEvent") />
