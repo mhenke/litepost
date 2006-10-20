@@ -38,7 +38,7 @@
 	<!--- listener methods --->
 	<cffunction name="getEntry" returntype="net.litepost.component.entry.Entry" access="public" output="false" 
 			hint="Returns an entry bean based on the entry ID in the event object">
-		<cfargument name="event" type="MachII.framework.Event">
+		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
 		<cfset var includeComments = true />
 		
