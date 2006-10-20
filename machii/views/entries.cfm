@@ -19,11 +19,21 @@
 			<!-- footer at the bottom of every post-->
 			<div class="postfooter">
 				<span>
-					<a href="postDetail.html"><img src="../assets/images/comment_icon.gif" alt="Comment" border="0" /></a> 
-					<a href="postDetail.html##comments">Comments (#entry.getNumComments()#)</a>
+					<a href="index.cfm?#getProperty('eventParameter')#=showEntry&entryID=#entry.getEntryID()#&includeComments=true">
+						<img src="../assets/images/comment_icon.gif" alt="Comment" border="0" />
+					</a>
+					<a href="index.cfm?#getProperty('eventParameter')#=showEntry&entryID=#entry.getEntryID()#&includeComments=true">
+						Comments (#entry.getNumComments()#)
+					</a>
 				</span>
 				<span class="right">
-					<cfif entry.getCategoryID() neq 0><a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#entry.getCategoryID()#">Filed under #entry.getCategory()#</a><cfelse>Unfiled</cfif>
+					<cfif entry.getCategoryID() neq 0>
+						<a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#entry.getCategoryID()#">
+							Filed under #entry.getCategory()#
+						</a>
+					<cfelse>
+						Unfiled
+					</cfif>
 				</span>
 			</div>
 		</cfloop>
