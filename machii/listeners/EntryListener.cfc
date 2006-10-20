@@ -41,12 +41,19 @@
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
 		<cfset var includeComments = true />
+		<cfset var entry = 0 />
 		
 		<cfif arguments.event.isArgDefined("includeComments")>
 			<cfset includeComments = arguments.event.getArg("includeComments") />
 		</cfif>
 		
-		<cfreturn variables.entryService.getEntryByID(arguments.event.getArg("entryID"), includeComments) />
+		<cfset entry = variables.entryService.getEntryByID(arguments.event.getArg("entryID", 0), includeComments) />
+		
+		<cfif entry.isNull()>
+			<cfset entry.init() />
+		</cfif>
+		
+		<cfreturn entry />
 	</cffunction>
 	
 	<cffunction name="getEntries" returntype="array" access="public" output="false" 
@@ -115,7 +122,8 @@
 			hint="Processes the entry form and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showEntryForm" />
+		<cfset var exitEvent = "success" />
+		<cfset var message = "The entry was saved." />
 		
 		<!--- if there's an exitEvent included in the event object, use it --->
 		<cfif arguments.event.isArgDefined("exitEvent")>
@@ -123,7 +131,13 @@
 		</cfif>
 		
 		<!--- save the data --->
-		<cfset variables.entryService.saveEntry(arguments.event.getArg("entry")) />
+		<!--- <cftry> --->
+			<cfset variables.entryService.saveEntry(arguments.event.getArg("entry")) />
+			<!--- <cfcatch type="any">
+				<cfset exitEvent = "failure" />
+				<cfset message = "An error occured: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry> --->
 		
 		<!--- announce the next event --->
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
