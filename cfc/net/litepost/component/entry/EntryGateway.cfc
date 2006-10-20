@@ -44,10 +44,13 @@
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" datasource="#variables.dsn#">
-			SELECT e.entryID, e.title, e.body, DATE(e.dateCreated) AS entryDate, 
-				e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category, COUNT(c.commentID) AS numComments
-			FROM entries e LEFT OUTER JOIN categories ct ON e.categoryID = ct.categoryID 
+			SELECT e.entryID, e.title, e.body, TIMESTAMP(e.dateCreated) AS entryDate, 
+				e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category, COUNT(c.commentID) AS numComments, 
+				u.userID, u.fname, u.lname 
+			FROM entries e 
+			LEFT OUTER JOIN categories ct ON e.categoryID = ct.categoryID 
 			LEFT OUTER JOIN comments c ON e.entryID = c.entryID 
+			INNER JOIN users u ON e.userID = u.userID 
              WHERE 1=1 
 				<cfif arguments.activeOnly>
 				AND 	e.dateCreated <= <cfqueryparam value="#now()#" cfsqltype="cf_sql_timestamp" /> 
@@ -80,6 +83,9 @@
 			<cfset entry = createObject("component", "net.litepost.component.entry.Entry").init() />
 			<cfset entry.setEntryID(qrySelect.entryID) />
 			<cfset entry.setCategoryID(qrySelect.categoryID) />
+			<cfset entry.setUserID(qrySelect.userID) />
+			<cfset entry.setUserFirstName(qrySelect.fname) />
+			<cfset entry.setUserLastName(qrySelect.lname) />
 			<cfset entry.setCategory(qrySelect.category) />
 			<cfset entry.setTitle(qrySelect.title) />
 			<cfset entry.setBody(qrySelect.body) />
