@@ -49,20 +49,7 @@
 	</div>
 <!-- navigation -->
 	<div id="navigation">
-		<h2>Categories</h2>
-		<ul>
-		  <li><a href="##">Category 1</a></li>
-		  <li><a href="##">Category 2</a></li>
-		  <li><a href="##">Category 3</a></li>
-		  <li><a href="##">Category 4</a></li>
-	  </ul>
-		<h2>Bookmarks</h2>
-		<ul>
-		  <li><a href="##">Bookmark 1</a></li>
-		  <li><a href="##">Bookmark 2</a></li>
-		  <li><a href="##">Bookmark 3</a></li>
-		  <li><a href="##">Bookmark 4</a> </li>
-		</ul>
+		#contentRight#
 	</div>
 <!-- site footer-->
 	<div id="footer"><p>LitePost is made under the Creative Commons license! (or something like that)</p></div>
@@ -70,54 +57,3 @@
 </cfoutput>
 </body>
 </html>
-
-<!--- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<title>:: LitePost! ::</title>
-	<link rel="stylesheet" type="text/css" href="views/css/simple.css" />
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-</head>
-
-<body>
-	
-	<div id="content">
-	
-	<div class="header">
-		<h3>LitePost!</h3>
-	</div>
-	
-	<cfoutput>
-	
-	<!-- center column -->
-	<div class="center">
-		<!-- content -->
-		#content#
-	</div>
-	
-	
-	<!-- right columns -->
-	<div class="right">
-		#contentRight#
-		
-		<br/>
-		<div class="links">
-		<cfif isAdmin>
-			<a href="index.cfm?#getProperty('eventParameter')#=logout">logout</a>
-		<cfelse>
-			<a href="index.cfm?#getProperty('eventParameter')#=showLogin">login</a>
-		</cfif>
-		</div>
-	</div>
-	
-	</cfoutput>
-	
-	<div class="clearer">&#160;</div>
-	
-	<!-- copyright -->
-	<p class="fine">&copy; 2006, Chris Scott, Matt Woodward, Adam Wayne Lehman, Dave Ross. All Rights Reserved.</p>
-	
-	</div>
-	
-</body>
-</html> --->
