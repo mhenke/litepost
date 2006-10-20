@@ -76,10 +76,6 @@
 			<cfset entry.setComments(variables.commentService.getCommentsByEntryID(entry.getEntryID())) />
 		</cfif>
 		
-		<cfif entry.isNull()>
-			<cfset entry.init() />
-		</cfif>
-		
 		<cfreturn entry />
 	</cffunction>
 	
