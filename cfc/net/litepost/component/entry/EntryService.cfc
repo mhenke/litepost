@@ -71,9 +71,11 @@
 		<cfargument name="includeComments" type="boolean" required="false" default="true" />
 		
 		<cfset var entry =  variables.entryDAO.fetch(arguments.entryID) />
+		
 		<cfif not entry.isNull() and arguments.includeComments>
 			<cfset entry.setComments(variables.commentService.getCommentsByEntryID(entry.getEntryID())) />
 		</cfif>
+		
 		<cfreturn entry />
 	</cffunction>
 	
