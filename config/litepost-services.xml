@@ -53,6 +53,9 @@
 		<property name="commentService">
 			<ref bean="commentService"/>
 		</property>
+		<property name="sessionService">
+			<ref bean="sessionService" />
+		</property>
 	</bean>
 	
 	<!-- Comments Service -->
