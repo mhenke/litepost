@@ -43,9 +43,12 @@
 		<cfset var qrySelect = 0 />
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
-		SELECT e.entryID, e.title, e.body, DATE(e.dateCreated) AS entryDate, 
-			e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category 
-        FROM entries e LEFT OUTER JOIN categories ct ON e.categoryID = ct.categoryID 
+		SELECT e.entryID, e.title, e.body, TIMESTAMP(e.dateCreated) AS entryDate, 
+			e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category, 
+			u.userID, u.fname, u.lname 
+        FROM entries e 
+		LEFT OUTER JOIN categories ct ON e.categoryID = ct.categoryID 
+		INNER JOIN users u ON e.userID = u.userID 
         WHERE e.entryID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.entryID#" />
 		</cfquery>
 		
@@ -58,6 +61,9 @@
 		<cfset entry.setEntryID(qrySelect.entryID) />
 		<cfset entry.setCategoryID(qrySelect.categoryID) />
 		<cfset entry.setCategory(qrySelect.category) />
+		<cfset entry.setUserID(qrySelect.userID) />
+		<cfset entry.setUserFirstName(qrySelect.fname) />
+		<cfset entry.setUserLastName(qrySelect.lname) />
 		<cfset entry.setTitle(qrySelect.title) />
 		<cfset entry.setBody(qrySelect.body) />
 		<cfset entry.setEntryDate(qrySelect.entryDate) />
@@ -103,9 +109,10 @@
 		<cftransaction>
 			<cfquery name="qryInsert" datasource="#variables.dsn#">
 			INSERT INTO entries (
-				categoryID, title, body, dateCreated, dateLastUpdated
+				userID, categoryID, title, body, dateCreated, dateLastUpdated
 				)
 			VALUES (
+				<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.entry.getUserID()#" />, 
 				<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.entry.getCategoryID()#" />, 
 				<cfqueryparam cfsqltype="cf_sql_varchar" maxlength="255" value="#arguments.entry.getTitle()#" />,
 				<cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.entry.getBody()#" />,
