@@ -4,18 +4,17 @@
 	<cfset categories = event.getArg("categories") />
 </cfsilent>
 
-<b>Categories</b>
+<h2>Categories</h2>
 
-<p>
+<ul>
 <cfoutput>
 	<cfif arrayLen(categories) gt 0>
 		<cfloop from="1" to="#ArrayLen(categories)#" index="i">
 			<cfset category = categories[i] />
-			<cfset catID = category.getCategoryID() />
-			<a href="">#category.getCategory()# (#category.getNumPosts()#)</a><br />
+			<li><a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#category.getCategoryID()#">#category.getCategory()# (#category.getNumPosts()#)</a><br /></li>
 		</cfloop>
 	<cfelse>
-		- no categories -
+		<li><em>no categories</em></li>
 	</cfif>
 </cfoutput>
-</p>
+</ul>
