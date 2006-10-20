@@ -13,7 +13,7 @@
 			<cfset entry = entries[i] />
 			
 			<h1>#entry.getTitle()#</h1>
-			<p class="author">Posted by NAME HERE, #entry.getEntryDate()#</p>
+			<p class="author">Posted by #entry.getPostedBy()#, #dateFormat(entry.getEntryDate(), shortDateString)# @ #timeFormat(entry.getEntryDate(), timeString)#</p>
 			<p>#entry.getBody()#</p>
 
 			<!-- footer at the bottom of every post-->
@@ -28,7 +28,7 @@
 			</div>
 		</cfloop>
 	<cfelse>
-		- no entries -
+		<em>no entries</em>
 	</cfif>
 
 </cfoutput>
