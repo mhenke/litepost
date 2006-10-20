@@ -58,7 +58,10 @@ Date Format: MM/DD/YYYY
 	<cffunction name="init" access="public" returntype="net.litepost.component.entry.Entry" output="false">
 		<cfargument name="entryID" type="Numeric" required="false" default="0" />
 		<cfargument name="categoryID" type="Numeric" required="false" default="-1" />
-		<cfargument name="category" type="String" required="false" default="" />
+		<cfargument name="category" type="string" required="false" default="" />
+		<cfargument name="userID" type="string" required="false" default="0" />
+		<cfargument name="userFirstName" type="string" required="false" default="" />
+		<cfargument name="userLastName" type="string" required="false" default="" />
 		<cfargument name="title" type="String" required="false" default="" />
 		<cfargument name="body" type="String" required="false" default="" />
 		<cfargument name="entryDate" type="Date" required="false" default="#Now()#" />
@@ -74,6 +77,9 @@ Date Format: MM/DD/YYYY
 		<cfset setEntryID(arguments.entryID) />
 		<cfset setCategoryID(arguments.categoryID) />
 		<cfset setCategory(arguments.category) />
+		<cfset setUserID(arguments.userID) />
+		<cfset setUserFirstName(arguments.userFirstName) />
+		<cfset setUserLastName(arguments.userLastName) />
 		<cfset setTitle(arguments.title) />
 		<cfset setBody(arguments.body) />
 		<cfset setComments(arguments.comments) />
@@ -125,6 +131,34 @@ Date Format: MM/DD/YYYY
 	</cffunction>
 	<cffunction name="getCategory" access="public" returntype="String" output="false">
 		<cfreturn variables.instance.category />
+	</cffunction>
+
+	<cffunction name="setUserID" access="public" returntype="void" output="false">
+		<cfargument name="userID" type="numeric" required="true" />
+		<cfset variables.instance.userID = arguments.userID />
+	</cffunction>
+	<cffunction name="getUserID" access="public" returntype="numeric" output="false">
+		<cfreturn variables.instance.userID />
+	</cffunction>
+
+	<cffunction name="setUserFirstName" access="public" returntype="void" output="false">
+		<cfargument name="userFirstName" type="String" required="true" />
+		<cfset variables.instance.userFirstName = arguments.userFirstName />
+	</cffunction>
+	<cffunction name="getUserFirstName" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.userFirstName />
+	</cffunction>
+
+	<cffunction name="setUserLastName" access="public" returntype="void" output="false">
+		<cfargument name="userLastName" type="String" required="true" />
+		<cfset variables.instance.userLastName = arguments.userLastName />
+	</cffunction>
+	<cffunction name="getUserLastName" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.userLastName />
+	</cffunction>
+
+	<cffunction name="getPostedBy" access="public" returntype="String" output="false">
+		<cfreturn getUserFirstName() &  " " & getUserLastName() />
 	</cffunction>
 
 	<cffunction name="setTitle" access="public" returntype="void" output="false">
