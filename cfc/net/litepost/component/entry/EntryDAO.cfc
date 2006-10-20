@@ -44,12 +44,14 @@
 		
 		<cfquery name="qrySelect" maxrows="1" datasource="#variables.dsn#">
 		SELECT e.entryID, e.title, e.body, TIMESTAMP(e.dateCreated) AS entryDate, 
-			e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category, 
+			e.dateCreated, e.dateLastUpdated, e.categoryID, ct.category, COUNT(c.commentID) AS numComments, 
 			u.userID, u.fname, u.lname 
         FROM entries e 
 		LEFT OUTER JOIN categories ct ON e.categoryID = ct.categoryID 
+		LEFT OUTER JOIN comments c ON e.entryID = c.entryID 
 		INNER JOIN users u ON e.userID = u.userID 
         WHERE e.entryID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.entryID#" />
+		GROUP BY e.entryID, e.title, e.body, e.dateCreated, e.dateLastUpdated 
 		</cfquery>
 		
 		<cfif qrySelect.RecordCount LT 1>
@@ -66,6 +68,7 @@
 		<cfset entry.setUserLastName(qrySelect.lname) />
 		<cfset entry.setTitle(qrySelect.title) />
 		<cfset entry.setBody(qrySelect.body) />
+		<cfset entry.setNumComments(qrySelect.numComments) />
 		<cfset entry.setEntryDate(qrySelect.entryDate) />
 		<cfset entry.setDateCreated(qrySelect.dateCreated) />
 		<cfset entry.setDateLastUpdated(qrySelect.dateLastUpdated) />
