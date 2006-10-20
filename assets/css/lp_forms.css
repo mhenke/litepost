@@ -31,6 +31,22 @@ textarea.comment {
 	width: 10em;
 }
 
+.adminbutton {
+	background-color: #9b5c20; /* light golden brown */
+	color: #FFF!important;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 4px;
+	margin: .5em 0;
+	font-size: .8em;
+	line-height: 1em;
+	display: block;
+	width: 10em;
+	height: 2.2em;
+	text-align: center;
+	border: 2px outset #9b5c20;
+}
+
 form#login {
 	width: 30em;
 }
