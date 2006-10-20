@@ -89,18 +89,34 @@
 			<redirect event="showLogin" />
 		</event-handler>
 		
+		<!-- main menu -->
+		<event-handler event="showAdminMenu" access="public">
+			<filter name="checkLoginFilter" />
+			<view-page name="adminMenu" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
 		<!-- entry-related events -->
+		<event-handler event="showEntry" access="public">
+			<notify listener="entryListener" method="getEntry" resultArg="entry" />
+			<view-page name="entry" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
 		<event-handler event="showEntryForm" access="public">
 			<view-page name="entryForm" contentArg="content" />
 			<announce event="mainLayout" copyEventArgs="true" />
 		</event-handler>
 		
 		<!-- comment-related events -->
-		
+		<event-handler event="processCommentForm" access="public">
+			<event-bean name="comment" type="net.litepost.component.comment.Comment" />
+			<notify listener="commentListener" method="processCommentForm" />
+		</event-handler>
 		
 		<!-- layout events -->
 		<event-handler event="mainLayout" access="private">
-			<notify listener="categoryListener" method="getCategories" resultArg="categories" />
+			<notify listener="categoryListener" method="getCategoriesWithCounts" resultArg="categories" />
 			<view-page name="categories" contentArg="contentRight" />
 			<view-page name="mainLayout" />
 		</event-handler>
@@ -113,8 +129,10 @@
 	
 	<!-- PAGE-VIEWS -->
 	<page-views>
+		<page-view name="adminMenu" page="/views/adminMenu.cfm" />
 		<page-view name="categories" page="/views/categories.cfm" />
 		<page-view name="entries" page="/views/entries.cfm" />
+		<page-view name="entry" page="/views/entry.cfm" />
 		<page-view name="login" page="/views/login.cfm" />
 		<page-view name="mainLayout" page="/views/mainLayout.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
