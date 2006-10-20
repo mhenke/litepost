@@ -22,7 +22,7 @@
 	displayname="CheckForUser"
 	extends="MachII.framework.Plugin"
 	output="false"
-	hint="Plugin to check for a valid user in MachBlog">
+	hint="Plugin to check for a valid user in LitePost">
 
 	<!---
 	INITIALIZATION / CONFIGURATION
