@@ -43,12 +43,14 @@ CREATE TABLE categories (
 
 CREATE TABLE entries (
 	entryID INT NOT NULL AUTO_INCREMENT,
+	userID INT NOT NULL, 
 	categoryID INT NOT NULL,
 	title VARCHAR(255) NULL,
 	body TEXT NOT NULL,
 	dateCreated DATETIME NOT NULL,
 	dateLastUpdated DATETIME NOT NULL,
 	CONSTRAINT entries_entryID_pk PRIMARY KEY (entryID),
+	CONSTRAINT entries_userID_fk FOREIGN KEY (userID) REFERENCES users (userID), 
 	INDEX entries_categoryID_ix (categoryID)
 	) TYPE=INNODB
 ;
