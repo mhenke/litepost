@@ -43,7 +43,7 @@
 		
 		<cfset var proceed = false />
 		
-		<cfif structKeyExists(session, "user") and session.user.getUserID() neq 0>
+		<cfif event.getArg("isAdmin")>
 			<cfset proceed = true />
 		<cfelse>
 			<cfset arguments.eventContext.clearEventQueue() />
