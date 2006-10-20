@@ -43,6 +43,11 @@
 		<cfset variables.commentService  = arguments.commentService />
 	</cffunction>
 	
+	<cffunction name="setSessionService" returntype="void" access="public" output="false" hint="Dependency: SessionService">
+		<cfargument name="sessionService" type="net.litepost.service.SessionService" required="true" />
+		<cfset variables.sessionService = arguments.sessionService />
+	</cffunction>
+	
 	<!--- service methods --->
 	<cffunction name="getEntries" returntype="array" access="public" output="false" hint="Gets entries and comments as objects">
 		<cfargument name="numToReturn" type="numeric" required="false" default="-1" />
@@ -81,6 +86,9 @@
 	
 	<cffunction name="saveEntry" returntype="numeric" access="public" output="false" hint="Saves an entry">
 		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
+		<!--- set the user id in the entry object --->
+		<cfset arguments.entry.setUserID(variables.sessionService.getUser().getUserID()) />
+		
 		<cfreturn variables.entryDAO.save(arguments.entry) />
 	</cffunction>
 	
