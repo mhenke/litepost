@@ -47,11 +47,11 @@
 	  </div>
 		
 	</div>
-<!-- navigation -->
+	<!-- navigation -->
 	<div id="navigation">
 		#contentRight#
 	</div>
-<!-- site footer-->
+	<!-- site footer-->
 	<div id="footer"><p>LitePost is made under the Creative Commons license! (or something like that)</p></div>
 </div>
 </cfoutput>

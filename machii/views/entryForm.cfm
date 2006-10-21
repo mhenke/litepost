@@ -1,10 +1,10 @@
 <cfsilent>
-	<cfset entryBean = event.getValue("entryBean") />
-	<cfset categories = event.getArg("categories") />
+	<cfset entry = event.getArg("entry") />
+	<cfset categoriesForSelect = event.getArg("categoriesForSelect") />
 	<cfset message = event.getArg("message", "") />
 	<cfset isAdmin = event.getArg("isAdmin") />
 	
-	<cfif entryBean.getEntryID() GT 0>
+	<cfif not entry.getEntryID() eq 0>
 		<cfset label = "Update" />
 	<cfelse>
 		<cfset label = "Add" />
@@ -13,33 +13,29 @@
 
 <cfoutput>
 
-	<h3>#label# Entry</h3>
+	<h1>#label# Entry </h1>
 	
-	<!--- entry form --->
-	<form action="index.cfm?#getProperty('eventParameter')#=processEntryForm" method="post">
-	<input type="hidden" name="entryID" value="#entryBean.getEntryID()#" />
-	 
-	#message#
-	<p>
-	Title:<br />
-	<input type="text" name="title" value="#entryBean.getTitle()#"  size="45" maxlength="255" />
-	<br />
-	<cfset currCatID = entryBean.getCategoryID() />
-	Category:<br />
-	<select size="1" name="categoryID">
-		<option value="-1" selected>- Select -</option>
-		<option value="0" <cfif currCatID EQ 0>selected</cfif>>- None -</option>
-		<cfloop from="1" to="#ArrayLen(categories)#" index="ix">
-			<option value="#categories[ix].getCategoryID()#" <cfif currCatID EQ categories[ix].getCategoryID()>selected</cfif>>#categories[ix].getCategory()#</option>
-		</cfloop>
-	</select>
-	<br />
-	Entry:<br />
-	<textarea name="body" cols="60" rows="18">#entryBean.getBody()#</textarea>
-	</p>
-	<p>
-	<input type="submit" name="submit" value="#label# Entry" />
-	</p>
+	<cfif message is not "">
+		<p><strong>#message#</strong></p>
+	</cfif>
 	
+	<form id="editEntry" name="editEntry" method="post" action="index.cfm?#getProperty('eventParameter')#=processEntryForm">
+		<label>Title<br />
+		<input name="title" type="text" value="#entry.getTitle()#" />
+		</label>
+		<label>Entry<br />
+		<textarea name="body" class="entry" cols="" rows="">#entry.getBody()#</textarea>
+		</label>
+		<label>Category<br />
+		<select name="categoryID">
+			<cfloop index="i" from="1" to="#arrayLen(categoriesForSelect)#">
+				<cfset category = categoriesForSelect[i] />
+				<option value="#category.getCategoryID()#"<cfif category.getCategoryID() eq entry.getCategoryID()> selected</cfif>>#category.getCategory()#</option>
+			</cfloop>
+		</select>
+		</label>
+		<input type="submit" name="submit" value="#label# Entry" class="adminbutton" />
+		<!--- <button name="submit">Submit</button> --->
+		<input type="hidden" name="entryID" value="#entry.getEntryID()#" />
 	</form>
 </cfoutput>
