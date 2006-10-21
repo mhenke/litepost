@@ -30,12 +30,17 @@
 	<!--- setters for dependencies --->
 	<cffunction name="setCategoryDAO" returntype="void" access="public" output="false" hint="Dependency: CategoryDAO">
 		<cfargument name="categoryDAO" type="net.litepost.component.category.CategoryDAO" required="true"/>
-		<cfset variables.categoryDAO  = arguments.categoryDAO />
+		<cfset variables.categoryDAO = arguments.categoryDAO />
 	</cffunction>
 	
 	<cffunction name="setCategoryGateway" returntype="void" access="public" output="false" hint="Dependency: CategoryGateway">
 		<cfargument name="categoryGateway" type="net.litepost.component.category.CategoryGateway" required="true"/>
-		<cfset variables.categoryGateway  = arguments.categoryGateway />
+		<cfset variables.categoryGateway = arguments.categoryGateway />
+	</cffunction>
+	
+	<cffunction name="setEntryService" returntype="void" access="public" output="false" hint="Dependency: EntryService">
+		<cfargument name="entryService" type="net.litepost.component.entry.EntryService" required="true" />
+		<cfset variables.entryService = arguments.entryService />
 	</cffunction>
 	
 	<!--- service methods --->
@@ -67,6 +72,7 @@
 	
 	<cffunction name="removeCategory" returntype="void" access="public" output="false">
 		<cfargument name="categoryID" type="numeric" required="true" />
+		<cfset variables.entryService.resetEntryCategories(arguments.categoryID) />
 		<cfset variables.categoryDAO.remove(arguments.categoryID) />
 	</cffunction>
 
