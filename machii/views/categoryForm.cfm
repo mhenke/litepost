@@ -3,7 +3,7 @@
 	<cfif not category.getCategoryID() eq 0>
 		<cfset label="Update" />
 	<cfelse>
-		<cfset label="Add" />
+		<cfset label="Create" />
 	</cfif>
 </cfsilent>
 
@@ -15,6 +15,7 @@
 		<input name="category" type="text" value="#category.getCategory()#" />
 		</label>
 		<!--- <button name="submit">Submit</button> --->
-		<input type="submit" name="submit" value="#label# Category" class="adminbutton" />
+		<input type="submit" name="submit" value="#label#" class="adminbutton" />
+		<input type="hidden" name="categoryID" value="#category.getCategoryID()#" />
 	</form>
 </cfoutput>
