@@ -48,7 +48,8 @@
 		</cfquery>
 		
 		<cfif qrySelect.RecordCount LT 1>
-			<cfthrow message="Category not found for categoryID: #arguments.categoryID#!">
+			<!--- return an uninitialized category --->
+			<cfreturn CreateObject('component','net.litepost.component.category.Category') />
 		</cfif>
 		
 		<cfset category.setCategoryID(qrySelect.categoryID) />
