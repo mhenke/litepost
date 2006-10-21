@@ -100,4 +100,16 @@
 		<cfreturn entries />
 	</cffunction>
 	
+	<cffunction name="resetEntryCategories" returntype="void" access="public" output="false" 
+			hint="Resets category ids in entries for a specific category id to 0">
+		<cfargument name="categoryID" type="numeric" required="true" />
+		
+		<cfset var qryUpdate = 0 />
+		
+		<cfquery name="qryUpdate" datasource="#variables.dsn#">
+			UPDATE entries 
+			SET categoryID = 0 
+			WHERE categoryID = <cfqueryparam value="#arguments.categoryID#" cfsqltype="cf_sql_integer" />
+		</cfquery>
+	</cffunction>
 </cfcomponent>
