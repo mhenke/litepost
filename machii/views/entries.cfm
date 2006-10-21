@@ -22,6 +22,9 @@
 		<a href="index.cfm?#getProperty('eventParameter')#=showEntryForm">
 			<img src="../assets/images/add_icon.gif" title="Add Entry" alt="Add Entry" border="0" />
 		</a>
+		<a href="index.cfm?#getProperty('eventParameter')#=showEntryForm">
+			Add Entry
+		</a>
 	</div>
 	</cfif>
 	
@@ -32,7 +35,6 @@
 	<cfif arrayLen(entries) gt 0>
 		<cfloop from="1" to="#ArrayLen(entries)#" index="i">
 			<cfset entry = entries[i] />
-			
 			<h1>#entry.getTitle()#</h1>
 			<p class="author">Posted by #entry.getPostedBy()#, #dateFormat(entry.getEntryDate(), shortDateString)# @ #timeFormat(entry.getEntryDate(), timeString)#</p>
 			<p>#entry.getBody()#</p>
