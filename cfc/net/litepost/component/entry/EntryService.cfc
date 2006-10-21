@@ -97,4 +97,9 @@
 		<cfset variables.entryDAO.remove(arguments.entryID) />
 	</cffunction>
 	
+	<cffunction name="resetEntryCategories" returntype="void" access="public" output="false" 
+			hint="Resets entry category ids for a particular category id to 0">
+		<cfargument name="categoryID" type="numeric" required="true" />
+		<cfset variables.entryGateway.resetEntryCategories(arguments.categoryID) />
+	</cffunction>
 </cfcomponent>
