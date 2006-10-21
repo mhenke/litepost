@@ -96,7 +96,16 @@
 			hint="Gets the entries for the home page using the numEntriesOnHomePage property in mach-ii.xml">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfreturn variables.entryService.getEntries(getProperty("numEntriesOnHomePage"), true) />
+		<cfset var entries = 0 />
+		
+		<cfif arguments.event.isArgDefined("categoryID")>
+			<cfset entries = variables.entryService.getEntriesByCategoryID(arguments.event.getArg("categoryID"), 
+																			getProperty("numEntriesOnHomePage"), true) />
+		<cfelse>
+			<cfset entries = variables.entryService.getEntries(getProperty("numEntriesOnHomePage"), true) />
+		</cfif>
+		
+		<cfreturn entries />
 	</cffunction>
 	
 	<cffunction name="getEntriesByCategoryID" returntype="array" access="public" output="false" 
