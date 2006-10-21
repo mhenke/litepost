@@ -89,7 +89,8 @@
 		<cfquery name="qrySelect" datasource="#variables.dsn#">
 		SELECT c.categoryID, c.category, COUNT(e.entryID) AS posts 
 		FROM categories c LEFT OUTER JOIN entries e ON c.categoryID = e.categoryID 
-		GROUP BY c.categoryID, c.category
+		GROUP BY c.categoryID, c.category 
+		ORDER BY c.category
 		</cfquery>
 		
 		<cfreturn qrySelect />
