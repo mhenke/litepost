@@ -131,15 +131,16 @@
 		</cfif>
 		
 		<!--- save the data --->
-		<!--- <cftry> --->
+		<cftry>
 			<cfset variables.entryService.saveEntry(arguments.event.getArg("entry")) />
-			<!--- <cfcatch type="any">
+			<cfcatch type="any">
 				<cfset exitEvent = "failure" />
 				<cfset message = "An error occured: #cfcatch.detail#" />
 			</cfcatch>
-		</cftry> --->
+		</cftry>
 		
 		<!--- announce the next event --->
+		<cfset arguments.event.setArg("message", message) />
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
 	</cffunction>
 	
@@ -147,7 +148,8 @@
 			hint="Deletes an entry and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent="showEntries" />
+		<cfset var exitEvent="success" />
+		<cfset var message = "The entry was deleted." />
 
 		<!--- if there's an exitEvent included in the event object, use it --->
 		<cfif arguments.event.isArgDefined("exitEvent")>
@@ -155,9 +157,16 @@
 		</cfif>
 		
 		<!--- delete the entry --->
-		<cfset variables.entryService.removeEvent(arguments.event.getArg("entryID")) />
+		<cftry>
+			<cfset variables.entryService.removeEntry(arguments.event.getArg("entryID")) />
+			<cfcatch type="any">
+				<cfset exitEvent = "failure" />
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry>
 		
 		<!--- announce the next event --->
+		<cfset arguments.event.setArg("message", message) />
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
 	</cffunction>
 </cfcomponent>
