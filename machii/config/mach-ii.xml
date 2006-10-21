@@ -79,21 +79,18 @@
 		</event-handler>
 		
 		<event-handler event="processLogin" access="public">
-			<event-mapping event="success" mapping="showAdminMenu" />
+			<event-mapping event="success" mapping="loginSucceeded" />
 			<event-mapping event="failure" mapping="showLogin" />
 			<notify listener="userListener" method="authenticate" />
+		</event-handler>
+		
+		<event-handler event="loginSucceeded" access="private">
+			<redirect event="showHome" />
 		</event-handler>
 		
 		<event-handler event="logout" access="public">
 			<notify listener="securityListener" method="logoutUser" />
 			<redirect event="showLogin" />
-		</event-handler>
-		
-		<!-- main menu -->
-		<event-handler event="showAdminMenu" access="public">
-			<filter name="checkLoginFilter" />
-			<view-page name="adminMenu" contentArg="content" />
-			<announce event="mainLayout" copyEventArgs="true" />
 		</event-handler>
 		
 		<!-- entry-related events -->
@@ -104,8 +101,56 @@
 		</event-handler>
 		
 		<event-handler event="showEntryForm" access="public">
+			<filter name="checkLoginFilter" />
+			<notify listener="categoryListener" method="getCategories" resultArg="categoriesForSelect" />
+			<notify listener="entryListener" method="getEntry" resultArg="entry" />
 			<view-page name="entryForm" contentArg="content" />
 			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
+		<event-handler event="processEntryForm" access="public">
+			<filter name="checkLoginFilter" />
+			<event-mapping event="success" mapping="entryFormSucceeded" />
+			<event-mapping event="failure" mapping="showEntryForm" />
+			<event-bean name="entry" type="net.litepost.component.entry.Entry" />
+			<notify listener="entryListener" method="processEntryForm" />
+		</event-handler>
+		
+		<event-handler event="entryFormSucceeded" access="private">
+			<redirect event="showHome" args="message" />
+		</event-handler>
+		
+		<event-handler event="deleteEntry" access="public">
+			<filter name="checkLoginFilter" />
+			<event-mapping event="success" mapping="entryFormSucceeded" />
+			<event-mapping event="failure" mapping="showEntries" />
+			<notify listener="entryListener" method="deleteEntry" />
+		</event-handler>
+		
+		<!-- category-related events -->
+		<event-handler event="showCategoryForm" access="public">
+			<filter name="checkLoginFilter" />
+			<notify listener="categoryListener" method="getCategory" resultArg="category" />
+			<view-page name="categoryForm" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
+		<event-handler event="processCategoryForm" access="public">
+			<filter name="checkLoginFilter" />
+			<event-mapping event="success" mapping="categoryFormSucceeded" />
+			<event-mapping event="failure" mapping="showCategoryForm" />
+			<event-bean name="category" type="net.litepost.component.category.Category" />
+			<notify listener="categoryListener" method="processCategoryForm" />
+		</event-handler>
+		
+		<event-handler event="categoryFormSucceeded" access="private">
+			<redirect event="showHome" args="message" />
+		</event-handler>
+		
+		<event-handler event="deleteCategory" access="public">
+			<filter name="checkLoginFilter" />
+			<notify listener="categoryListener" method="deleteCategory" />
+			<redirect event="showHome" args="message" />
 		</event-handler>
 		
 		<!-- comment-related events -->
@@ -131,8 +176,10 @@
 	<page-views>
 		<page-view name="adminMenu" page="/views/adminMenu.cfm" />
 		<page-view name="categories" page="/views/categories.cfm" />
+		<page-view name="categoryForm" page="/views/categoryForm.cfm" />
 		<page-view name="entries" page="/views/entries.cfm" />
 		<page-view name="entry" page="/views/entry.cfm" />
+		<page-view name="entryForm" page="/views/entryForm.cfm" />
 		<page-view name="login" page="/views/login.cfm" />
 		<page-view name="mainLayout" page="/views/mainLayout.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
