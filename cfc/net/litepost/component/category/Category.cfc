@@ -52,6 +52,9 @@ Date Format: MM/DD/YYYY
 		<cfargument name="categoryID" type="Numeric" required="false" default="0" />
 		<cfargument name="category" type="String" required="false" default="" />
 		<cfargument name="numPosts" type="Numeric" required="false" default="0" />
+		
+		<!--- init parent --->
+		<cfset super.init() />
 
 		<!--- run setters --->
 		<cfset setCategoryID(arguments.categoryID) />
