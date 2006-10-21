@@ -92,6 +92,9 @@
 				 </property>
 			</bean>
 		</property>
+		<property name="entryService">
+			<ref bean="entryService" />
+		</property>
 	</bean>
 	
 	<!-- Bookmark Service -->
