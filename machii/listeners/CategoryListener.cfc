@@ -40,7 +40,13 @@
 			hint="Returns a category bean using the category ID in the event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfreturn variables.categoryService.getCategoryByID(arguments.event.getArg("categoryID")) />
+		<cfset var category = variables.categoryService.getCategoryByID(arguments.event.getArg("categoryID", 0)) />
+		
+		<cfif category.isNull()>
+			<cfset category.init() />
+		</cfif>
+		
+		<cfreturn category />
 	</cffunction>
 	
 	<cffunction name="getCategories" returntype="array" access="public" output="false" 
@@ -75,14 +81,22 @@
 			hint="Processes the category form and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showCategoryForm" />
+		<cfset var exitEvent = "success" />
+		<cfset var message = "The category was saved." />
 		
 		<cfif arguments.event.isArgDefined("exitEvent")>
 			<cfset exitEvent = arguments.event.getArg("exitEvent") />
 		</cfif>
 		
-		<cfset variables.categoryService.saveCategory(arguments.event.getArg("category")) />
+		<cftry>
+			<cfset variables.categoryService.saveCategory(arguments.event.getArg("category")) />
+			<cfcatch type="any">
+				<cfset exitEvent = "failure" />
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry>
 		
+		<cfset arguments.event.setArg("message", message) />
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
 	</cffunction>
 	
@@ -90,14 +104,15 @@
 			hint="Deletes a category">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showCategoryForm" />
+		<cfset var message = "The category was deleted." />
 		
-		<cfif arguments.event.isArgDefined("exitEvent")>
-			<cfset exitEvent = arguments.event.getArg("exitEvent") />
-		</cfif>
+		<cftry>
+			<cfset variables.categoryService.removeCategory(arguments.event.getArg("categoryID")) />
+			<cfcatch type="any">
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry>
 		
-		<cfset variables.categoryService.deleteCategory(arguments.event.getArg("categoryID")) />
-		
-		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+		<cfset arguments.event.setArg("message", message) />
 	</cffunction>
 </cfcomponent>
