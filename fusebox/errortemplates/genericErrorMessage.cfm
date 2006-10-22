@@ -13,6 +13,7 @@ Error message
 </cfoutput>
 </cfsavecontent>
 
-<cfinclude template="../layouts/lay_main.cfm" />
+<cfinclude template="../layout/lay_main.cfm" />
+
 
 <cfabort/>

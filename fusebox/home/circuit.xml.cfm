@@ -21,8 +21,10 @@
 		<xfa name="home" value="entry.recent" />
 		<xfa name="view" value="entry.display" />
 		<xfa name="addPost" value="entry.addForm" />
+		<xfa name="addCategory" value="category.addForm" />
 		<xfa name="login" value="login.form" />
 		<xfa name="logout" value="login.logout" />
+		<xfa name="category" value="entry.category" />
 	</fuseaction>
 	
 </circuit>
