@@ -1,6 +1,7 @@
 <!---- set default values ---->
 <cfparam name="ATTRIBUTES.category" default="" type="string" />
 <cfparam name="ATTRIBUTES.categoryID" default="0" type="string" />
+<cfparam name="XFA.submit" default="" type="string" />
 
 <cfoutput>
 <!---- dsp_categoryForm ---->

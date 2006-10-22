@@ -27,7 +27,7 @@
 		<parameter name="characterEncoding" value="utf-8" />
 		<paramater name="strictMode" value="false" />
 		<parameter name="allowImplicitCircuits" value="false" />
-		<parameter name="debug" value="true" />
+		<parameter name="debug" value="false" />
 	</parameters>
 
 	<globalfuseactions>
@@ -36,7 +36,8 @@
 		</appinit>
 		<preprocess>
 			<do action="home.globalXFA" />
-			<do action="category.get" />
+			<do action="category.getAll" />
+			<do action="bookmark.getAll" />
 		</preprocess>
 		<postprocess>
 			<do action="home.output"/>

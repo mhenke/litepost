@@ -13,7 +13,12 @@ Error message
 </cfoutput>
 </cfsavecontent>
 
-<cfinclude template="../layout/lay_main.cfm" />
+<cftry>
+	<cfinclude template="../layout/lay_main.cfm" />
+	<cfcatch type="any">
+		<cfoutput>#REQUEST.content.body#</cfoutput>
+	</cfcatch>
+</cftry>
 
 
 <cfabort/>

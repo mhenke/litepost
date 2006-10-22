@@ -22,6 +22,11 @@
 		<xfa name="view" value="entry.display" />
 		<xfa name="addPost" value="entry.addForm" />
 		<xfa name="addCategory" value="category.addForm" />
+		<xfa name="editCategory" value="category.editForm" />
+		<xfa name="removeCategory" value="category.remove" />
+		<xfa name="addBookmark" value="bookmark.addForm" />
+		<xfa name="editBookmark" value="bookmark.editForm" />
+		<xfa name="removeBookmark" value="bookmark.remove" />
 		<xfa name="login" value="login.form" />
 		<xfa name="logout" value="login.logout" />
 		<xfa name="category" value="entry.category" />

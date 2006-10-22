@@ -11,8 +11,8 @@
 <div class="postfooter">
 	<span>
 		<cfif SESSION.user.role IS 'admin'>
-			<a href="#REQUEST.myself##XFA.edit#&entryID=#REQUEST.qryEntry.entryID[1]#">Edit</a>
-			| <a href="#REQUEST.myself##XFA.remove#&entryID=#REQUEST.qryEntry.entryID[1]#">Remove</a>
+			<a href="#REQUEST.myself##XFA.edit#&entryID=#REQUEST.qryEntry.entryID[1]#"><img src="assets/images/edit_icon.gif" border="0" /></a>
+			<a href="#REQUEST.myself##XFA.remove#&entryID=#REQUEST.qryEntry.entryID[1]#"><img src="assets/images/delete_icon.gif" border="0" /></a>
 		</cfif>
 	</span>
 	<span class="right">

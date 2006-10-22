@@ -22,7 +22,7 @@
 <!-- main container -->
 <div id="container">
 <!-- login/out button -->
-<a href="#REQUEST.myself##XFA.login#" id="loginbutton" class="adminbutton">Log In</a>
+<cfif NOT SESSION.user.isLoggedIn><a href="#REQUEST.myself##XFA.login#" id="loginbutton" class="adminbutton">Log In</a></cfif>
 	<!-- header block -->
 	<div id="header"><a href="#REQUEST.myself##XFA.home#"><img src="assets/images/litePost_logo.gif" alt="litePost" border="0" /></a></div>
 	
@@ -48,18 +48,35 @@
 				<li><a href="#REQUEST.myself##XFA.addPost#">Add Post</a></li>
 			</cfif>
 		</ul>
-		<h2>Categories <a href="#REQUEST.myself##XFA.addCategory#">+</a></h2>
+		<h2>
+			Categories
+			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addCategory#"><img src="assets/images/add_icon.gif" border="0" /></a></cfif>
+		</h2>
 		<ul>
-			<cfloop from="1" to="#REQUEST.qryCategory.recordCount#" index="c">
-				<li><a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryCategory.categoryID[c]#">#REQUEST.qryCategory.category[c]#</a> (#REQUEST.qryCategory.entryCount[c]#)</li>
+			<cfloop from="1" to="#REQUEST.qryCategories.recordCount#" index="c">
+				<li>
+					<a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryCategories.categoryID[c]#">#REQUEST.qryCategories.category[c]#</a> (#REQUEST.qryCategories.entryCount[c]#)
+					<cfif SESSION.user.role IS 'admin'>
+						<a href="#REQUEST.myself##XFA.editCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="assets/images/edit_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.removeCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="assets/images/delete_icon.gif" border="0" /></a>
+					</cfif>
+				</li>
 			</cfloop>
 	  </ul>
-		<h2>Bookmarks</h2>
+		<h2>
+			Bookmarks
+			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addBookmark#"><img src="assets/images/add_icon.gif" border="0" /></a></cfif>
+		</h2>
 		<ul>
-		  <li><a href="#">Bookmark 1</a></li>
-		  <li><a href="#">Bookmark 2</a></li>
-		  <li><a href="#">Bookmark 3</a></li>
-		  <li><a href="#">Bookmark 4</a> </li>
+			<cfloop from="1" to="#REQUEST.qryBookmarks.recordCount#" index="b">
+				<li>
+					<a href="#REQUEST.qryBookmarks.url[b]#" target="_blank">#REQUEST.qryBookmarks.name[b]#</a>
+					<cfif SESSION.user.role IS 'admin'>
+						<a href="#REQUEST.myself##XFA.editBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="assets/images/edit_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.removeBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="assets/images/delete_icon.gif" border="0" /></a>
+					</cfif>
+				</li>
+			</cfloop>
 		</ul>
 	</div>
 <!-- site footer-->

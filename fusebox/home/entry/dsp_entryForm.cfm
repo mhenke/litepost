@@ -14,8 +14,8 @@
 	<label>Category<br />
 		<select name="categoryID">
 			<option value="0">None</option>
-			<cfloop from="1" to="#REQUEST.qryCategory.recordCount#" index="c">
-				<option value="#REQUEST.qryCategory.categoryID[c]#" #iif(ATTRIBUTES.categoryID EQ REQUEST.qryCategory.categoryID[c], DE('selected'), DE(''))#>#REQUEST.qryCategory.category[c]#</option>
+			<cfloop from="1" to="#REQUEST.qryCategories.recordCount#" index="c">
+				<option value="#REQUEST.qryCategories.categoryID[c]#" #iif(ATTRIBUTES.categoryID EQ REQUEST.qryCategories.categoryID[c], DE('selected'), DE(''))#>#REQUEST.qryCategories.category[c]#</option>
 			</cfloop>
 		</select>
 	</label>

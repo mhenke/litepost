@@ -123,7 +123,7 @@
 	-->
 	
 	<fuseaction name="outputForm" access="internal">
-		<do action="category.get" />
+		<do action="category.getAll" />
 		<include template="dsp_entryForm" contentvariable="REQUEST.content.body" />
 	</fuseaction>
 	
