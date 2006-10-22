@@ -48,12 +48,11 @@
 				<li><a href="#REQUEST.myself##XFA.addPost#">Add Post</a></li>
 			</cfif>
 		</ul>
-		<h2>Categories</h2>
+		<h2>Categories <a href="#REQUEST.myself##XFA.addCategory#">+</a></h2>
 		<ul>
-		  <li><a href="#">Category 1</a></li>
-		  <li><a href="#">Category 2</a></li>
-		  <li><a href="#">Category 3</a></li>
-		  <li><a href="#">Category 4</a></li>
+			<cfloop from="1" to="#REQUEST.qryCategory.recordCount#" index="c">
+				<li><a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryCategory.categoryID[c]#">#REQUEST.qryCategory.category[c]#</a> (#REQUEST.qryCategory.entryCount[c]#)</li>
+			</cfloop>
 	  </ul>
 		<h2>Bookmarks</h2>
 		<ul>
