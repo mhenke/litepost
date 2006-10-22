@@ -13,6 +13,18 @@
 		<include template="dsp_entries.cfm" contentvariable="REQUEST.content.body" />
 	</fuseaction>
 	
+	<fuseaction name="category">
+		<if condition="NOT structKeyExists(ATTRIBUTES, 'categoryID')">
+			<true>
+				<cf:throw type="validation.INVALID_ID" message="Invalid Category" detail="You must specify a valid category." />
+			</true>
+		</if>
+		<do action="getRecent">
+			<parameter name="ATTRIBUTES.categoryID" value="#ATTRIBUTES.categoryID#" />
+		</do>
+		<include template="dsp_entries.cfm" contentvariable="REQUEST.content.body" />
+	</fuseaction>
+	
 	<fuseaction name="display">
 		<if condition="NOT structKeyExists(ATTRIBUTES, 'entryID')">
 			<true>

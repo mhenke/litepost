@@ -16,7 +16,9 @@
 		</cfif>
 	</span>
 	<span class="right">
-		<a href="##">Filed under #REQUEST.qryEntry.category[1]#</a>
+		<cfif NOT isEmpty(REQUEST.qryEntry.category[1])>
+			Filed under <a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryEntry.categoryID[1]#">#REQUEST.qryEntry.category[1]#</a>
+		</cfif>
 	</span>
 </div>
 

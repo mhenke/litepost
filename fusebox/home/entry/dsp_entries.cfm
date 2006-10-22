@@ -15,7 +15,9 @@
 				<a href="#REQUEST.myself##XFA.view#&entryID=#REQUEST.qryEntry.entryID[r]#">Comment (#REQUEST.qryEntry.numComments[r]#)</a>
 			</span>
 			<span class="right">
-				<a href="##">Filed under #REQUEST.qryEntry.category[r]#</a>
+				<cfif NOT isEmpty(REQUEST.qryEntry.category[r])>
+					Filed under <a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryEntry.categoryID[r]#">#REQUEST.qryEntry.category[r]#</a>
+				</cfif>
 			</span>
 		</div>
 	</cfloop>
