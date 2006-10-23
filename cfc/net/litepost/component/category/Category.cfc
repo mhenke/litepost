@@ -64,6 +64,15 @@ Date Format: MM/DD/YYYY
 		<cfreturn this />
  	</cffunction>
 
+	<!--- validate the required fields --->
+	<cffunction name="validate" access="public" returntype="boolean" output="false">
+		<cfif len(getCategory())>
+			<cfreturn true />
+		<cfelse>
+			<cfreturn false />
+		</cfif>
+	</cffunction>
+
 	<!---
 	ACCESSORS
 	--->
