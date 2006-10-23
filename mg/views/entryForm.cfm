@@ -14,33 +14,32 @@
 
 <cfoutput>
 
-	<h3>#label# Entry</h3>
+	<h1>#label# Entry</h1>
 	
-	<!--- entry form --->
-	<form action="#myself#saveEntry" method="post">
-	<input type="hidden" name="entryID" value="#entryBean.getEntryID()#" />
-	 
-	#message#
-	<p>
-	Title:<br />
-	<input type="text" name="title" value="#entryBean.getTitle()#"  size="45" maxlength="255" />
-	<br />
-	<cfset currCatID = entryBean.getCategoryID() />
-	Category:<br />
-	<select size="1" name="categoryID">
-		<option value="-1" selected>- Select -</option>
-		<option value="0" <cfif currCatID EQ 0>selected</cfif>>- None -</option>
-		<cfloop from="1" to="#ArrayLen(categories)#" index="ix">
-			<option value="#categories[ix].getCategoryID()#" <cfif currCatID EQ categories[ix].getCategoryID()>selected</cfif>>#categories[ix].getCategory()#</option>
-		</cfloop>
-	</select>
-	<br />
-	Entry:<br />
-	<textarea name="body" cols="60" rows="18">#entryBean.getBody()#</textarea>
-	</p>
-	<p>
-	<input type="submit" name="submit" value="#label# Entry" />
-	</p>
+	<cfif len(message)>
+		<p><strong>#message#</strong></p>
+	</cfif>
 	
+	<form id="editEntry" name="editEntry" action="#myself#saveEntry" method="post">
+		<input type="hidden" name="entryID" value="#entryBean.getEntryID()#" />
+		<label>Title<br />
+		<input name="title" type="text" value="#entryBean.getTitle()#" />
+		</label>
+		<label>Category<br />
+		<cfset currCatID = entryBean.getCategoryID() />
+		<select name="categoryID">
+			<option value="-1" selected>- Select -</option>
+			<option value="0" <cfif currCatID EQ 0>selected</cfif>>- None -</option>
+			<cfloop from="1" to="#arrayLen(categories)#" index="i">
+				<cfset category = categories[i] />
+				<option value="#category.getCategoryID()#"<cfif currCatID eq entryBean.getCategoryID()> selected</cfif>>#category.getCategory()#</option>
+			</cfloop>
+		</select>
+		</label>
+		<label>Entry<br />
+		<textarea name="body" class="entry" cols="" rows="">#entryBean.getBody()#</textarea>
+		</label>
+		<input type="submit" name="submit" value="#label# Entry" class="adminbutton" />
 	</form>
+	
 </cfoutput>

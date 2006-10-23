@@ -5,24 +5,19 @@
 </cfsilent>
 
 <cfoutput>
-<center>
-	<h3>Login</h3>
+	<h1>Please Log In</h1>
+		
+	<cfif len(message)>
+		<p style="color:red;font-weight:bold;" align="center">#message#</p>
+	</cfif>
 	
-	<!--- entry form --->
 	<form action="#myself##submitEvent#" method="post">
-	 
-	#message#
-	<p>
-	Username:<br />
-	<input type="text" name="username" size="20" maxlength="20" />
-	<br />
-	password:<br />
-	<input type="password" name="password" size="20" maxlength="20" />
-	</p>
-	<p>
-	<input type="submit" name="submit" value="login" />
-	</p>
-	
+	  	<label>Username<br />
+	  	<input name="userName" type="text" maxlength="30" />
+		</label>
+		<label>Password<br />
+		<input name="password" type="password" maxlength="30" />
+		</label>
+		<input type="submit" name="submit" value="Log In" class="adminbutton" />
 	</form>
-</center>
 </cfoutput>

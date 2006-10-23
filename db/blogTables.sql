@@ -30,6 +30,9 @@ CREATE TABLE users (
 	) TYPE=INNODB
 ;
 
+INSERT INTO users (fname, lname, email, username, password, role) 
+VALUES ('Chris','Scott','chris.scott.one@gmail.com','chris','asstro','admin');
+
 /*
  * Categories, Entries, Comments, Bookmarks
  */

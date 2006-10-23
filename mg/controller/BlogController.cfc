@@ -159,5 +159,43 @@
 		</cfif>
 		
 	</cffunction>
+	
+	<cffunction name="getCategoryBean" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var categoryBean = arguments.event.makeEventBean("net.litepost.component.category.Category") />
+		<cfset arguments.event.SetValue("categoryBean", categoryBean) />
+		
+	</cffunction>
+	
+	<cffunction name="getCategory" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var categoryID = arguments.event.getValue("categoryID",0) />
+		<cfset var category = variables.categoryService.getCategoryByID(categoryID) />
+		
+		<cfif category.isNull()>
+			<cfset arguments.event.forward("home") />
+		<cfelse>
+			<cfset arguments.event.SetValue("categoryBean", category) />
+		</cfif>
+		
+	</cffunction>
+	
+	<cffunction name="saveCategory" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var categoryBean = arguments.event.makeEventBean("net.litepost.component.category.Category") />
+		<!--- validate the bean, add result based on validation--->
+		<cfif categoryBean.validate()>
+			<cfset variables.categoryService.saveCategory(categoryBean) />
+			<cfset arguments.event.addResult("goHome") />
+		<cfelse>
+			<cfset arguments.event.SetValue("message", "Please complete comments form!") />
+			<cfset arguments.event.SetValue("categoryBean", categoryBean) />
+			<cfset arguments.event.addResult("goCategoryForm") />
+		</cfif>
+		
+	</cffunction>
 		
 </cfcomponent>

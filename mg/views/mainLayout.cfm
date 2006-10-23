@@ -9,66 +9,72 @@
 </cfsilent>
 <cfcontent reset="true" />
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>:: LitePost! ::</title>
-	<link rel="stylesheet" type="text/css" href="views/css/simple.css" />
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>litePost blog</title>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+	<style type="text/css" media="all">
+	<!--
+	@import url("../assets/css/lp_layout.css");
+	@import url("../assets/css/lp_text.css");
+	@import url("../assets/css/lp_forms.css");
+	-->
+	</style>
+
 </head>
 
 <body>
+
+<!-- display divider-->
+<div id="bar">&nbsp;</div>
+
+<cfoutput>
+<!-- main container -->
+<div id="container">
+
+	<!-- login/out button -->
+	<cfif isAdmin>
+		<a href="#myself#logout" id="loginbutton" class="adminbutton">Log Out</a>
+	<cfelse>
+		<a href="#myself#loginForm" id="loginbutton" class="adminbutton">Log In</a>
+	</cfif>
 	
-	<div id="content">
+	<!-- header block -->
+	<div id="header"><a href="#myself#home"><img src="../assets/images/litePost_logo.gif" alt="litePost" border="0" /></a></div>
 	
-	<div class="header">
-		<h3>LitePost!</h3>
-	</div>
-	
-	<cfoutput>
-	
-	<!-- center column -->
-	<div class="center">
-		
-		<!-- content -->
-		<cfif len("content")>
-			#content#
-		</cfif>
+	<!-- wrapper block to constrain widths -->
+	<div id="wrapper">
+		<!-- begin body content -->
+		<div id="content">
 			
+			<!-- anchor to top of content, also used for skip to content links-->
+			<a name="content"></a>
+			
+			<!-- content -->
+			<cfif len("content")>
+				#content#
+			</cfif>
+		
+	  	</div>
+		
 	</div>
-	
-	
-	<!-- right columns -->
-	<div class="right">
+	<!-- navigation -->
+	<div id="navigation">
+				
 		<cfif len("contentRight")>
 			#contentRight#
 		</cfif>
 		
-		<b>Nav</b>
-		
-		<p>
-		<div class="links">
-		<cfif isAdmin>
-			<a href="#myself#logout">logout</a> | 
-			<a href="#myself#addEntry">add entry</a> | 
-			<a href="#myself#home">home</a>
-		<cfelse>
-			<a href="#myself#loginForm">login</a> | 
-			<a href="#myself#home">home</a>
-		</cfif>
-		</div>
-		</p>
-		
 	</div>
 	
-	</cfoutput>
+	<!-- site footer-->
+	<div id="footer"><p>LitePost is made under the Creative Commons license! (or something like that)</p></div>
 	
-	<div class="clearer">&#160;</div>
-	
-	<!-- copyright -->
-	<p class="fine">&copy; 2006, Chris Scott, Matt Woodward, Adam Wayne Lehman, Dave Ross. All Rights Reserved.</p>
-	
-	</div>
-	
+</div>
+</cfoutput>
+
 </body>
 </html>
