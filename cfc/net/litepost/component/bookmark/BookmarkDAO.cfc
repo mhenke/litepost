@@ -48,13 +48,15 @@
 			WHERE bookmarkID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.bookmarkID#"/>
 		</cfquery>
 		
-		<cfif qrySelect.RecordCount LT 1>
+		<!--- <cfif qrySelect.RecordCount LT 1>
 			<cfthrow message="Record not found for bookmarkID: #arguments.bookmarkID#!">
-		</cfif>
+		</cfif> --->
 		
-		<cfset bookmark.setBookmarkID(qrySelect.bookmarkID) />
-		<cfset bookmark.setName(qrySelect.name) />
-		<cfset bookmark.setUrl(qrySelect.url) />
+		<cfif qrySelect.recordCount gt 0>
+			<cfset bookmark.setBookmarkID(qrySelect.bookmarkID) />
+			<cfset bookmark.setName(qrySelect.name) />
+			<cfset bookmark.setUrl(qrySelect.url) />
+		</cfif>
 		
 		<cfreturn bookmark />
 		
