@@ -8,7 +8,7 @@
 </cfsilent>
 
 <cfoutput>
-	<h1>#label# Category </h1>
+	<h1>#label# Category</h1>
 	
 	<form id="editCategory" name="editCategory" method="post" action="index.cfm?#getProperty('eventParameter')#=processCategoryForm">
 		<label>Category<br />
