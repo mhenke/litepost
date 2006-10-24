@@ -159,10 +159,38 @@
 			<notify listener="commentListener" method="processCommentForm" />
 		</event-handler>
 		
+		<!-- bookmark-related events -->
+		<event-handler event="showBookmarkForm" access="public">
+			<filter name="checkLoginFilter" />
+			<notify listener="bookmarkListener" method="getBookmark" resultArg="bookmark" />
+			<view-page name="bookmarkForm" contentArg="content" />
+			<announce event="mainLayout" copyEventArgs="true" />
+		</event-handler>
+		
+		<event-handler event="processBookmarkForm" access="public">
+			<filter name="checkLoginFilter" />
+			<event-mapping event="success" mapping="bookmarkFormSucceeded" />
+			<event-mapping event="failure" mapping="showBookmarkForm" />
+			<event-bean name="bookmark" type="net.litepost.component.bookmark.Bookmark" />
+			<notify listener="bookmarkListener" method="processBookmarkForm" />
+		</event-handler>
+		
+		<event-handler event="bookmarkFormSucceeded" access="private">
+			<redirect event="showHome" args="message" />
+		</event-handler>
+		
+		<event-handler event="deleteBookmark" access="public">
+			<filter name="checkLoginFilter" />
+			<notify listener="bookmarkListener" method="deleteBookmark" />
+			<redirect event="showHome" args="message" />
+		</event-handler>
+		
 		<!-- layout events -->
 		<event-handler event="mainLayout" access="private">
+			<notify listener="bookmarkListener" method="getBookmarks" resultArg="bookmarks" />
 			<notify listener="categoryListener" method="getCategoriesWithCounts" resultArg="categories" />
-			<view-page name="categories" contentArg="contentRight" />
+			<view-page name="bookmarks" contentArg="contentRight" />
+			<view-page name="categories" contentArg="contentRight" append="true" />
 			<view-page name="mainLayout" />
 		</event-handler>
 		
@@ -175,6 +203,8 @@
 	<!-- PAGE-VIEWS -->
 	<page-views>
 		<page-view name="adminMenu" page="/views/adminMenu.cfm" />
+		<page-view name="bookmarkForm" page="/views/bookmarkForm.cfm" />
+		<page-view name="bookmarks" page="/views/bookmarks.cfm" />
 		<page-view name="categories" page="/views/categories.cfm" />
 		<page-view name="categoryForm" page="/views/categoryForm.cfm" />
 		<page-view name="entries" page="/views/entries.cfm" />
