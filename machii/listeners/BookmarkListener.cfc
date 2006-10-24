@@ -38,8 +38,7 @@
 	<cffunction name="getBookmark" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false" 
 			hint="Returns a bookmark">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
-		
-		<cfreturn variables.bookmarkService.getBookmarkByID(arguments.event.getArg("bookmarkID")) />
+		<cfreturn variables.bookmarkService.getBookmarkByID(arguments.event.getArg("bookmarkID", 0)) />
 	</cffunction>
 	
 	<cffunction name="getBookmarks" returntype="array" access="public" output="false" 
@@ -60,13 +59,16 @@
 			hint="Processes the bookmark form and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showBookmarkForm" />
+		<cfset var exitEvent = "success" />
+		<cfset var message = "The link was saved." />
 		
-		<cfif arguments.event.isArgDefined("exitEvent")>
-			<cfset exitEvent = arguments.event.getArg("exitEvent") />
-		</cfif>
-		
-		<cfset variables.bookmarkService.saveBookmark(arguments.event.getArg("bookmark")) />
+		<cftry>
+			<cfset variables.bookmarkService.saveBookmark(arguments.event.getArg("bookmark")) />
+			<cfcatch type="any">
+				<cfset exitEvent = "failure" />
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry>
 		
 		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
 	</cffunction>
@@ -75,14 +77,13 @@
 			hint="Deletes a bookmark and announces the next event">
 		<cfargument name="event" type="MachII.framework.Event" required="true" />
 		
-		<cfset var exitEvent = "showBookmarkForm" />
+		<cfset var message = "The link was deleted." />
 		
-		<cfif arguments.event.isArgDefined("exitEvent")>
-			<cfset exitEvent = arguments.event.getArg("exitEvent") />
-		</cfif>
-		
-		<cfset variables.bookmarkService.removeBookmark(arguments.event.getArg("bookmarkID")) />
-		
-		<cfset announceEvent(exitEvent, arguments.event.getArgs()) />
+		<cftry>
+			<cfset variables.bookmarkService.removeBookmark(arguments.event.getArg("bookmarkID")) />
+			<cfcatch type="any">
+				<cfset message = "An error occurred: #cfcatch.detail#" />
+			</cfcatch>
+		</cftry>
 	</cffunction>
 </cfcomponent>
