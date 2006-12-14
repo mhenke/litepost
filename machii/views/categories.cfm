@@ -30,8 +30,9 @@
 			<cfset category = categories[i] />
 			<li>
 				<a href="index.cfm?#getProperty('eventParameter')#=showHome&categoryID=#category.getCategoryID()#">
-					#category.getCategory()# (#category.getNumPosts()#)
+					#category.getCategory()# (#category.getNumPosts()#) 
 				</a>
+				[<a href="index.cfm?#getProperty('eventParameter')#=showCategoryRSS&categoryID=#category.getCategoryID()#&categoryName=#category.getCategory()#">rss</a>]
 				<cfif event.getArg("isAdmin")>
 					&nbsp;
 					<a href="index.cfm?#getProperty('eventParameter')#=showCategoryForm&categoryID=#category.getCategoryID()#">

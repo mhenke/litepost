@@ -33,6 +33,12 @@
 		<property name="dsn" value="litepost" />
 		<property name="numEntriesOnHomePage" value="20" />
 		<property name="coldspringConfigFile" value="../config/litepost-services.xml"/>
+		<property name="blogName" value="LitePost - Mach-II Edition" />
+		<property name="blogURL" value="http://localhost/litepost/machii" />
+		<property name="blogDescription" value="The Mach-II Edition of LitePost" />
+		<property name="blogLanguage" value="en_US" />
+		<property name="authorEmail" value="mpwoodward@gmail.com" />
+		<property name="webmasterEmail" value="mpwoodward@gmail.com" />
 	</properties>
 
 	<!-- PLUGINS -->
@@ -59,6 +65,7 @@
 		<listener name="categoryListener" type="litepost.machii.listeners.CategoryListener" />
 		<listener name="commentListener" type="litepost.machii.listeners.CommentListener" />
 		<listener name="entryListener" type="litepost.machii.listeners.EntryListener" />
+		<listener name="rssListener" type="litepost.machii.listeners.RSSListener" />
 		<listener name="securityListener" type="litepost.machii.listeners.SecurityListener" />
 		<listener name="userListener" type="litepost.machii.listeners.UserListener" />
 	</listeners>
@@ -185,12 +192,23 @@
 			<redirect event="showHome" args="message" />
 		</event-handler>
 		
+		<!-- rss-related events -->
+		<event-handler event="showBlogRSS" access="public">
+			<notify listener="rssListener" method="getBlogRSS" resultArg="rss" />
+			<view-page name="rss" />
+		</event-handler>
+
+		<event-handler event="showCategoryRSS" access="public">
+			<notify listener="rssListener" method="getCategoryRSS" resultArg="rss" />
+			<view-page name="rss" />
+		</event-handler>
+		
 		<!-- layout events -->
 		<event-handler event="mainLayout" access="private">
 			<notify listener="bookmarkListener" method="getBookmarks" resultArg="bookmarks" />
 			<notify listener="categoryListener" method="getCategoriesWithCounts" resultArg="categories" />
-			<view-page name="bookmarks" contentArg="contentRight" />
-			<view-page name="categories" contentArg="contentRight" append="true" />
+			<view-page name="categories" contentArg="contentRight" />
+			<view-page name="bookmarks" contentArg="contentRight" append="true" />
 			<view-page name="mainLayout" />
 		</event-handler>
 		
@@ -212,6 +230,7 @@
 		<page-view name="entryForm" page="/views/entryForm.cfm" />
 		<page-view name="login" page="/views/login.cfm" />
 		<page-view name="mainLayout" page="/views/mainLayout.cfm" />
+		<page-view name="rss" page="/views/rss.cfm" />
 		<page-view name="exception" page="/views/exception.cfm" />
 	</page-views>
 

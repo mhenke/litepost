@@ -114,5 +114,12 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<!-- RSS Service -->
+	<bean id="rssService" class="net.litepost.component.rss.RSSService">
+		<property name="entryService">
+			<ref bean="entryService" />
+		</property>
+	</bean>
 
 </beans>

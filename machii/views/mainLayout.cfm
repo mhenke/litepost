@@ -12,7 +12,6 @@
 <title>litePost blog</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 
-
 <style type="text/css" media="all">
 <!--
 @import url("../assets/css/lp_layout.css");
@@ -20,6 +19,9 @@
 @import url("../assets/css/lp_forms.css");
 -->
 </style>
+<cfoutput>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="#getProperty('blogURL')#/index.cfm?#getProperty('eventParameter')#=showBlogRSS" />
+</cfoutput>
 </head>
 <body>
 <cfoutput>
