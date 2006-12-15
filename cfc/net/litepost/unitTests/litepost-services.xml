@@ -44,7 +44,7 @@
 			</bean>
          </property>
 		<property name="entryGateway">
-			<bean class="net.litepost.component.entry.entryGateway">
+			<bean class="net.litepost.component.entry.EntryGateway">
          		<property name="dsn">
 					<value>litepost</value>
 				 </property>
@@ -52,6 +52,9 @@
          </property>
 		<property name="commentService">
 			<ref bean="commentService"/>
+		</property>
+		<property name="sessionService">
+			<ref bean="sessionService" />
 		</property>
 	</bean>
 	
@@ -89,6 +92,9 @@
 				 </property>
 			</bean>
 		</property>
+		<property name="entryService">
+			<ref bean="entryService" />
+		</property>
 	</bean>
 	
 	<!-- Bookmark Service -->
@@ -106,6 +112,13 @@
 					<value>litepost</value>
 				 </property>
 			</bean>
+		</property>
+	</bean>
+	
+	<!-- RSS Service -->
+	<bean id="rssService" class="net.litepost.component.rss.RSSService">
+		<property name="entryService">
+			<ref bean="entryService" />
 		</property>
 	</bean>
 

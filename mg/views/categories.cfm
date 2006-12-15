@@ -40,9 +40,8 @@
 			<cfset catID = category.getCategoryID() />
 			
 			<li>
-				<a href="#myself#home&categoryID=#catID#">
-					#category.getCategory()# [#category.getNumPosts()#]
-				</a>
+				<a href="#myself#home&categoryID=#catID#">#category.getCategory()#</a> (#category.getNumPosts()#)
+				[<a href="#myself#categoryRSS&categoryID=#category.getCategoryID()#&categoryName=#category.getCategory()#">rss</a>]
 				<cfif isAdmin>
 					&nbsp;
 					<a href="#myself#editCategory&categoryID=#catID#">

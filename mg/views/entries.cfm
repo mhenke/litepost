@@ -44,7 +44,7 @@
 			
 			<h1>#entry.getTitle()#</h1>
 			<p class="author">Posted by #entry.getPostedBy()#, #dateFormat(entry.getEntryDate(), shortDateString)# @ #timeFormat(entry.getEntryDate(), timeString)#</p>
-			<p>#entry.getBody()#</p
+			<p>#ParagraphFormat(entry.getBody())#</p
 			
 			<!-- footer at the bottom of every post -->
 			<div class="postfooter">

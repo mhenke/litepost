@@ -1,6 +1,7 @@
 <cfsilent>
 	<cfset entryBean = viewState.getValue("entryBean") />
 	<cfset categories = viewState.getValue("categories") />
+	<cfset submitEvent = viewState.getValue("submitEvent") />
 	<cfset message = viewState.getValue("message") />
 	<cfset isAdmin = viewState.getValue("isAdmin") />
 	<cfset myself = viewState.getValue("myself") />
@@ -20,7 +21,7 @@
 		<p><strong>#message#</strong></p>
 	</cfif>
 	
-	<form id="editEntry" name="editEntry" action="#myself#saveEntry" method="post">
+	<form id="editEntry" name="editEntry" action="#myself##submitEvent#" method="post">
 		<input type="hidden" name="entryID" value="#entryBean.getEntryID()#" />
 		<label>Title<br />
 		<input name="title" type="text" value="#entryBean.getTitle()#" />

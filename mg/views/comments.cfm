@@ -15,7 +15,7 @@
 	<!--- output entry --->
 	<h1>#entry.getTitle()#</h1>
 	<p class="author">Posted by #entry.getPostedBy()#, #dateFormat(entry.getEntryDate(), shortDateString)# @ #timeFormat(entry.getEntryDate(), timeString)#</p>
-	<p>#entry.getBody()#</p
+	<p>#ParagraphFormat(entry.getBody())#</p
 	
 	<!-- footer at the bottom of every post -->
 	<div class="postfooter">
@@ -66,7 +66,7 @@
 						<cfif comment.getUrl() is not ""></a></cfif>
 					</strong> 
 					- <em>#dateFormat(comment.getDateCreated(), "mm/dd/yyyy")#</em></p>
-				<p>#comment.getName()# says ... #comment.getComment()#</p>
+				<p>#comment.getName()# says ... #ParagraphFormat(comment.getComment())#</p>
 		 	</div>
 			<p><a href="##content"><img src="../assets/images/top_icon.gif" alt="top" /></a> <a href="##content">top</a></p>
 		</cfloop>

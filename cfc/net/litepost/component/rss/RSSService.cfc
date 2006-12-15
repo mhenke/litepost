@@ -50,12 +50,16 @@ THANKS RAY!!!!
 		<cfset var entries = getEntryService().getEntries(arguments.numEntries, true) />
 		<cfset var publishDate = DateFormat(Now(), "ddd, dd mmm yyyy") & " " & TimeFormat(Now(), "HH:mm:ss") & " -" 
 									& NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
-		<cfset var lastBuildDate = DateFormat(entries[1].getDateCreated(), "ddd, dd mmm yyyy") & " " 
-									& TimeFormat(entries[1].getDateCreated(), "HH:mm:ss") 
-									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+		<cfset var lastBuildDate = "" />
 		<cfset var entryDate = "" />
 		<cfset var rss = "" />
 		<cfset var i = 0 />
+		
+		<cfif arrayLen(entries)>
+			<cfset lastBuildDate = DateFormat(entries[1].getDateCreated(), "ddd, dd mmm yyyy") & " " 
+									& TimeFormat(entries[1].getDateCreated(), "HH:mm:ss") 
+									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+		</cfif>
 		
 		<cfsavecontent variable="rss">
 		<cfoutput>
@@ -71,24 +75,24 @@ THANKS RAY!!!!
 			<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 			<managingEditor>#xmlFormat(arguments.authorEmail)#</managingEditor>
 			<webMaster>#xmlFormat(arguments.webmasterEmail)#</webMaster>
-		<cfloop index="i" from="1" to="#arrayLen(entries)#">
-			<cfset entryDate = DateFormat(entries[i].getDateCreated(), "ddd, dd mmm yyyy") & " " 
-								& TimeFormat(entries[i].getDateCreated(), "HH:mm:ss") 
-								& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
-			<item>
-				<title>#xmlFormat(entries[i].getTitle())#</title>
-				<link>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
-				<description>
-				<!--- Regex operation removes HTML code from blog body output --->
-				<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
-				#xmlFormat(Left(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"), 250))#...
-				<cfelse>#xmlFormat(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"))#</cfif>
-				</description>
-				<category>#xmlFormat(entries[i].getCategory())#</category>
-				<pubDate>#entryDate#</pubDate>
-				<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
-			</item>
-		</cfloop>
+			<cfloop index="i" from="1" to="#arrayLen(entries)#">
+				<cfset entryDate = DateFormat(entries[i].getDateCreated(), "ddd, dd mmm yyyy") & " " 
+									& TimeFormat(entries[i].getDateCreated(), "HH:mm:ss") 
+									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+				<item>
+					<title>#xmlFormat(entries[i].getTitle())#</title>
+					<link>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
+					<description>
+					<!--- Regex operation removes HTML code from blog body output --->
+					<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
+					#xmlFormat(Left(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"), 250))#...
+					<cfelse>#xmlFormat(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"))#</cfif>
+					</description>
+					<category>#xmlFormat(entries[i].getCategory())#</category>
+					<pubDate>#entryDate#</pubDate>
+					<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
+				</item>
+			</cfloop>
 			</channel>
 			</rss>
 		</cfoutput>
@@ -113,14 +117,18 @@ THANKS RAY!!!!
 		<cfset var entries = getEntryService().getEntriesByCategoryID(arguments.categoryID, 20, true) />
 		<cfset var publishDate = DateFormat(Now(), "ddd, dd mmm yyyy") & " " & TimeFormat(Now(), "HH:mm:ss") & " -" 
 									& NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
-		<cfset var lastBuildDate = DateFormat(entries[1].getDateCreated(), "ddd, dd mmm yyyy") & " " 
-									& TimeFormat(entries[1].getDateCreated(), "HH:mm:ss") 
-									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+		<cfset var lastBuildDate = "" />
 		<cfset var entryDate = "" />
 		<cfset var category = "" />
 		<cfset var rss = "" />
 		<cfset var i = 0 />
-
+		
+		<cfif arrayLen(entries)>
+			<cfset lastBuildDate = DateFormat(entries[1].getDateCreated(), "ddd, dd mmm yyyy") & " " 
+									& TimeFormat(entries[1].getDateCreated(), "HH:mm:ss") 
+									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+		</cfif>
+		
 		<cfsavecontent variable="rss">
 		<cfoutput>
 			<rss version="2.0">
@@ -135,24 +143,24 @@ THANKS RAY!!!!
 			<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 			<managingEditor>#xmlFormat(arguments.authorEmail)#</managingEditor>
 			<webMaster>#xmlFormat(arguments.webmasterEmail)#</webMaster>
-		<cfloop index="i" from="1" to="#arrayLen(entries)#">
-			<cfset entryDate = DateFormat(entries[i].getDateCreated(), "ddd, dd mmm yyyy") & " " 
-								& TimeFormat(entries[i].getDateCreated(), "HH:mm:ss") 
-								& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
-			<item>
-				<title>#xmlFormat(entries[i].getTitle())#</title>
-				<link>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
-				<description>
-				<!--- Regex operation removes HTML code from blog body output --->
-				<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
-				#xmlFormat(Left(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"), 250))#...
-				<cfelse>#xmlFormat(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"))#</cfif>
-				</description>
-				<category>#xmlFormat(entries[i].getCategory())#</category>
-				<pubDate>#entryDate#</pubDate>
-				<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
-			</item>
-		</cfloop>
+			<cfloop index="i" from="1" to="#arrayLen(entries)#">
+				<cfset entryDate = DateFormat(entries[i].getDateCreated(), "ddd, dd mmm yyyy") & " " 
+									& TimeFormat(entries[i].getDateCreated(), "HH:mm:ss") 
+									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
+				<item>
+					<title>#xmlFormat(entries[i].getTitle())#</title>
+					<link>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
+					<description>
+					<!--- Regex operation removes HTML code from blog body output --->
+					<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
+					#xmlFormat(Left(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"), 250))#...
+					<cfelse>#xmlFormat(REReplace(entries[i].getBody(), "<[^>]*>", "", "ALL"))#</cfif>
+					</description>
+					<category>#xmlFormat(entries[i].getCategory())#</category>
+					<pubDate>#entryDate#</pubDate>
+					<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
+				</item>
+			</cfloop>
 			</channel>
 			</rss>
 		</cfoutput>

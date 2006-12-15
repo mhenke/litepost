@@ -197,5 +197,45 @@
 		</cfif>
 		
 	</cffunction>
+	
+	
+	<!--- methods for editting bookmarks --->
+	<cffunction name="getBookmarkBean" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var bookmarkBean = arguments.event.makeEventBean("net.litepost.component.bookmark.Bookmark") />
+		<cfset arguments.event.SetValue("bookmarkBean", bookmarkBean) />
+		
+	</cffunction>
+	
+	<cffunction name="getBookmark" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var bookmarkID = arguments.event.getValue("bookmarkID",0) />
+		<cfset var bookmark = variables.bookmarkService.getBookmarkByID(bookmarkID) />
+		
+		<cfif bookmark.isNull()>
+			<cfset arguments.event.forward("home") />
+		<cfelse>
+			<cfset arguments.event.SetValue("bookmarkBean", bookmark) />
+		</cfif>
+		
+	</cffunction>
+	
+	<cffunction name="saveBookmark" access="public" returntype="void" output="false">
+		<cfargument name="event" type="ModelGlue.Core.Event" required="true">
+		
+		<cfset var bookmarkBean = arguments.event.makeEventBean("net.litepost.component.bookmark.Bookmark") />
+		<!--- validate the bean, add result based on validation--->
+		<cfif bookmarkBean.validate()>
+			<cfset variables.bookmarkService.saveBookmark(bookmarkBean) />
+			<cfset arguments.event.addResult("goHome") />
+		<cfelse>
+			<cfset arguments.event.SetValue("message", "Please complete comments form!") />
+			<cfset arguments.event.SetValue("bookmarkBean", bookmarkBean) />
+			<cfset arguments.event.addResult("goBookmarkForm") />
+		</cfif>
+		
+	</cffunction>
 		
 </cfcomponent>
