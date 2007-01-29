@@ -13,6 +13,23 @@
 		<include template="dsp_entries.cfm" contentvariable="REQUEST.content.body" />
 	</fuseaction>
 	
+	<fuseaction name="rss">
+		<do action="getRecent" />
+		<include template="dsp_entries_rss.cfm" contentvariable="REQUEST.content.rss" />
+	</fuseaction>
+	
+	<fuseaction name="rssCategory">
+		<if condition="NOT structKeyExists(ATTRIBUTES, 'categoryID')">
+			<true>
+				<cf:throw type="validation.INVALID_ID" message="Invalid Category" detail="You must specify a valid category." />
+			</true>
+		</if>
+		<do action="getRecent">
+			<parameter name="ATTRIBUTES.categoryID" value="#ATTRIBUTES.categoryID#" />
+		</do>
+		<include template="dsp_entries_rss.cfm" contentvariable="REQUEST.content.rss" />
+	</fuseaction>
+	
 	<fuseaction name="category">
 		<if condition="NOT structKeyExists(ATTRIBUTES, 'categoryID')">
 			<true>

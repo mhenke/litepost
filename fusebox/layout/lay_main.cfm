@@ -7,9 +7,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 	<style type="text/css" media="all">
 	<!--
-	@import url("assets/css/lp_layout.css");
-	@import url("assets/css/lp_text.css");
-	@import url("assets/css/lp_forms.css");
+	@import url("/assets/css/lp_layout.css");
+	@import url("/assets/css/lp_text.css");
+	@import url("/assets/css/lp_forms.css");
 	-->
 	</style>
 	#REQUEST.content.head#
@@ -24,7 +24,7 @@
 <!-- login/out button -->
 <cfif NOT SESSION.user.isLoggedIn><a href="#REQUEST.myself##XFA.login#" id="loginbutton" class="adminbutton">Log In</a></cfif>
 	<!-- header block -->
-	<div id="header"><a href="#REQUEST.myself##XFA.home#"><img src="assets/images/litePost_logo.gif" alt="litePost" border="0" /></a></div>
+	<div id="header"><a href="#REQUEST.myself##XFA.home#"><img src="/assets/images/litePost_logo.gif" alt="litePost" border="0" /></a></div>
 	
 	<!-- wrapper block to constrain widths -->
 	<div id="wrapper">
@@ -32,7 +32,7 @@
 		<div id="content">
 		<!-- anchor to top of content, also used for skip to content links-->
 		<a name="content"></a>
-		#REQUEST.content.body#		
+		#REQUEST.content.body#
 	  </div>
 	</div>
 	
@@ -54,13 +54,16 @@
 		</h2>
 		<ul>
 			<cfloop from="1" to="#REQUEST.qryCategories.recordCount#" index="c">
+				<cfif REQUEST.qryCategories.entryCount[c]>
 				<li>
 					<a href="#REQUEST.myself##XFA.category#&categoryID=#REQUEST.qryCategories.categoryID[c]#">#REQUEST.qryCategories.category[c]#</a> (#REQUEST.qryCategories.entryCount[c]#)
+					<a href="#REQUEST.myself##XFA.rssCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="/assets/images/rss_icon.gif" border="0" /></a>
 					<cfif SESSION.user.role IS 'admin'>
-						<a href="#REQUEST.myself##XFA.editCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="assets/images/edit_icon.gif" border="0" /></a>
-						<a href="#REQUEST.myself##XFA.removeCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="assets/images/delete_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.editCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="/assets/images/edit_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.removeCategory#&categoryID=#REQUEST.qryCategories.categoryID[c]#"><img src="/assets/images/delete_icon.gif" border="0" /></a>
 					</cfif>
 				</li>
+				</cfif>
 			</cfloop>
 	  </ul>
 		<h2>

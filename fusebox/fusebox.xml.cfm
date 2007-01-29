@@ -4,11 +4,12 @@
 	fusebox.xml control file. Defines circuits, classes, parameters and global fuseactions.
 -->
 <fusebox>
+
 	<circuits>
 		<circuit alias="home" path="home/" parent="" />
-		<circuit alias="entry" path="home/entry/" parent="" />
+		<circuit alias="entry" path="home/entry/" parent="home" />
 		<circuit alias="comment" path="home/entry/comment/" parent="entry" />
-		<circuit alias="bookmark" path="home/bookmark" parent="" />
+		<circuit alias="bookmark" path="home/bookmark/" parent="" />
 		<circuit alias="category" path="home/category/" parent="" />
 		<circuit alias="login" path="home/login/" parent="home" />
 	</circuits>

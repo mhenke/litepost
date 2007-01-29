@@ -14,6 +14,13 @@
 	and then cfinclude this file into your non-Fusebox application.
 --->
 <cflock scope="Application" type="exclusive" timeout="10" throwontimeout="true">
+	
+
+	<!----
+	
+	LitePost Settings
+	
+	----->
 
 	<!---- define application settings ---->
 	<cfset APPLICATION.settings = structNew() />
@@ -24,11 +31,31 @@
 	
 	<!---- datasource ---->
 	<cfset APPLICATION.settings.dsn = structNew() />
-	<cfset APPLICATION.settings.dsn.name = 'liteblog' />
+	<cfset APPLICATION.settings.dsn.name = 'LitePost' />
 	<cfset APPLICATION.settings.dsn.username = '' />
 	<cfset APPLICATION.settings.dsn.password = '' />
 	
-	<!---- udfs ---->
+	<!----
+	
+	Blog Settings
+	
+	----->
+	
+	<cfset APPLICATION.settings.blog = structNew() />
+	<cfset APPLICATION.settings.blog.name = 'LitePost - FuseBox Edition' />
+	<cfset APPLICATION.settings.blog.url = 'http://192.168.3.100/fusebox/' />
+	<cfset APPLICATION.settings.blog.description = 'The FuseBox 5.1 Edition of LitePost.' />
+	<cfset APPLICATION.settings.blog.language = 'en_US' />
+	<cfset APPLICATION.settings.blog.email.author = 'adrocknaphobia@gmail.com' />
+	<cfset APPLICATION.settings.blog.email.webmaster = 'adrocknaphobia@gmail.com' />
+	
+
+	<!----
+	
+	udfs
+	
+	----->
+	
 	<cfscript>
 		APPLICATION.udf = structNew();
 		

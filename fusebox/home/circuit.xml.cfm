@@ -7,7 +7,14 @@
 	</fuseaction>
 	
 	<fuseaction name="output">
-		<include template="../layout/lay_main.cfm" />
+		<if condition="structKeyExists(REQUEST.content, 'rss')">
+			<true>
+				<include template="../layout/lay_rss.cfm" />
+			</true>
+			<false>
+				<include template="../layout/lay_main.cfm" />
+			</false>
+		</if>
 	</fuseaction>
 	
 	<fuseaction name="message">
@@ -30,6 +37,8 @@
 		<xfa name="login" value="login.form" />
 		<xfa name="logout" value="login.logout" />
 		<xfa name="category" value="entry.category" />
+		<xfa name="rss" value="entry.rss" />
+		<xfa name="rssCategory" value="entry.rssCategory" />
 	</fuseaction>
 	
 </circuit>
