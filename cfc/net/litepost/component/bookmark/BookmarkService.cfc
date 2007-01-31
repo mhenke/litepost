@@ -52,6 +52,11 @@
 		<cfreturn variables.bookmarkDAO.fetch(arguments.bookmarkID) />
 	</cffunction>
 	
+	<cffunction name="getNewBookmark" returntype="net.litepost.component.bookmark.Bookmark" access="public" output="false" hint="Returns and empty bookmark">
+		<cfset var bookmark = createObject('component', 'net.litepost.component.bookmark.Bookmark').init() />
+		<cfreturn bookmark />
+	</cffunction>
+	
 	<cffunction name="saveBookmark" returntype="numeric" access="public" output="false">
 		<cfargument name="bookmark" type="net.litepost.component.bookmark.Bookmark" required="true" />
 		<cfreturn variables.bookmarkDAO.save(arguments.bookmark) />

@@ -28,7 +28,7 @@
 		<parameter name="characterEncoding" value="utf-8" />
 		<paramater name="strictMode" value="false" />
 		<parameter name="allowImplicitCircuits" value="false" />
-		<parameter name="debug" value="false" />
+		<parameter name="debug" value="true" />
 	</parameters>
 
 	<globalfuseactions>

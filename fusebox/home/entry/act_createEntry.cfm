@@ -34,13 +34,14 @@ Adds a new entry.
 		<cfquery datasource="#APPLICATION.settings.dsn.name#" username="#APPLICATION.settings.dsn.username#" password="#APPLICATION.settings.dsn.password#">
 		INSERT INTO entries
 		(
-			categoryID, title, body, dateCreated, dateLastUpdated
+			categoryID, title, body, userID, dateCreated, dateLastUpdated
 		)
 		VALUES
 		(
 			<cfqueryparam cfsqltype="cf_sql_integer" value="#ATTRIBUTES.categoryID#"  />,
 			<cfqueryparam cfsqltype="cf_sql_varchar" maxlength="255" value="#ATTRIBUTES.title#" />,
 			<cfqueryparam cfsqltype="cf_sql_longvarchar" value="#ATTRIBUTES.body#" />,
+			<cfqueryparam cfsqltype="cf_sql_integer" value="#SESSION.user.id#" />,
 			<cfqueryparam cfsqltype="cf_sql_timestamp" value="#Now()#" />,
 			<cfqueryparam cfsqltype="cf_sql_timestamp" value="#Now()#" />
 		)

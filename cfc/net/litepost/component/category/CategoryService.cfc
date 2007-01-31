@@ -65,6 +65,11 @@
 		<cfreturn variables.categoryDAO.fetch(arguments.categoryID) />
 	</cffunction>
 	
+	<cffunction name="getNewCategory" returntype="net.litepost.component.category.Category" output="false" access="public" hint="Returns an empty category.">
+		<cfset var category = createObject('component', 'net.litepost.component.category.Category').init() />
+		<cfreturn category />
+	</cffunction>
+	
 	<cffunction name="saveCategory" returntype="numeric" access="public" output="false">
 		<cfargument name="category" type="net.litepost.component.category.Category" required="true" />
 		<cfreturn variables.categoryDAO.save(arguments.category) />

@@ -99,7 +99,7 @@ div.postfooter span {
 	width: 50%;
 	float: left;
 	font-weight: bold;
-	border-top: 2px solid #000;
+	border-top: 1px dashed #000;
 }
 
 /* generic clearing class */

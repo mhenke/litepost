@@ -1,11 +1,10 @@
 <cfoutput>
-
 <!---- display entries ---->
 <cfif REQUEST.qryEntry.recordCount>
 	<cfloop from="1" to="#REQUEST.qryEntry.recordCount#" index="r">
 		<!-- post -->
 		<h1>#REQUEST.qryEntry.title[r]#</h1>
-		<p class="author">Posted #dateFormat(REQUEST.qryEntry.entryDate[r])#
+		<p class="author">Posted #dateFormat(REQUEST.qryEntry.entryDate[r])# by #REQUEST.qryEntry.author[r]#</p>
 		<p>#paragraphFormat(REQUEST.qryEntry.body[r])#</p>
 		<a href="#REQUEST.myself##XFA.view#&entryID=#REQUEST.qryEntry.entryID[r]#">More</a>
 		<!-- footer at the bottom of every post-->

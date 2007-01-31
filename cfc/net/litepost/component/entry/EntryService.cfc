@@ -84,11 +84,15 @@
 		<cfreturn entry />
 	</cffunction>
 	
+	<cffunction name="getNewEntry" returntype="net.litepost.component.entry.Entry" access="public" output="false" hint="Returns an empty entry.">
+		<cfset var entry = createObject('component', 'net.litepost.component.entry.Entry').init() />
+		<cfreturn entry />
+	</cffunction>
+	
 	<cffunction name="saveEntry" returntype="numeric" access="public" output="false" hint="Saves an entry">
 		<cfargument name="entry" type="net.litepost.component.entry.Entry" required="true" />
 		<!--- set the user id in the entry object --->
-		<cfset arguments.entry.setUserID(variables.sessionService.getUser().getUserID()) />
-		
+		<cfset arguments.entry.setUserID(variables.sessionService.getUser().getUserID()) />		
 		<cfreturn variables.entryDAO.save(arguments.entry) />
 	</cffunction>
 	

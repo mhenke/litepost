@@ -46,6 +46,7 @@ THANKS RAY!!!!
 		<cfargument name="authorEmail" type="string" required="true" />
 		<cfargument name="webmasterEmail" type="string" required="true" />
 		<cfargument name="eventParameter" type="string" required="true" />
+		<cfargument name="eventLocation" type="string" required="false" default="showEntry" />
 		
 		<cfset var entries = getEntryService().getEntries(arguments.numEntries, true) />
 		<cfset var publishDate = DateFormat(Now(), "ddd, dd mmm yyyy") & " " & TimeFormat(Now(), "HH:mm:ss") & " -" 
@@ -81,7 +82,7 @@ THANKS RAY!!!!
 									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
 				<item>
 					<title>#xmlFormat(entries[i].getTitle())#</title>
-					<link>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
+					<link>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=" & arguments.eventLocation & "&entryId=" & entries[i].getEntryID())#</link>
 					<description>
 					<!--- Regex operation removes HTML code from blog body output --->
 					<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
@@ -90,7 +91,7 @@ THANKS RAY!!!!
 					</description>
 					<category>#xmlFormat(entries[i].getCategory())#</category>
 					<pubDate>#entryDate#</pubDate>
-					<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
+					<guid>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=" & arguments.eventLocation & "&entryId=" & entries[i].getEntryID())#</guid>
 				</item>
 			</cfloop>
 			</channel>
@@ -149,7 +150,7 @@ THANKS RAY!!!!
 									& " -" & NumberFormat(getTimeZoneInfo().utcHourOffset, "00") & "00" />
 				<item>
 					<title>#xmlFormat(entries[i].getTitle())#</title>
-					<link>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</link>
+					<link>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=" & arguments.eventLocation & "&entryId=" & entries[i].getEntryID())#</link>
 					<description>
 					<!--- Regex operation removes HTML code from blog body output --->
 					<cfif Len(REReplaceNoCase(entries[i].getBody(), "<[^>]*>", "", "ALL")) GTE 250>
@@ -158,7 +159,7 @@ THANKS RAY!!!!
 					</description>
 					<category>#xmlFormat(entries[i].getCategory())#</category>
 					<pubDate>#entryDate#</pubDate>
-					<guid>#xmlFormat(arguments.blogURL & "/index.cfm?" & arguments.eventParameter & "=showEntry&entryId=" & entries[i].getEntryID())#</guid>
+					<guid>#xmlFormat(arguments.blogUrl & "/index.cfm?" & arguments.eventParameter & "=" & arguments.eventLocation & "&entryId=" & entries[i].getEntryID())#</guid>
 				</item>
 			</cfloop>
 			</channel>

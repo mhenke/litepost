@@ -50,7 +50,7 @@
 		</ul>
 		<h2>
 			Categories
-			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addCategory#"><img src="assets/images/add_icon.gif" border="0" /></a></cfif>
+			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addCategory#"><img src="/assets/images/add_icon.gif" border="0" /></a></cfif>
 		</h2>
 		<ul>
 			<cfloop from="1" to="#REQUEST.qryCategories.recordCount#" index="c">
@@ -68,15 +68,15 @@
 	  </ul>
 		<h2>
 			Bookmarks
-			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addBookmark#"><img src="assets/images/add_icon.gif" border="0" /></a></cfif>
+			<cfif SESSION.user.role IS 'admin'><a href="#REQUEST.myself##XFA.addBookmark#"><img src="/assets/images/add_icon.gif" border="0" /></a></cfif>
 		</h2>
 		<ul>
 			<cfloop from="1" to="#REQUEST.qryBookmarks.recordCount#" index="b">
 				<li>
 					<a href="#REQUEST.qryBookmarks.url[b]#" target="_blank">#REQUEST.qryBookmarks.name[b]#</a>
 					<cfif SESSION.user.role IS 'admin'>
-						<a href="#REQUEST.myself##XFA.editBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="assets/images/edit_icon.gif" border="0" /></a>
-						<a href="#REQUEST.myself##XFA.removeBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="assets/images/delete_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.editBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="/assets/images/edit_icon.gif" border="0" /></a>
+						<a href="#REQUEST.myself##XFA.removeBookmark#&bookmarkID=#REQUEST.qryBookmarks.bookmarkID[b]#"><img src="/assets/images/delete_icon.gif" border="0" /></a>
 					</cfif>
 				</li>
 			</cfloop>

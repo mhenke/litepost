@@ -44,9 +44,14 @@
 		<cfreturn variables.commentGateway.getCommentsByEntryID(arguments.entryID) />
 	</cffunction>
 	
-	<cffunction name="getCommentByID" returntype="net.litepost.component.comment.Comment" required="true">
+	<cffunction name="getCommentByID" returntype="net.litepost.component.comment.Comment" output="false" hint="Returns a comment based on the specified comment id.">
 		<cfargument name="commentID" type="numeric" required="true" />
 		<cfreturn variables.commentDAO.fetch(arguments.commentID) />
+	</cffunction>
+	
+	<cffunction name="getNewComment" returntype="net.litepost.component.comment.Comment" output="false" hint="Returns an empty Comment.">
+		<cfset var comment = createObject('component', 'net.litepost.component.comment.Comment').init() />
+		<cfreturn comment />
 	</cffunction>
 	
 	<cffunction name="saveComment" returntype="numeric" access="public" output="false">
