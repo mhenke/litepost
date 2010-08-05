@@ -50,7 +50,7 @@
 					<cfif params.isAdmin>
 						#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Entry")#", controller="blog", action="entry", key=id)#
 						
-						#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Entry")#", controller="blog", action="deleteEntry", key=id, confirm="delete")#
+						#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Entry")#", controller="blog", action="deleteEntry", key=id, confirm="Are you sure you want to delete this entry?")#
 					</cfif>
 				</span>
 			</div>

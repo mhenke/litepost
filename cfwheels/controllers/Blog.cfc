@@ -34,17 +34,22 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'bookmarkBean') ) {
-			return;
-		}
-		if ( structKeyExists( params, 'bookmarkID' ) ) {
-			id = val( params.bookmarkID );
+		if ( structKeyExists( params, 'key' ) ) {
+			id = val( params.key );
 		}
 		if ( id == 0 ) {
-			bookmark = model('bookmark').new();
+			bookmark = model('bookmark').FindByKey( key=id, returnAs="query" );
 		} else {
-			bookmark = model('bookmark').findByKey(id);
+			bookmark = model('bookmark').FindByKey( id );
 		}
+
+		if ( bookmark.id GT 0 ) {
+			label = "Update";
+		} else {
+			label = "Create";
+		}
+		
+		title = 'LitePost Blog - #label# Link';
 		
 	}
 	
@@ -53,17 +58,22 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'categoryBean') ) {
-			return;
-		}
-		if ( structKeyExists( params, 'categoryID' ) ) {
-			id = val( params.categoryID );
+		if ( structKeyExists( params, 'key' ) ) {
+			id = val( params.key );
 		}
 		if ( id == 0 ) {
-			category = model('category').new();
+			category = model('category').FindByKey( key=id, returnAs="query" );
 		} else {
 			category = model('category').FindByKey( id );
 		}
+
+		if ( category.id GT 0 ) {
+			label = "Update";
+		} else {
+			label = "Create";
+		}
+		
+		title = 'LitePost Blog - #label# Category';
 		
 	}
 	
@@ -112,15 +122,18 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'entryID' ) ) {
-			id = val( params.entryID );
+		if ( structKeyExists( params, 'key' ) ) {
+			id = val( key );
 		}
 
 		aEntry = model("entry").findByKey( id );
 		aEntry.deleteAllComments();
 		aEntry.delete();
 
-		renderPage(action="main");
+		flashInsert(message="#aEntry.title# entry and comments deleted!");
+
+		entries = model('entry').findAll();
+		redirectTo(action="main");
 	}
 	
 	// doLogin - attempt authentication:

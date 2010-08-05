@@ -1,5 +1,5 @@
 <cfoutput>
-	
+
 <div>
 	<h2>
 		Categories
@@ -24,7 +24,7 @@
 				<cfif params.isAdmin>
 					&nbsp;
 					#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Category")#", controller="blog", action="entry",key=id)#
-					#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Category")#", controller="blog", action="deleteCategory",confirm="delete category",key=id)#
+					#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Category")#", controller="blog", action="deleteCategory",confirm="Are you sure you want to delete this category?",key=id)#
 				</cfif>
 			</li>
 			

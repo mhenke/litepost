@@ -29,7 +29,7 @@
 					&nbsp;
 					#linkTo(text="Edit Link", controller="blog", action="bookmark")#
 						#imageTag(source="edit_icon.gif", border="0", title="Edit Link")#
-					#linkTo(text="Delete Link", controller="blog", action="bookmark",  confirm="delete?", key=bkmkID)#
+					#linkTo(text="Delete Link", controller="blog", action="deleteBookmark",  confirm="Are you sure you want to delete this bookmark?", key=bkmkID)#
 						#imageTag(source="delete_icon.gif", border="0", title="Delete Link")#
 				</cfif>
 			</li>
