@@ -1,14 +1,5 @@
 <cfoutput>
 	
-<cfif params.isAdmin>
-	<script type="text/javascript">
-		function deleteBookmark(bookmarkID) {
-			if(confirm("Are you sure you want to delete this link?")) {
-				location.href = "?#framework.action#=blog.deleteBookmark&bookmarkID=" + bookmarkID;
-			}
-		}
-	</script>
-</cfif>
 <div>
 	<h2>
 		Links

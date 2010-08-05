@@ -13,3 +13,5 @@
 	<cfset set(URLRewriting="Partial")>
 --->
 <cfset set(dataSourceName="litepost")>
+<cfset set(timeStampOnCreateProperty = "dateCreated")>
+<cfset set(timeStampOnUpdateProperty = "dateLastUpdated")>

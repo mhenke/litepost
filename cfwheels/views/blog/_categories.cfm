@@ -1,14 +1,5 @@
 <cfoutput>
 	
-<cfif params.isAdmin>
-	<script type="text/javascript">
-		function deleteCategory(categoryID) {
-			if(confirm("Are you sure you want to delete this category?")) {
-				location.href = "?#framework.action#=blog.deleteCategory&categoryID=" + categoryID;
-			}
-		}
-	</script>
-</cfif>
 <div>
 	<h2>
 		Categories

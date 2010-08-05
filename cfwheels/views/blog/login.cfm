@@ -1,5 +1,5 @@
-<cfparam name="params.isAdmin" default="false" />
-<cfparam name="framework.action" default="" />
+
+
 
 <cfsilent>
 	<cfset params.title = "LitePost - Login" />

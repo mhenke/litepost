@@ -10,7 +10,6 @@
 	// called before any actions:
 	function before() {	
 		loadBeanFactory(id="factory",configPath="/config/litepost-services.xml");
-		params.test = getBeanFactory(id="factory");
 	 	params.isAdmin = isAuthenticated();
 	 	params.bookmarks = model('bookmark').FindAll();
 	 	// params.categories = getCategoriesWithCounts();
@@ -19,7 +18,7 @@
 	 
 	 function isAuthenticated() {
 	 
-	 return false;
+	 return true;
 	 
 	}
 	
@@ -28,9 +27,6 @@
 	}
 	
 	
-	function getCategoriesWithCounts() {
-	}
-
 	// blog actions:
 	
 	// bookmark - add/edit bookmark:
@@ -119,8 +115,11 @@
 		if ( structKeyExists( params, 'entryID' ) ) {
 			id = val( params.entryID );
 		}
-		// TODO: remove comments for this entry first!
-		model('entry').deleteByKey(id);
+
+		aEntry = model("entry").findByKey( id );
+		aEntry.deleteAllComments();
+		aEntry.delete();
+
 		renderPage(action="main");
 	}
 	
@@ -143,20 +142,29 @@
 	
 	// entry - add/edit entry:
 	function entry() {
-		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'entryBean') ) {
-			return;
-		}
 		if ( structKeyExists( params, 'entryID' ) ) {
 			id = val( params.entryID );
 		}
 		if ( id == 0 ) {
 			entry = model('entry').new();
+			entry.id = id;
+			entry.title = '';
+			entry.body = '';
 		} else {
 			entry = model('entry').FindByKey(id);
 		}
+		
+		if ( entry.id GT 0 ) {
+			label = "Update";
+		} else {
+			label = "Add";
+		}
+		
+		entry.CategoryID = '';
+	
+		title = 'LitePost Blog - #label# Entry';
 		
 	}
 	
@@ -201,33 +209,24 @@
 		
 	}
 	
-	// setters for dependencies:
-	function setBookmarkService(bookmarkService) {
-		variables.bookmarkService = bookmarkService;
+	// saveEntry - create/update entry:
+	function saveEntry() {
+
+		params.userID = 1;
+		params.dateLastUpdated = now();
+		entry = model("Entry").create(params);
+
+		if ( not entry.hasErrors() ) {
+
+			redirectTo( action="main" );
+			
+		} else {
+
+			flashInsert(message="Please complete the entry form!");
+			renderPage( action="entry" );
+			
+		}
 	}
 	
-	function setCategoryService(categoryService) {
-		variables.categoryService = categoryService;
-	}
-	
-	function setCommentService(commentService) {
-		variables.commentService = commentService;
-	}
-	
-	function setEntryService(entryService) {
-		variables.entryService = entryService;
-	}
-	
-	function setRSSService(rssService) {
-		variables.rssService = rssService;
-	}
-	
-	function setSecurityService(securityService) {
-		variables.securityService = securityService;
-	}
-	
-	function setUserService(userService) {
-		variables.userService = userService;
-	}
-	
-</cfscript></cfcomponent>
+</cfscript>
+</cfcomponent>

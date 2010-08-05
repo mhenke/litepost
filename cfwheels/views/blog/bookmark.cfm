@@ -1,8 +1,8 @@
-<cfparam name="params.isAdmin" default="false" />
-<cfparam name="framework.action" default="" />
+
+
 
 <cfsilent>
-	<cfparam name="params.message" default="" />
+	
 	
 	<cfif bookmark.getBookmarkID() gt 0>
 		<cfset local.label="Update" />
@@ -15,11 +15,11 @@
 <cfoutput>
 	<h1>#local.label# Link</h1>
 	
-	<cfif len(params.message)>
-		<p><strong>#params.message#</strong></p>
+	<cfif flashKeyExists("message")>
+		<p style="font-weight:bold;">#flash("message")#</p>
 	</cfif>
 	
-	<form id="editBookmark" name="editBookmark" method="post" action="?#framework.action#=blog.saveBookmark">
+	#startFormTag(action="saveBookmark")#
 		<input type="hidden" name="bookmarkID" value="#bookmark.getBookmarkID()#" />
 		<label>Name<br />
 		<input name="name" type="text" value="#bookmark.getName()#" />
@@ -28,5 +28,5 @@
 		<input name="url" type="text" value="#bookmark.getUrl()#" />
 		</label>
 		<input type="submit" name="submit" value="#local.label#" class="adminbutton" />
-	</form>
+	#endFormTag()#
 </cfoutput>

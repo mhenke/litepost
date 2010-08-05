@@ -1,8 +1,8 @@
-<cfparam name="params.isAdmin" default="false" />
-<cfparam name="framework.action" default="" />
+
+
 
 <cfsilent>
-	<cfparam name="params.message" default="" />
+	
 	<cfset local.fullDateString = "dddd, mmmm dd, yyyy" />
 	<cfset local.shortDateString = "mmm dd, yyyy" />
 	<cfset local.timeString = "h:mm tt" />
@@ -68,12 +68,12 @@
 		<p>No comments yet. Be the first to add a comment!</p>
 	</cfif>
 	
-	<cfif len(params.message)>
-		<p><strong>#params.message#</strong></p>
+	<cfif flashKeyExists("message")>
+		<p style="font-weight:bold;">#flash("message")#</p>
 	</cfif>
 	
 	<h2>Add A Comment </h2>
-	<form id="comment" name="comment" action="?#framework.action#=blog.saveComment" method="post">
+	#startFormTag(action="saveComment")#
 		<input type="hidden" name="entryID" value="#id#" />
 		<label>Your Name<br/>
 		<input type="text" name="name" value="#comment.getName()#" />
@@ -88,7 +88,7 @@
 		<textarea name="comment" class="comment">#comment.getComment()#</textarea>
 		</label>
 		<input type="submit" name="submit" value="Submit" class="adminbutton" />
-	</form>
+	#endFormTag()#
   <p>&nbsp;</p>
 	
 </cfoutput>
