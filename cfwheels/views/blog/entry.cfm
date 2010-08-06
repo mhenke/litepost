@@ -1,11 +1,10 @@
 <cfoutput>
-
+<cfdump var="#bookmark#">
 	<h1>#label# Entry</h1>
 	
 	<cfif flashKeyExists("message")>
 		<p style="font-weight:bold;">#flash("message")#</p>
 	</cfif>
-	
 	#startFormTag(action="saveEntry")#
 		<input type="hidden" name="entryID" value="#entry.id#" />
 		<label>Title<br />
@@ -17,7 +16,7 @@
 			<option value="-1" selected>- Select -</option>
 			<option value="0" <cfif currCatID EQ 0>selected</cfif>>- None -</option>
 			<cfloop query="categories">
-				<option value="#categories.id#"<cfif categories.id eq entry.CategoryID> selected</cfif>>#categories.title #</option>
+				<option value="#categories.id#"<cfif categories.id eq entry.CategoryID> selected</cfif>>#categories.category#</option>
 			</cfloop>
 		</select>
 		</label>

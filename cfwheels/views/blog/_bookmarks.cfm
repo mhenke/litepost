@@ -15,25 +15,23 @@
 		<li><em>no links</em></li>
 	<cfelse>
 
-		<cfoutput query="bookmarks">
+		<cfloop query="bookmarks">
 			<cfset linkUrl = 0 />
 			<cfif Left(linkUrl,7) NEQ "http://">
 				<cfset linkUrl = "http://" & linkUrl />
 			</cfif>
 			
 			<li>
-
-				#linkTo(text="bookmark.getName()", controller="blog", action="bookmark", target="_blank")#
-
+				<a href="#bookmarks.url#" target="_blank">#bookmarks.name#</a>				
+				#linkTo(text="rss", controller="blog", action="rss", params="bookmarkID=#id#&bookmarkName=#bookmarks.name#")#
+				
 				<cfif params.isAdmin>
 					&nbsp;
-					#linkTo(text="Edit Link", controller="blog", action="bookmark")#
-						#imageTag(source="edit_icon.gif", border="0", title="Edit Link")#
-					#linkTo(text="Delete Link", controller="blog", action="deleteBookmark",  confirm="Are you sure you want to delete this bookmark?", key=bkmkID)#
-						#imageTag(source="delete_icon.gif", border="0", title="Delete Link")#
+					#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Link")#", controller="blog", action="bookmark",key=bookmarks.id)#
+					#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Link")#", controller="blog", action="deletebookmark",confirm="Are you sure you want to delete this link?",key=bookmarks.id)#
 				</cfif>
 			</li>
-		</cfoutput>
+		</cfloop>
 		
 	</cfif>
 
