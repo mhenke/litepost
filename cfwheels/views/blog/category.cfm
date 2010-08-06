@@ -5,11 +5,11 @@
 		<p style="font-weight:bold;">#flash("message")#</p>
 	</cfif>
 	
+	#errorMessagesFor("category")#
+	
 	#startFormTag(action="saveCategory")#
-		<input type="hidden" name="id" value="#category.id#" />
-		<label>Category<br />
-		<input name="category" type="text" value="#category.category#" />
-		</label>
-		<input type="submit" name="submit" value="#label#" class="adminbutton" />
+		#hiddenField(objectName="category", property="id")#
+		#textField(label="Category", objectName="category", property="category")#
+		#submitTag(value="#label#", class="adminbutton")#
 	#endFormTag()#
 </cfoutput>

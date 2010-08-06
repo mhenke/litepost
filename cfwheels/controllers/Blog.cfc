@@ -37,14 +37,14 @@
 			id = val( params.key );
 		}
 
-		bookmark = model('bookmark').FindByKey( key=id, returnAs="query" );
-
-		if ( bookmark.id GT 0 ) {
-			label = "Update";
-		} else {
-			label = "Create";
-		}
+		label = "Update";
+		bookmark = model('bookmark').FindByKey( id );
 		
+		if (not IsObject(bookmark)) {
+			label = "Create";
+    		bookmark = model('bookmark').new();
+		}
+
 		title = 'LitePost Blog - #label# Link';
 		
 	}
@@ -57,15 +57,15 @@
 		if ( structKeyExists( params, 'key' ) ) {
 			id = val( params.key );
 		}
-		
-		category = model('category').FindByKey( key=id, returnAs="query" );
 
-		if ( category.id GT 0 ) {
-			label = "Update";
-		} else {
-			label = "Create";
-		}
+		label = "Update";
+		category = model('category').FindByKey( id );
 		
+		if (not IsObject(category)) {
+			label = "Create";
+    		category = model('category').new();
+		}
+
 		title = 'LitePost Blog - #label# Category';
 		
 	}
@@ -104,7 +104,12 @@
 		if ( structKeyExists( params, 'key' ) ) {
 			id = val( params.key);
 		}
-		model('category').deleteByKey(id);
+		// TODO: make sure the category doesn't exist in an entry
+		
+		if (not model('category').deleteByKey(id)) {
+			flashInsert(message="This category cannot be deleted. It has an entry filed under it (See below).");
+			redirectTo(action="main",params="categoryID=#id#");
+		}
 		redirectTo(action="main");
 	}
 	
@@ -118,7 +123,6 @@
 		}
 
 		aEntry = model("entry").findByKey( id );
-		aEntry.deleteAllComments();
 		aEntry.delete();
 
 		flashInsert(message="#aEntry.title# entry and comments deleted!");
@@ -148,6 +152,7 @@
 	function entry() {
 		var id = 0;
 		
+		
 		if ( structKeyExists( params, 'entryID' ) ) {
 			id = val( params.entryID );
 		}
@@ -156,18 +161,15 @@
 			entry.id = id;
 			entry.title = '';
 			entry.body = '';
+			label = "Add";
 		} else {
 			entry = model('entry').FindByKey(id);
-		}
-		
-		if ( entry.id GT 0 ) {
 			label = "Update";
-		} else {
-			label = "Add";
 		}
 		
-		entry.CategoryID = '';
-	
+		entry.userId = 1;
+		entry.dateLastUpdated = now();
+		
 		title = 'LitePost Blog - #label# Entry';
 		
 	}
@@ -183,10 +185,10 @@
 	// main - home page:
 	function main() {
 		
-		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) gt 0 ) {
-			entries = model('entry').findByKey(key=categoryID, returnAs='query');
+		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
+			entries = model('entry').findAllByCategoryID(value=categoryID, include='category');
 		} else {
-			entries = model('entry').findAll();
+			entries = model('entry').findAll(include='category');
 		}
 
 	}
@@ -215,29 +217,54 @@
 
 	// saveBookmark - create/update bookmark:
 	function saveBookmark() {
+		var returnValue = '';
 		
-		bookmark = model("bookmark").findByKey(params.id);
+		if ( structKeyExists( params.bookmark, 'id' ) and val(params.bookmark.id)) {
+  			bookmark = model("bookmark").findByKey(params.bookmark.id); 
+			returnValue = bookmark.update(params.bookmark);
+			label = "Update";
+		}
+		else 
+		{ 
+  			bookmark = model("bookmark").new(params.bookmark);
+			returnValue = bookmark.save();
+			label = "Create";
+		} 
+		
+		title = 'LitePost Blog - #label# Link';
 
-		if (bookmark.save()) {
-			flashInsert(message="Success!");
+		if (returnValue) {
     		redirectTo(action="main");
 		} else {
     		flashInsert(message="Please complete the bookmark form!");
-    		redirectTo(action="bookmark");
+    		renderPage(action="bookmark");
 		}
 		
 	}
 
 	// saveCategory - create/update category:
 	function saveCategory() {
-	
-		category = model("category").new(params);
+	    var returnValue = '';
 		
-		if (category.save()) {
+		if ( structKeyExists( params.category, 'id' ) and val(params.category.id)) {
+  			category = model("category").findByKey(params.category.id); 
+			returnValue = category.update(params.category);
+			label = "Update";
+		}
+		else 
+		{ 
+  			category = model("category").new(params.category);
+			returnValue = category.save();
+			label = "Update";
+		} 
+		
+		title = 'LitePost Blog - #label# Category';
+
+		if (returnValue) {
     		redirectTo(action="main");
 		} else {
     		flashInsert(message="Please complete the category form!");
-    		redirectTo(action="category");
+    		renderPage(action="category");
 		}
 		
 	}
@@ -265,20 +292,28 @@
 
 	// saveEntry - create/update entry:
 	function saveEntry() {
+		
+		 var returnValue = '';
+		
+		if ( structKeyExists( params.entry, 'id' ) and val(params.entry.id)) {
+  			entry = model("entry").findByKey(params.entry.id); 
+			returnValue = entry.update(params.entry);
+			label = "Update";
+		}
+		else 
+		{ 
+  			entry = model("entry").new(params.entry);
+			returnValue = entry.save();
+			label = "Update";
+		} 
+		
+		title = 'LitePost Blog - #label# entry';
 
-		params.userID = 1;
-		params.dateLastUpdated = now();
-		entry = model("Entry").save(params);
-
-		if ( not entry.hasErrors() ) {
-
-			redirectTo( action="main" );
-			
+		if (returnValue) {
+    		redirectTo(action="main");
 		} else {
-
-			flashInsert(message="Please complete the entry form!");
-			renderPage( action="entry" );
-			
+    		flashInsert(message="Please complete the entry form!");
+    		renderPage(action="entry");
 		}
 	}
 	

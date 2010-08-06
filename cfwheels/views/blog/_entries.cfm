@@ -1,13 +1,8 @@
-
-
-
 <cfsilent>
 	<cfset local.fullDateString = "dddd, mmmm dd, yyyy" />
 	<cfset local.shortDateString = "mmm/dd/yyyy" />
 	<cfset local.timeString = "h:mm tt" />
-	
 </cfsilent>
-
 <!--- main entries page --->
 
 <cfoutput>
@@ -39,11 +34,11 @@
 				<span>
 					#linkTo(text="#imageTag(source="comment_icon.gif", border="0", title="Comments")#", controller="blog", action="comments", key=id)#
 					
-					#linkTo(text="Comments (xxxx)", controller="blog", action="comments", key=id)#
+					#linkTo(text="Comments (#entries.commentCount#)", controller="blog", action="comments", key=id)#
 				</span>
 				<span class="right">
 					<cfif entries.CategoryID neq 0>
-						#linkTo(text="Filed under #entries.getCategory()#", controller="blog", action="main", key=entries.getCategoryID())#
+						#linkTo(text="Filed under #entries.category#", controller="blog", action="main", params="categoryID=#entries.CategoryID#")#
 					<cfelse>
 						Unfiled
 					</cfif>

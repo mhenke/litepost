@@ -5,14 +5,15 @@
 		<p style="font-weight:bold;">#flash("message")#</p>
 	</cfif>
 	
+	#errorMessagesFor("bookmark")#
+	
 	#startFormTag(action="saveBookmark")#
-		<input type="hidden" name="id" value="#bookmark.id#" />
-		<label>Name<br />
+		#hiddenField(objectName="bookmark", property="id")#
+		#textField(label="Name", objectName="bookmark", property="name")#
+		#textField(label="Url", objectName="bookmark", property="url")#
+		<!---<label>Name<br />
 		<input name="name" type="text" value="#bookmark.name#" />
-		</label>
-		<label>Url<br />
-		<input name="url" type="text" value="#bookmark.url#" />
-		</label>
-		<input type="submit" name="submit" value="#label#" class="adminbutton" />
+		</label>--->
+		#submitTag(value="#label#", class="adminbutton")#
 	#endFormTag()#
 </cfoutput>
