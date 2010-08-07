@@ -2,7 +2,7 @@
 	<cffunction name="init">
 		<cfset property(name="id", column="entryid")>
 		<cfset property(name="commentCount", sql="(SELECT COUNT(*) FROM comments WHERE comments.entryid = entries.entryid)")> 
-		<cfset validatesPresenceOf(properties=",userID,categoryIDbody,dateCreated,dateLastUpdated")>
+		<cfset validatesPresenceOf(properties="entryID,userID,categoryID,body,dateCreated,dateLastUpdated")>
 		<cfset hasMany("comment")>
 		<cfset belongsTo(name="category",joinType="OUTER")>
 		<cfset belongsTo("user")>
