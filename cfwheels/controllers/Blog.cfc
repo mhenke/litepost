@@ -5,6 +5,7 @@
 	// init
 	function init() {
 		filters("before");
+		filters(through="setupForEntry",only="entry,savecomment,comments");
 	}
 	
 	// called before any actions:
@@ -13,6 +14,14 @@
 	 	params.isAdmin = isAuthenticated();
 	 	params.bookmarks = model('bookmark').FindAll();
 		params.categories = model('category').findAll();
+	 }
+	 
+	 function setupForEntry() {
+	 	fullDateString = "dddd, mmmm dd, yyyy";
+		shortDateString = "mmm dd, yyyy";
+		timeString = "h:mm tt";
+		entries.title  = "this is the comment entry's title";
+		title = 'LitePost Blog - #entries.title#';
 	 }
 	 
 	 function isAuthenticated() {
@@ -90,13 +99,6 @@
 		}
 		
 		comments = model('comment').findAllByEntryID(id);
-		
-		fullDateString = "dddd, mmmm dd, yyyy";
-		shortDateString = "mmm dd, yyyy";
-		timeString = "h:mm tt";
-		entries.title  = "this is the comment entry's title";
-		title = 'LitePost Blog - #entries.title#';
-		
 	}
 	
 	// deleteBookmark - delete by ID
@@ -282,14 +284,17 @@
 
 	// saveComment - create/update comment:
 	function saveComment() {
-		
+
   		comment = model("comment").create(params.comment);
+		entry = model('entry').findByKey(key=params.comment.entryid, include='category,comment,user',returnAs='query');
+		comments = model('comment').findAllByEntryID(params.comment.entryid);
 		
 		if (comment.hasErrors()) {
     		flashInsert(message="Please complete the comment form!");
+			renderPage(action="comments",params="entryID=#params.comment.entryid#");
 		}
-		redirectTo(back=true);	
-		// redirectTo(action="comments", params="entryID=#params.comment.entryID#");
+		// Why does it always redirect even if hasErrors()
+		redirectTo(action="comments",params="entryID=#params.comment.entryid#");
 	}
 
 	// saveEntry - create/update entry:
