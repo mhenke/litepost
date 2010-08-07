@@ -200,7 +200,7 @@
 	function main() {
 		
 		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
-			entries = model('entry').findAllByCategoryID(value=categoryID, include='categorys');
+			entries = model('entry').findAllByCategoryID(value=categoryID, include='category,user');
 		} else {
 			entries = model('entry').findAll(include='category,comments,user');
 		}
