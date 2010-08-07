@@ -83,7 +83,7 @@
 			return;
 		}
 		
-		entry = model('entry').findByKey( key=id, include="category" );
+		entry = model('entry').findByKey( key=id, include="category,comment,user", returnAs="query" );
 		
 		if (not structKeyExists( variables, 'comment')) {
 		comment = model('comment').new(name="", url="",comment="",email="");
