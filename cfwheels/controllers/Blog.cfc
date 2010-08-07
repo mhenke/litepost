@@ -128,10 +128,15 @@
 		if ( structKeyExists( params, 'key' ) ) {
 			id = val( params.key);
 		}
-		// TODO: make sure the category doesn't exist in an entry
-		category = model('category');
-		if (not category.deleteByKey(id)) {
-			flashInsert(message="This category cannot be deleted. It has an entry filed under it (See below).");
+		
+		entries = model('entry').findAllByCategoryId(id);
+		
+		if (IsQuery(entries)) {
+			flashInsert(message="This category cannot be deleted. It has  #pluralize(word="entry", count=entries.recordCount)# filed under it.");
+			redirectTo(action="main",params="categoryId=#id#");
+		} else {
+			category = model('category').DeleteByKey(id);
+			redirectTo(action="main");
 		}
 		
 	}
@@ -153,6 +158,7 @@
 		
 		entries = model('entry').findAll();
 		redirectTo(action="main");
+		
 	}
 	
 	// doLogin - attempt authentication:
