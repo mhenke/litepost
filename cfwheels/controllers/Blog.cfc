@@ -6,17 +6,21 @@
 	function init() {
 		filters("before");
 		filters(through="setupForEntry",only="entry,savecomment,comments");
+
 	}
 	
 	// called before any actions:
 	function before() {	
+
 		loadBeanFactory(id="factory",configPath="/config/litepost-services.xml");
 	 	params.isAdmin = isAuthenticated();
 	 	params.bookmarks = model('bookmark').FindAll();
 		params.categories = model('category').findAll();
+
 	 }
 	 
 	 function setupForEntry() {
+
 	 	fullDateString = "dddd, mmmm dd, yyyy";
 		shortDateString = "mmm dd, yyyy";
 		timeString = "h:mm tt";
@@ -32,6 +36,7 @@
 	
 	
 	function removeUserSession() {
+
 	}
 	
 	
@@ -99,10 +104,12 @@
 		}
 		
 		comments = model('comment').findAllByEntryID(id);
+
 	}
 	
 	// deleteBookmark - delete by ID
 	function deleteBookmark() {
+
 		var id = 0;
 		
 		if ( structKeyExists( params, 'key' ) ) {
@@ -110,10 +117,12 @@
 		}
 		model('bookmark').deleteByKey(id);
 		redirectTo(action="main");
+
 	}
 	
 	// deleteCategory - delete by ID
 	function deleteCategory() {
+
 		var id = 0;
 		
 		if ( structKeyExists( params, 'key' ) ) {
@@ -165,6 +174,7 @@
 	
 	// entry - add/edit entry:
 	function entry() {
+
 		var id = 0;
 		
 		if ( structKeyExists( params, 'entryID' ) ) {
@@ -200,9 +210,9 @@
 	function main() {
 		
 		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
-			entries = model('entry').findAllByCategoryID(value=categoryID, include='category,user');
+			entries = model('entry').findAllByCategoryID(value=categoryID, include='category,user', order="dateCreated DESC", where="dateCreated <= '#now()#'");
 		} else {
-			entries = model('entry').findAll(include='category,comments,user');
+			entries = model('entry').findAll(include='category,user', order="dateCreated DESC", where="dateCreated <= '#now()#'");
 		}
 
 	}
@@ -231,6 +241,7 @@
 
 	// saveBookmark - create/update bookmark:
 	function saveBookmark() {
+
 		var returnValue = '';
 		
 		if ( structKeyExists( params.bookmark, 'id' ) and val(params.bookmark.id)) {
@@ -258,6 +269,7 @@
 
 	// saveCategory - create/update category:
 	function saveCategory() {
+
 	    var returnValue = '';
 		
 		if ( structKeyExists( params.category, 'id' ) and val(params.category.id)) {
@@ -296,6 +308,7 @@
 		}
 		// Why does it always redirect even if hasErrors()
 		redirectTo(action="comments",params="entryID=#params.comment.entryid#");
+
 	}
 
 	// saveEntry - create/update entry:
@@ -326,6 +339,7 @@
     		flashInsert(message="Please complete the entry form!");
     		renderPage(action="entry");
 		}
+
 	}
 	
 </cfscript>

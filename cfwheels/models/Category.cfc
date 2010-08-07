@@ -3,7 +3,7 @@
 		<cfset property(name="id", column="categoryid")>
 		<cfset property(name="categoriesCount", sql="(SELECT COUNT(*) FROM entries WHERE categories.categoryid = entries.categoryId)")> 
 		<cfset validatesPresenceOf(properties="category")>
-		<cfset hasMany("entry") >
+		<cfset belongsTo("entry") >
 		<cfset beforeDelete("checkEntries")>
 	</cffunction>
 
