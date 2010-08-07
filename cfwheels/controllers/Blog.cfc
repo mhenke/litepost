@@ -78,11 +78,24 @@
 		if ( structKeyExists( params, 'entryID' ) ) {
 			id = val( params.entryID );
 		}
-		params.entry = model('entry').FindByKey(id);
+		entry = model('entry').FindByKey(id);
 		if ( structKeyExists( params, 'comment') ) {
 			return;
 		}
-		comment = model('comment').new();
+		
+		entry = model('entry').findByKey( key=id, include="category" );
+		
+		if (not structKeyExists( variables, 'comment')) {
+		comment = model('comment').new(name="", url="",comment="",email="");
+		}
+		
+		comments = model('comment').findAllByEntryID(id);
+		
+		fullDateString = "dddd, mmmm dd, yyyy";
+		shortDateString = "mmm dd, yyyy";
+		timeString = "h:mm tt";
+		entries.title  = "this is the comment entry's title";
+		title = 'LitePost Blog - #entries.title#';
 		
 	}
 	
@@ -105,12 +118,11 @@
 			id = val( params.key);
 		}
 		// TODO: make sure the category doesn't exist in an entry
-		
-		if (not model('category').deleteByKey(id)) {
+		category = model('category');
+		if (not category.deleteByKey(id)) {
 			flashInsert(message="This category cannot be deleted. It has an entry filed under it (See below).");
-			redirectTo(action="main",params="categoryID=#id#");
 		}
-		redirectTo(action="main");
+		
 	}
 	
 	// deleteEntry - delete by ID
@@ -152,7 +164,6 @@
 	function entry() {
 		var id = 0;
 		
-		
 		if ( structKeyExists( params, 'entryID' ) ) {
 			id = val( params.entryID );
 		}
@@ -188,7 +199,7 @@
 		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
 			entries = model('entry').findAllByCategoryID(value=categoryID, include='category');
 		} else {
-			entries = model('entry').findAll(include='category');
+			entries = model('entry').findAll(include='category,comment,user');
 		}
 
 	}
@@ -272,28 +283,22 @@
 	// saveComment - create/update comment:
 	function saveComment() {
 		
-		var bean = variables.commentService.getNewComment();
+  		comment = model("comment").create(params.comment);
 		
-		variables.fw.populate( bean );
-		
-		if ( bean.validate() ) {
-
-			variables.commentService.saveComment( bean );
-			variables.fw.redirect( 'blog.comments', '', 'entryId' );
-			
-		} else {
-
-			rc.message = 'Please complete the comment form!';
-			rc.commentBean = bean;
-			variables.fw.redirect( 'blog.comments', 'message,commentBean', 'entryId' );
-			
+		if (comment.hasErrors()) {
+    		flashInsert(message="Please complete the comment form!");
 		}
+		redirectTo(back=true);	
+		// redirectTo(action="comments", params="entryID=#params.comment.entryID#");
 	}
 
 	// saveEntry - create/update entry:
 	function saveEntry() {
 		
 		 var returnValue = '';
+	   if ( structKeyExists( params.entry, 'categoryid' ) and not val(params.entry.categoryid)) {
+	   		params.entry.categoryid = 0;
+	   }
 		
 		if ( structKeyExists( params.entry, 'id' ) and val(params.entry.id)) {
   			entry = model("entry").findByKey(params.entry.id); 

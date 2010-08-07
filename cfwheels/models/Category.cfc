@@ -2,16 +2,15 @@
 	<cffunction name="init">
 		<cfset property(name="id", column="categoryid")>
 		<cfset property(name="categoriesCount", sql="(SELECT COUNT(*) FROM entries WHERE categories.categoryid = entries.categoryId)")> 
-		<cfset validatesPresenceOf(properties="category")>
-		<cfset belongsTo("Entry")>
+		<cfset validatesPresenceOf(properties="categoryid,category")>
+		<cfset hasMany("entry") >
 		<cfset beforeDelete("checkEntries")>
 	</cffunction>
 
 	<cffunction name="checkEntries">
-		<cfset var returnThis = true >
-		<cfif IsQuery(model('entry').FindAllByCategoryid(this.id))>
-			<cfset returnThis = false >
+		<cfif IsQuery(model('entry').FindAllByCategoryId(this.id))>
+			<cfset this.addErrorToBase(message="Your email address needs to be the same as your domain name.")>
 		</cfif>
-		<cfreturn returnThis>
+		<cfreturn false>
 	</cffunction>
 </cfcomponent>
