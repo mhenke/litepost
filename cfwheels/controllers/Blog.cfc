@@ -92,7 +92,7 @@
 			return;
 		}
 		
-		entry = model('entry').findByKey( key=id, include="category,comment,user", returnAs="query" );
+		entry = model('entry').findByKey( key=id, include="category,comments,user", returnAs="query" );
 		
 		if (not structKeyExists( variables, 'comment')) {
 		comment = model('comment').new(name="", url="",comment="",email="");
@@ -137,10 +137,11 @@
 		}
 
 		aEntry = model("entry").findByKey( id );
-		aEntry.delete();
-
+      	aEntry.deleteAllComments();
+      	aEntry.delete();
+		
 		flashInsert(message="#aEntry.title# entry and comments deleted!");
-
+		
 		entries = model('entry').findAll();
 		redirectTo(action="main");
 	}
@@ -199,9 +200,9 @@
 	function main() {
 		
 		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
-			entries = model('entry').findAllByCategoryID(value=categoryID, include='category');
+			entries = model('entry').findAllByCategoryID(value=categoryID, include='categorys');
 		} else {
-			entries = model('entry').findAll(include='category,comment,user');
+			entries = model('entry').findAll(include='category,comments,user');
 		}
 
 	}
@@ -286,7 +287,7 @@
 	function saveComment() {
 
   		comment = model("comment").create(params.comment);
-		entry = model('entry').findByKey(key=params.comment.entryid, include='category,comment,user',returnAs='query');
+		entry = model('entry').findByKey(key=params.comment.entryid, include='category,comments,user',returnAs='query');
 		comments = model('comment').findAllByEntryID(params.comment.entryid);
 		
 		if (comment.hasErrors()) {

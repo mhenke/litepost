@@ -3,13 +3,8 @@
 		<cfset property(name="id", column="entryid")>
 		<cfset property(name="commentCount", sql="(SELECT COUNT(*) FROM comments WHERE comments.entryid = entries.entryid)")> 
 		<cfset validatesPresenceOf(properties="id,userid,categoryid,body,dateCreated,dateLastUpdated")>
-		<cfset hasMany("comment")>
+		<cfset hasMany("comments")>
 		<cfset belongsTo(name="category",joinType="OUTER")>
 		<cfset belongsTo("user")>
-		<cfset beforeDelete("deleteAllComments")>
-	</cffunction>
-	
-	<cffunction name="deleteAllComments" >
-		<cfset model('category').deleteAll(this.categoryid)>
 	</cffunction>
 </cfcomponent>
