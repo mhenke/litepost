@@ -26,18 +26,6 @@
 		entries.title  = "this is the comment entry's title";
 		title = 'LitePost Blog - #entries.title#';
 	 }
-	 
-	 function isAuthenticated() {
-	 
-	 return true;
-	 
-	}
-	
-	
-	function removeUserSession() {
-
-	}
-	
 	
 	// blog actions:
 	
@@ -130,7 +118,7 @@
 		
 		entries = model('entry').findAllByCategoryId(id);
 		
-		if (IsQuery(entries)) {
+		if (entries.recordCount GT 0) {
 			flashInsert(message="This category cannot be deleted. It has  #pluralize(word="entry", count=entries.recordCount)# filed under it.");
 			redirectTo(action="main",params="categoryId=#id#");
 		} else {
@@ -152,8 +140,6 @@
 		aEntry = model("entry").findByKey( id );
       	aEntry.deleteAllComments();
       	aEntry.delete();
-		
-		flashInsert(message="#aEntry.title# entry and comments deleted!");
 		
 		entries = model('entry').findAll();
 		redirectTo(action="main");
@@ -192,9 +178,6 @@
 			entry = model('entry').FindByKey(id);
 			label = "Update";
 		}
-		
-		entry.userId = 1;
-		entry.dateLastUpdated = now();
 		
 		title = 'LitePost Blog - #label# Entry';
 		
