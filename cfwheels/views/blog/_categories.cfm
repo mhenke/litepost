@@ -3,7 +3,7 @@
 <div>
 	<h2>
 		Categories
-		<cfif params.isAdmin>
+		<cfif isAdmin>
 			#linkTo(text="#imageTag(source="add_icon.gif", border="0", title="Add Category")#", controller="blog", action="category")#
 		</cfif>
 	</h2>
@@ -20,7 +20,7 @@
 				
 				#linkTo(text="rss", controller="blog", action="rss", params="categoryID=#id#&categoryName=#title#")#
 				
-				<cfif params.isAdmin>
+				<cfif isAdmin>
 					&nbsp;
 					#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Category")#", controller="blog", action="category",key=categories.id)#
 					#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Category")#", controller="blog", action="deleteCategory",confirm="Are you sure you want to delete this category?",key=categories.id)#

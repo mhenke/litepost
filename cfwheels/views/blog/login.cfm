@@ -1,10 +1,3 @@
-
-
-
-<cfsilent>
-	<cfset params.title = "LitePost - Login" />
-</cfsilent>
-
 <cfoutput>
 	<h1>Please Log In</h1>
 		

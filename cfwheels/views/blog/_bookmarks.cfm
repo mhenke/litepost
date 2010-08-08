@@ -3,7 +3,7 @@
 <div>
 	<h2>
 		Links
-		<cfif params.isAdmin>
+		<cfif isAdmin>
 			#linkTo(text="#imageTag(source="add_icon.gif", border="0", title="Add Link")#", controller="blog", action="bookmark")#
 		</cfif>
 	</h2>
@@ -25,7 +25,7 @@
 				<a href="#bookmarks.url#" target="_blank">#bookmarks.name#</a>				
 				#linkTo(text="rss", controller="blog", action="rss", params="bookmarkID=#id#&bookmarkName=#bookmarks.name#")#
 				
-				<cfif params.isAdmin>
+				<cfif isAdmin>
 					&nbsp;
 					#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Link")#", controller="blog", action="bookmark",key=bookmarks.id)#
 					#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Link")#", controller="blog", action="deletebookmark",confirm="Are you sure you want to delete this link?",key=bookmarks.id)#

@@ -1,16 +1,9 @@
-<cfsilent>
-	<cfset local.fullDateString = "dddd, mmmm dd, yyyy" />
-	<cfset local.shortDateString = "mmm/dd/yyyy" />
-	<cfset local.timeString = "h:mm tt" />
-</cfsilent>
-<!--- main entries page --->
-
 <cfoutput>
 	
-	<cfif params.isAdmin>
+	<cfif isAdmin>
 	
 	<div align="right">
-		#linkTo(text="#imageTag(source="add_icon.gif", border="0", title="Add Entry")#", controller="account", action="entry")#
+		#linkTo(text="#imageTag(source="add_icon.gif", border="0", title="Add Entry")#", controller="blog", action="entry")#
 		#linkTo(text="Add Entry", controller="blog", action="entry")#
 	</div>
 	</cfif>
@@ -24,7 +17,7 @@
 	<cfelse>
 		<cfloop query="entries">
 			<h1>#entries.title#</h1>
-			<p class="author">Posted by #entries.userid#, 
+			<p class="author">Posted by #entries.fullname#, 
 				#dateFormat(entries.dateLastUpdated, 'full')# @ 
 				#timeFormat(entries.dateLastUpdated, 'short')#</p>
 			<p>#ParagraphFormat(entries.body)#</p
@@ -34,7 +27,7 @@
 				<span>
 					#linkTo(text="#imageTag(source="comment_icon.gif", border="0", title="Comments")#", controller="blog", action="comments", key=id)#
 					
-					#linkTo(text="Comments (#entries.commentCount#)", controller="blog", action="comments", key=id)#
+					#linkTo(text="Comments (#entries.commentCount#)", controller="blog", action="comments", params="entryID=#entries.id#")#
 				</span>
 				<span class="right">
 					<cfif entries.CategoryID neq 0>
@@ -42,7 +35,7 @@
 					<cfelse>
 						Unfiled
 					</cfif>
-					<cfif params.isAdmin>
+					<cfif isAdmin>
 						#linkTo(text="#imageTag(source="edit_icon.gif", border="0", title="Edit Entry")#", controller="blog", action="entry", key=id)#
 						
 						#linkTo(text="#imageTag(source="delete_icon.gif", border="0", title="Delete Entry")#", controller="blog", action="deleteEntry", key=id, confirm="Are you sure you want to delete this entry?")#

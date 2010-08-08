@@ -7,7 +7,6 @@
 	#errorMessagesFor("entry")#
 
 	#startFormTag(action="saveEntry")#
-		#hiddenField(objectName="entry", property="userID")#
 		#hiddenField(objectName="entry", property="id")#
 		#hiddenField(objectName="entry", property="dateLastUpdated")#
 
