@@ -4,17 +4,21 @@
 	
 	// init
 	function init() {
-		filters(through="setServices,before");
+		
+		filters(through="setSecurityService,before");
 		filters(through="setupForEntry",only="entry,savecomment,comments");
-
+		filters(through="setSessionService",only="saveEntry");
+		filters(through="setRssService",only="rss");
+		filters(through="setUserService",only="doLogin");
+		
 	}
 	
 	// called before any actions:
 	function before() {	
-
+	
 	 	params.isAdmin = variables.securityService.isAuthenticated();
-	 	params.bookmarks = model('bookmark').FindAll();
-		params.categories = model('category').findAll();
+	 	params.bookmarks = model("bookmark").FindAll();
+		params.categories = model("category").findAll();
 
 	 }
 	 
@@ -24,7 +28,8 @@
 		shortDateString = "mmm dd, yyyy";
 		timeString = "h:mm tt";
 		entries.title  = "this is the comment entry's title";
-		title = 'LitePost Blog - #entries.title#';
+		title = "LitePost Blog - #entries.title#";
+		
 	 }
 	
 	// blog actions:
@@ -34,19 +39,19 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'key' ) ) {
+		if ( structKeyExists( params, "key" ) ) {
 			id = val( params.key );
 		}
 
 		label = "Update";
-		bookmark = model('bookmark').FindByKey( id );
+		bookmark = model("bookmark").FindByKey( id );
 		
 		if (not IsObject(bookmark)) {
 			label = "Create";
-    		bookmark = model('bookmark').new();
+    		bookmark = model("bookmark").new();
 		}
 
-		title = 'LitePost Blog - #label# Link';
+		title = "LitePost Blog - #label# Link";
 		
 	}
 	
@@ -55,19 +60,19 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'key' ) ) {
+		if ( structKeyExists( params, "key" ) ) {
 			id = val( params.key );
 		}
 
 		label = "Update";
-		category = model('category').FindByKey( id );
+		category = model("category").FindByKey( id );
 		
 		if (not IsObject(category)) {
 			label = "Create";
-    		category = model('category').new();
+    		category = model("category").new();
 		}
 
-		title = 'LitePost Blog - #label# Category';
+		title = "LitePost Blog - #label# Category";
 		
 	}
 	
@@ -76,21 +81,21 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'entryID' ) ) {
+		if ( structKeyExists( params, "entryID" ) ) {
 			id = val( params.entryID );
 		}
-		entry = model('entry').FindByKey(id);
-		if ( structKeyExists( params, 'comment') ) {
+		entry = model("entry").FindByKey(id);
+		if ( structKeyExists( params, "comment") ) {
 			return;
 		}
 		
-		entry = model('entry').findByKey( key=id, include="category,comments,user", returnAs="query" );
+		entry = model("entry").findByKey( key=id, include="category,comments,user", returnAs="query" );
 		
-		if (not structKeyExists( variables, 'comment')) {
-		comment = model('comment').new(name="", url="",comment="",email="");
+		if (not structKeyExists( variables, "comment")) {
+		comment = model("comment").new(name="", url="",comment="",email="");
 		}
 		
-		comments = model('comment').findAllByEntryID(id);
+		comments = model("comment").findAllByEntryID(id);
 
 	}
 	
@@ -99,10 +104,10 @@
 
 		var id = 0;
 		
-		if ( structKeyExists( params, 'key' ) ) {
+		if ( structKeyExists( params, "key" ) ) {
 			id = val( params.key);
 		}
-		model('bookmark').deleteByKey(id);
+		model("bookmark").deleteByKey(id);
 		redirectTo(action="main");
 
 	}
@@ -112,17 +117,17 @@
 
 		var id = 0;
 		
-		if ( structKeyExists( params, 'key' ) ) {
+		if ( structKeyExists( params, "key" ) ) {
 			id = val( params.key);
 		}
 		
-		entries = model('entry').findAllByCategoryId(id);
+		entries = model("entry").findAllByCategoryId(id);
 		
 		if (entries.recordCount GT 0) {
 			flashInsert(message="This category cannot be deleted. It has  #pluralize(word="entry", count=entries.recordCount)# filed under it.");
 			redirectTo(action="main",params="categoryId=#id#");
 		} else {
-			category = model('category').DeleteByKey(id);
+			category = model("category").DeleteByKey(id);
 			redirectTo(action="main");
 		}
 		
@@ -133,7 +138,7 @@
 		
 		var id = 0;
 		
-		if ( structKeyExists( params, 'key' ) ) {
+		if ( structKeyExists( params, "key" ) ) {
 			id = val( key );
 		}
 
@@ -141,7 +146,7 @@
       	aEntry.deleteAllComments();
       	aEntry.delete();
 		
-		entries = model('entry').findAll();
+		entries = model("entry").findAll();
 		redirectTo(action="main");
 		
 	}
@@ -153,7 +158,7 @@
 		
 		if ( user.isNull() ) {
 			flashInsert(message="User not found!");
-			redirectTo( action='login' );
+			redirectTo( action="login" );
 		} else {
 			redirectTo( action="main" );
 		}
@@ -165,27 +170,25 @@
 
 		var id = 0;
 		
-		if ( structKeyExists( params, 'entryID' ) ) {
+		if ( structKeyExists( params, "entryID" ) ) {
 			id = val( params.entryID );
 		}
+		
 		if ( id == 0 ) {
-			entry = model('entry').new();
-			entry.id = id;
-			entry.title = '';
-			entry.body = '';
+			entry = model("entry").new();
 			label = "Add";
 		} else {
-			entry = model('entry').FindByKey(id);
+			entry = model("entry").FindByKey(id);
 			label = "Update";
 		}
 		
-		title = 'LitePost Blog - #label# Entry';
+		title = "LitePost Blog - #label# Entry";
 		
 	}
 	
 	// logout - end user session:
 	function logout() {
-
+		
 		securityService.removeUserSession();
 		redirectTo( action="main" );
 
@@ -194,10 +197,10 @@
 	// main - home page:
 	function main() {
 		
-		if ( structKeyExists( params, 'categoryID' ) and val( params.categoryID ) ) {
-			entries = model('entry').findAllByCategoryID(value=categoryID, include='category,user', order="dateCreated DESC", where="dateCreated <= '#now()#'");
+		if ( structKeyExists( params, "categoryID" ) and val( params.categoryID ) ) {
+			entries = model("entry").findAllByCategoryID(value=categoryID, include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'");
 		} else {
-			entries = model('entry').findAll(include='category,user', order="dateCreated DESC", where="dateCreated <= '#now()#'");
+			entries = model("entry").findAll(include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'");
 		}
 
 	}
@@ -208,18 +211,41 @@
 			
 		// additional arguments used in RSSService:
 		args.eventParameter = variables.fw.getAction();
-		args.eventLocation = 'blog.comments';
-		args.generator = 'LitePost';
+		args.eventLocation = "blog.comments";
+		args.generator = "LitePost";
 		
 		// fixup blogLanguage:
 		args.blogLanguage = replace(lcase(args.blogLanguage), "_", "-", "one");
 		
-		if ( structKeyExists( params, 'categoryID' ) ) {
+		if ( structKeyExists( params, "categoryID" ) ) {
 			args.categoryId = params.categoryId;
 			args.categoryName = params.categoryName;
-			params.rss = variables.rssService.getCategoryRSS( argumentCollection=args );
+			
+			rss = variables.rssService.getCategoryRSS( argumentCollection=args );
+			
+			// <cfset rss = variables.rssService.getCategoryRSS(categoryID, 
+			//										"Category: " & categoryID,  
+			//										blogName, 
+			//										blogURL, 
+			//										blogDescription, 
+			//										replace(lcase(blogLanguage), "_", "-", "one"), 
+			//										"LitePost", 
+			//										authorEmail, 
+			//										webmasterEmail, 
+			//										eventValue) />
+													
 		} else {
-			params.rss = variables.rssService.getBlogRSS( argumentCollection=args );
+			rss = variables.rssService.getBlogRSS( argumentCollection=args );
+			
+			// <cfset rss = variables.rssService.getBlogRSS(numEntriesOnHomePage, 
+			//										blogName, 
+			//										blogURL, 
+			//										blogDescription, 
+			//										replace(lcase(blogLanguage), "_", "-", "one"), 
+			//										"LitePost", 
+			//										authorEmail, 
+			//										webmasterEmail, 
+			//										eventValue) />
 		}
 		
 	}
@@ -227,9 +253,9 @@
 	// saveBookmark - create/update bookmark:
 	function saveBookmark() {
 
-		var returnValue = '';
+		var returnValue = "";
 		
-		if ( structKeyExists( params.bookmark, 'id' ) and val(params.bookmark.id)) {
+		if ( structKeyExists( params.bookmark, "id" ) and val(params.bookmark.id)) {
   			bookmark = model("bookmark").findByKey(params.bookmark.id); 
 			returnValue = bookmark.update(params.bookmark);
 			label = "Update";
@@ -241,7 +267,7 @@
 			label = "Create";
 		} 
 		
-		title = 'LitePost Blog - #label# Link';
+		title = "LitePost Blog - #label# Link";
 
 		if (returnValue) {
     		redirectTo(action="main");
@@ -255,9 +281,9 @@
 	// saveCategory - create/update category:
 	function saveCategory() {
 
-	    var returnValue = '';
+	    var returnValue = "";
 		
-		if ( structKeyExists( params.category, 'id' ) and val(params.category.id)) {
+		if ( structKeyExists( params.category, "id" ) and val(params.category.id)) {
   			category = model("category").findByKey(params.category.id); 
 			returnValue = category.update(params.category);
 			label = "Update";
@@ -269,7 +295,7 @@
 			label = "Update";
 		} 
 		
-		title = 'LitePost Blog - #label# Category';
+		title = "LitePost Blog - #label# Category";
 
 		if (returnValue) {
     		redirectTo(action="main");
@@ -284,8 +310,8 @@
 	function saveComment() {
 
   		comment = model("comment").create(params.comment);
-		entry = model('entry').findByKey(key=params.comment.entryid, include='category,comments,user',returnAs='query');
-		comments = model('comment').findAllByEntryID(params.comment.entryid);
+		entry = model("entry").findByKey(key=params.comment.entryid, include="category,comments,user",returnAs="query");
+		comments = model("comment").findAllByEntryID(params.comment.entryid);
 		
 		if (comment.hasErrors()) {
     		flashInsert(message="Please complete the comment form!");
@@ -299,24 +325,30 @@
 	// saveEntry - create/update entry:
 	function saveEntry() {
 		
-		 var returnValue = '';
-	   if ( structKeyExists( params.entry, 'categoryid' ) and not val(params.entry.categoryid)) {
+	   var returnValue = "";
+	   entry = false;
+	   
+	   params.entry.userid = variables.sessionService.getUser().getUserId();
+	   params.entry.dateLastUpdated = now();
+	   
+	   if ( structKeyExists( params.entry, "categoryid" ) and not val(params.entry.categoryid)) {
 	   		params.entry.categoryid = 0;
 	   }
 		
-		if ( structKeyExists( params.entry, 'id' ) and val(params.entry.id)) {
+		if ( structKeyExists( params.entry, "id" ) and val(params.entry.id)) {
   			entry = model("entry").findByKey(params.entry.id); 
+		}
+		
+		if ( isObject(entry)) {
 			returnValue = entry.update(params.entry);
 			label = "Update";
-		}
-		else 
-		{ 
+		} else { 
   			entry = model("entry").new(params.entry);
 			returnValue = entry.save();
-			label = "Update";
-		} 
+			label = "Add";
+		 }
 		
-		title = 'LitePost Blog - #label# entry';
+		title = "LitePost Blog - #label# entry";
 
 		if (returnValue) {
     		redirectTo(action="main");
@@ -327,11 +359,30 @@
 
 	}
 	
-	function setServices() {
-		variables.rssService = getBeanFactory(id="factory").getBean('rssService');
-		variables.securityService = getBeanFactory(id="factory").getBean('securityService');
-		variables.userService = getBeanFactory(id="factory").getBean('userService');
+	function setSecurityService() {
+		
+		variables.securityService = getBeanFactory(id="factory").getBean("securityService");
+		
+	}
+	
+	function setUserService() {
+	
+		variables.userService = getBeanFactory(id="factory").getBean("userService");
+		
+	}
+	
+	function setSessionService() {
+	
+		variables.sessionService = getBeanFactory(id="factory").getBean("sessionService");
+		
+	}
+	
+	function setRssService() {		
+	
+		variables.rssService = getBeanFactory(id="factory").getBean("rssService");
+
 	}
 	
 </cfscript>
+
 </cfcomponent>
