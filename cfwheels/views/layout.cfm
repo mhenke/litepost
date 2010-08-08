@@ -1,4 +1,4 @@
-<cfparam name="params.isAdmin" default="false" />
+<cfparam name="isAdmin" default="false" />
 
 <cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,7 +22,7 @@
 <div id="container">
 
 	<!-- login/out button -->
-	<cfif params.isAdmin>
+	<cfif isAdmin>
 		#linkTo(text="Log Out", controller="blog", action="logout", id="loginbutton", class="adminbutton")#
 	<cfelse>
 		#linkTo(text="Log In", controller="blog", action="login", id="loginbutton", class="adminbutton")#

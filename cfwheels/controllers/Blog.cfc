@@ -16,9 +16,9 @@
 	// called before any actions:
 	function before() {	
 	
-	 	params.isAdmin = variables.securityService.isAuthenticated();
-	 	params.bookmarks = model("bookmark").FindAll();
-		params.categories = model("category").findAll();
+	 	isAdmin = variables.securityService.isAuthenticated();
+	 	bookmarks = model("bookmark").FindAll();
+		categories = model("category").findAll();
 
 	 }
 	 
@@ -198,9 +198,9 @@
 	function main() {
 		
 		if ( structKeyExists( params, "categoryID" ) and val( params.categoryID ) ) {
-			entries = model("entry").findAllByCategoryID(value=categoryID, include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'");
+			entries = model("entry").findAllByCategoryID(include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'", select="id,title,fullname,datelastupdated,body,commentcount,categoryid,category", value=categoryID);
 		} else {
-			entries = model("entry").findAll(include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'");
+			entries = model("entry").findAll(include="category,user", order="dateCreated DESC", where="dateCreated <= '#now()#'", select="id,title,fullname,datelastupdated,body,commentcount,categoryid,category");
 		}
 
 	}
