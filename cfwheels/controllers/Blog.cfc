@@ -4,7 +4,7 @@
 	
 	// init
 	function init() {
-		filters("before");
+		filters(through="setServices,before");
 		filters(through="setupForEntry",only="entry,savecomment,comments");
 
 	}
@@ -12,8 +12,7 @@
 	// called before any actions:
 	function before() {	
 
-		loadBeanFactory(id="factory",configPath="/config/litepost-services.xml");
-	 	params.isAdmin = isAuthenticated();
+	 	params.isAdmin = variables.securityService.isAuthenticated();
 	 	params.bookmarks = model('bookmark').FindAll();
 		params.categories = model('category').findAll();
 
@@ -164,16 +163,13 @@
 	// doLogin - attempt authentication:
 	function doLogin() {
 		
-		user = model('user').findOne(where="username='#params.username#' AND password='#params.password#'");
+		var user = variables.userService.authenticate( params.username, params.password );
 		
-		// userService.authenticate
-		if ( NOT isObject(user)) {
-		
+		if ( user.isNull() ) {
 			flashInsert(message="User not found!");
-			redirectTo(action="login");
+			redirectTo( action='login' );
 		} else {
-			//  store validated user in session
-			redirectTo(action="main");
+			redirectTo( action="main" );
 		}
 		
 	}
@@ -207,8 +203,8 @@
 	// logout - end user session:
 	function logout() {
 
-		removeUserSession();
-		renderPage(action="main");
+		securityService.removeUserSession();
+		redirectTo( action="main" );
 
 	}
 	
@@ -346,6 +342,12 @@
     		renderPage(action="entry");
 		}
 
+	}
+	
+	function setServices() {
+		variables.rssService = getBeanFactory(id="factory").getBean('rssService');
+		variables.securityService = getBeanFactory(id="factory").getBean('securityService');
+		variables.userService = getBeanFactory(id="factory").getBean('userService');
 	}
 	
 </cfscript>
