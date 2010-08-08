@@ -83,18 +83,12 @@
 		if ( structKeyExists( params, "entryID" ) ) {
 			id = val( params.entryID );
 		}
-		entry = model("entry").FindByKey(id);
-		if ( structKeyExists( params, "comment") ) {
-			return;
-		}
+
+		entry = model("entry").findByKey( key=id, include="category,comments,user", returnAs="query", select="title, fullname, datecreated, body, id, commentcount, categoryid, category" );
+
+		comment = model("comment").new();
 		
-		entry = model("entry").findByKey( key=id, include="category,comments,user", returnAs="query" );
-		
-		if (not structKeyExists( variables, "comment")) {
-		comment = model("comment").new(name="", url="",comment="",email="");
-		}
-		
-		comments = model("comment").findAllByEntryID(id);
+		comments = model("comment").findAllByEntryID(value=id, select="comment, email, name, url, datecreated");
 
 	}
 	
