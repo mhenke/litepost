@@ -315,9 +315,9 @@
 		if (comment.hasErrors()) {
     		flashInsert(message="Please complete the comment form!");
 			renderPage(action="comments",params="entryID=#params.comment.entryid#");
+		} else {
+			redirectTo(action="comments",params="entryID=#params.comment.entryid#");
 		}
-		// Why does it always redirect even if hasErrors()
-		redirectTo(action="comments",params="entryID=#params.comment.entryid#");
 
 	}
 
