@@ -6,10 +6,10 @@
 	function init() {
 		
 		filters(through="setSecurityService,before");
-		filters(through="setupForEntry",only="entry,savecomment,comments");
 		filters(through="setSessionService",only="saveEntry");
 		filters(through="setRssService",only="rss");
 		filters(through="setUserService",only="doLogin");
+		filters(through="setupForEntry",only="entry,savecomment,comments");
 		
 	}
 	
@@ -17,18 +17,17 @@
 	function before() {	
 	
 	 	isAdmin = variables.securityService.isAuthenticated();
-	 	bookmarks = model("bookmark").FindAll();
+	 	bookmarks = model("bookmark").findAll();
 		categories = model("category").findAll();
 
 	 }
 	 
+	 // called entry, savecomment, and comments:
 	 function setupForEntry() {
 
 	 	fullDateString = "dddd, mmmm dd, yyyy";
 		shortDateString = "mmm dd, yyyy";
 		timeString = "h:mm tt";
-		entries.title  = "this is the comment entry's title";
-		title = "LitePost Blog - #entries.title#";
 		
 	 }
 	
