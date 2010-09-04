@@ -48,7 +48,7 @@
 	<!-- navigation -->
 	<div id="navigation">
 		
-		#includePartial("navigation")#
+		#includePartial("/blog/navigation")#
 		
 	</div>
 	

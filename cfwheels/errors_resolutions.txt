@@ -1,0 +1,7 @@
+1) Bean creation exception in net.litepost.component.security.SecurityService
+
+Could not find the ColdFusion Component or Interface net.litepost.component.security.SecurityService.:Ensure that the name is correct and that the component or interface exists.:
+ 
+The error occurred in xxxxx\coldspring\beans\BeanDefinition.cfc: line 573
+
+1b) make sure to reload Wheels

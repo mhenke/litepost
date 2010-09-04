@@ -1,0 +1,1 @@
+Download images from http://github.com/mhenke/litepost/tree/master/assets/images and place in this folder

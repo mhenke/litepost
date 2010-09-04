@@ -1,4 +1,4 @@
 <cfoutput>
-	#includePartial("categories")#
-	#includePartial("bookmarks")#
+	#includePartial("/blog/categories")#
+	#includePartial("/blog/bookmarks")#
 </cfoutput>
