@@ -4,4 +4,4 @@ Could not find the ColdFusion Component or Interface net.litepost.component.secu
  
 The error occurred in xxxxx\coldspring\beans\BeanDefinition.cfc: line 573
 
-1b) make sure to reload Wheels
+1b) make sure you copied the net folder for more information read /net/where_is_net.txt
