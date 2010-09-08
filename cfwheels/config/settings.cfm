@@ -15,3 +15,16 @@
 <cfset set(dataSourceName="litepost")>
 <cfset set(timeStampOnCreateProperty = "dateCreated")>
 <cfset set(timeStampOnUpdateProperty = "dateLastUpdated")>
+<cfset set(overwritePlugins=false)>
+
+<cfset loc.myapp = {}> 
+<cfset loc.myapp.blogName = 'LitePost - CFWheels Edition' /> 
+<cfset loc.myapp.blogURL = 'http://localhost/' /> 
+<cfset loc.myapp.blogDescription = 'The CFWheels Edition of LitePost' /> 
+<cfset loc.myapp.blogLanguage = 'en_US' /> 
+<cfset loc.myapp.authorEmail = 'henke.mike@gmail.com' /> 
+<cfset loc.myapp.webmasterEmail = 'henke.mike@gmail.com' />
+<cfset loc.myapp.numEntries = 20 />
+<cfset loc.myapp.generator = 'LitePost' />
+
+<cfset set(myapp = loc.myapp)> 

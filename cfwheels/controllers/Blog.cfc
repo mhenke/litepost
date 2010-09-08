@@ -199,16 +199,18 @@
 	}
 	
 	function rss() {
+		var args = StructNew();
+		args.blogName = get("myapp").blogName;
+		args.blogURL = get("myapp").blogURL;
+		args.blogDescription = get("myapp").blogDescription;
+		args.blogLanguage = get("myapp").blogLanguage;
+		args.authorEmail = get("myapp").authorEmail;
+		args.webmasterEmail = get("myapp").webmasterEmail;
+		args.numEntries = get("myapp").numEntries;
+		args.generator = get("myapp").generator;
+		args.eventparameter = get("myapp").generator;
 		
-		var args = structCopy( variables.fw.getBlogConfiguration() );
-			
-		// additional arguments used in RSSService:
-		args.eventParameter = variables.fw.getAction();
-		args.eventLocation = "blog.comments";
-		args.generator = "LitePost";
-		
-		// fixup blogLanguage:
-		args.blogLanguage = replace(lcase(args.blogLanguage), "_", "-", "one");
+	// litepost event
 		
 		if ( structKeyExists( params, "categoryID" ) ) {
 			args.categoryId = params.categoryId;
@@ -216,31 +218,12 @@
 			
 			rss = variables.rssService.getCategoryRSS( argumentCollection=args );
 			
-			// <cfset rss = variables.rssService.getCategoryRSS(categoryID, 
-			//										"Category: " & categoryID,  
-			//										blogName, 
-			//										blogURL, 
-			//										blogDescription, 
-			//										replace(lcase(blogLanguage), "_", "-", "one"), 
-			//										"LitePost", 
-			//										authorEmail, 
-			//										webmasterEmail, 
-			//										eventValue) />
 													
 		} else {
 			rss = variables.rssService.getBlogRSS( argumentCollection=args );
-			
-			// <cfset rss = variables.rssService.getBlogRSS(numEntriesOnHomePage, 
-			//										blogName, 
-			//										blogURL, 
-			//										blogDescription, 
-			//										replace(lcase(blogLanguage), "_", "-", "one"), 
-			//										"LitePost", 
-			//										authorEmail, 
-			//										webmasterEmail, 
-			//										eventValue) />
 		}
 		
+		rss = trim(rss);
 	}
 
 	// saveBookmark - create/update bookmark:
