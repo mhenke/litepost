@@ -1,1 +1,1 @@
-Download the fw1 example here <a href="http://github.com/seancorfield/fw1/tree/master/examples/litepost/">http://github.com/seancorfield/fw1/tree/master/examples/litepost/</a>
+Download the fw1 example here http://github.com/seancorfield/fw1/tree/master/examples/litepost/

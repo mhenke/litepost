@@ -1,2 +1,1 @@
-Download the litepost-services.xml from
-<a href="http://github.com/mhenke/litepost/blob/master/config/litepost-services.xml">http://github.com/mhenke/litepost/blob/master/config/litepost-services.xml</a> and place here
+Download the litepost-services.xml from http://github.com/mhenke/litepost/blob/master/config/litepost-services.xml and place here

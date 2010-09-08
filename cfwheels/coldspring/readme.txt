@@ -1,2 +1,1 @@
-Download the coldspring from  and place here
-<a href="http://coldspringframework.org/">http://coldspringframework.org/</a>
+Download the coldspring from http://coldspringframework.org/ and place here
